@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI Coding 素养课：面向校招生的 AI 思维、AI 协同工作、Agent 新工作语言和岗位小流程创新课程。"
+    />
+    <title>AI Coding 素养课：从会用工具到 AI 协同工作</title>
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="返回顶部">
+          <img src="./assets/favicon.svg" alt="" width="36" height="36" />
+          <span>AI Coding 素养课</span>
+        </a>
+        <nav class="nav-links" aria-label="课程导航">
+          <a href="#t-shaped">T 型人才</a>
+          <a href="#language">新工作语言</a>
+          <a href="#workflow">重做小流程</a>
+          <a href="#cases">岗位案例</a>
+          <a href="#tools">互动任务卡</a>
+          <a href="#action">7 天行动</a>
+        </nav>
+        <button class="icon-button" type="button" data-theme-toggle aria-label="切换到深色主题" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+        </button>
+        <button class="icon-button" type="button" data-present-toggle aria-label="进入全屏" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3"></path>
+            <path d="M21 8V5a2 2 0 0 0-2-2h-3"></path>
+            <path d="M3 16v3a2 2 0 0 0 2 2h3"></path>
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3"></path>
+          </svg>
+        </button>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+          <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+          <div class="hero-content" data-reveal>
+            <p class="kicker">For New Graduates</p>
+            <h1 id="hero-title">AI Coding 素养课：从会用工具到 AI 协同工作</h1>
+            <p class="hero-copy">
+              帮校招生建立 AI 思维：会定目标、组织上下文、拆任务、让 AI 先处理、人来验收，并把一次好结果沉淀成可复用工作法。
+            </p>
+            <div class="hero-actions">
+              <a class="primary-action" href="#tools">生成 AI 协同任务卡</a>
+              <a class="secondary-action" href="#language">查看新术语图谱</a>
+            </div>
+          </div>
+          <div class="hero-metrics" aria-label="课程结构" data-reveal>
+            <div>
+              <strong>4</strong>
+              <span>核心模块：人才、语言、流程、案例</span>
+            </div>
+            <div>
+              <strong>16</strong>
+              <span>新工作术语：Goal、Claude Tag、Worktree 等</span>
+            </div>
+            <div>
+              <strong>7</strong>
+              <span>入职场景案例与 7 天行动卡</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section thesis" aria-labelledby="thesis-title">
+          <div class="section-inner thesis-grid">
+            <div data-reveal>
+              <p class="kicker">Core Shift</p>
+              <h2 id="thesis-title">AI 思维的重点，不是问出答案，而是设计一条能被验收的小流程。</h2>
+            </div>
+            <div class="shift-list" data-reveal>
+              <article>
+                <span>从搜索到协同</span>
+                <div>
+                  <h3>AI 不是更聪明的搜索框</h3>
+                  <p>它可以先读材料、拆任务、出草稿、做预审，但需要人给目标和标准。</p>
+                </div>
+              </article>
+              <article>
+                <span>从提问到派活</span>
+                <div>
+                  <h3>把一句问题改成一份任务说明</h3>
+                  <p>目标、材料、标准、边界、验收越清楚，AI 越像可靠搭档。</p>
+                </div>
+              </article>
+              <article>
+                <span>从结果到复盘</span>
+                <div>
+                  <h3>一次好输出要留下方法</h3>
+                  <p>把提示词、样例、检查项和失败点沉淀下来，团队才会越用越稳。</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section" id="t-shaped" aria-labelledby="t-shaped-title">
+          <div class="section-inner">
+            <div class="section-heading" data-reveal>
+              <div>
+                <p class="kicker">Module 1</p>
+                <h2 id="t-shaped-title">AI 时代的 T 型人才：一专更深，多能成链</h2>
+              </div>
+              <p>
+                “一专多能”不是泛泛会很多工具，而是在本岗位专业领域更深，同时借助 AI 横向做好相关岗位的小闭环。
+              </p>
+            </div>
+            <div class="t-model" data-reveal>
+              <div class="t-axis" aria-label="T 型人才模型">
+                <div class="t-axis-label">
+                  <div>
+                    <strong>多能横轴</strong>
+                    <span>产品、设计、测试、运维、运营反馈</span>
+                  </div>
+                  <div>
+                    <strong>一专纵轴</strong>
+                    <span>本岗位判断力、质量标准、责任边界</span>
+                  </div>
+                </div>
+              </div>
+              <div class="t-cards">
+                <article class="t-card">
+                  <h3>研发样例：从写代码到小闭环交付</h3>
+                  <p>AI 帮新人理解产品目标、生成交互草图、补测试、定位日志、写发布说明、分析运营反馈，但业务判断和合并责任仍在人。</p>
+                </article>
+                <article class="t-card">
+                  <h3>校招生能力目标：OPC 是进阶方向</h3>
+                  <p>OPC 在课里理解为个人具备端到端小闭环交付能力，不是第一天全能，而是知道如何用 AI 补齐协作链。</p>
+                </article>
+                <article class="t-card">
+                  <h3>岗位专业不会被削弱</h3>
+                  <p>AI 生成越快，人越要懂专业标准、风险边界和验收方式。专业深度是协同的根。</p>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section" id="language" aria-labelledby="language-title">
+          <div class="section-inner">
+            <div class="section-heading" data-reveal>
+              <div>
+                <p class="kicker">Module 2</p>
+                <h2 id="language-title">AI 新工作语言：概念、工具、模型与 Agent 图谱</h2>
+              </div>
+              <p>
+                术语不做百科式罗列。每个词都回答一个问题：它解决什么工作痛点，新人怎样把它用到真实任务里。
+              </p>
+            </div>
+            <div class="language-map" data-reveal>
+              <div>
+                <div class="term-controls" id="term-groups" aria-label="术语分组"></div>
+                <div class="term-list" id="term-list" aria-label="术语列表"></div>
+              </div>
+              <article class="term-detail" id="term-detail" aria-live="polite"></article>
+            </div>
+            <div class="source-note" data-reveal>
+              <strong>前沿案例如何讲给新人听</strong>
+              <span>
+                Claude Tag 用来说明“团队频道里的常驻 AI 执行体”，Agent Team 用来说明复杂任务可拆给多个角色，Worktree 用来说明并行试验需要隔离空间。
+              </span>
+              <span>
+                参考：
+                <a href="https://www.anthropic.com/news/introducing-claude-tag" target="_blank" rel="noreferrer">Claude Tag</a>、
+                <a href="https://code.claude.com/docs/en/worktrees" target="_blank" rel="noreferrer">Claude Code worktrees</a>、
+                <a href="https://developers.openai.com/codex/subagents" target="_blank" rel="noreferrer">Codex Subagents</a>。
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section workflow-band" id="workflow" aria-labelledby="workflow-title">
+          <div class="section-inner">
+            <div class="section-heading" data-reveal>
+              <div>
+                <p class="kicker">Module 3</p>
+                <h2 id="workflow-title">创新不是换工具，是重做小流程</h2>
+              </div>
+              <p>
+                校招生最先要练的不是“大系统创新”，而是把一个真实任务改造成 AI 可协同、人可验收、下次可复用的小流程。
+              </p>
+            </div>
+            <div class="workflow-grid" aria-label="AI 协同五步法扩展流程" data-reveal>
+              <article class="workflow-step">
+                <span>01</span>
+                <h3>定目标</h3>
+                <p>把“帮我做一下”改成可验收结果。</p>
+              </article>
+              <article class="workflow-step">
+                <span>02</span>
+                <h3>给材料</h3>
+                <p>提供背景、样例、限制和可信来源。</p>
+              </article>
+              <article class="workflow-step">
+                <span>03</span>
+                <h3>拆任务</h3>
+                <p>拆成可执行、可并行、可检查的小步骤。</p>
+              </article>
+              <article class="workflow-step">
+                <span>04</span>
+                <h3>AI 先处理</h3>
+                <p>让 AI 做草稿、摘要、检查、方案或代码。</p>
+              </article>
+              <article class="workflow-step">
+                <span>05</span>
+                <h3>人来验收</h3>
+                <p>确认事实、质量、责任、风险和例外。</p>
+              </article>
+              <article class="workflow-step">
+                <span>06</span>
+                <h3>控制边界</h3>
+                <p>明确权限、敏感数据和必须停下的动作。</p>
+              </article>
+              <article class="workflow-step">
+                <span>07</span>
+                <h3>复盘沉淀</h3>
+                <p>把好样例、失败点和新标准变成资产。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section" id="cases" aria-labelledby="cases-title">
+          <div class="section-inner">
+            <div class="section-heading" data-reveal>
+              <div>
+                <p class="kicker">Module 4</p>
+                <h2 id="cases-title">实际岗位案例：旧做法、AI 协同做法、人负责什么</h2>
+              </div>
+              <p>
+                每个案例都贴近校招生入职后的真实任务，并输出一段可以复制改写的任务模板。
+              </p>
+            </div>
+            <div class="case-layout" data-reveal>
+              <div class="case-tabs" id="case-tabs" aria-label="岗位案例选择"></div>
+              <article class="case-output" id="case-output" aria-live="polite"></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section tools-section" id="tools" aria-labelledby="tools-title">
+          <div class="section-inner">
+            <div class="section-heading" data-reveal>
+              <div>
+                <p class="kicker">Interactive</p>
+                <h2 id="tools-title">现场互动：生成一张 AI 协同任务卡</h2>
+              </div>
+              <p>
+                任务卡帮助学员把一个模糊任务整理成目标、输入、AI 先做、人来验收、边界和复用方式。
+              </p>
+            </div>
+            <div class="tools-grid" data-reveal>
+              <article class="tool-panel">
+                <h3>岗位任务拆解器</h3>
+                <p>输入一个本周真实任务，页面会在本地生成可复制的任务卡。</p>
+                <form class="task-form" id="task-card-form">
+                  <label>
+                    角色
+                    <select name="role">
+                      <option>校招生 / 新员工</option>
+                      <option>研发</option>
+                      <option>产品</option>
+                      <option>运营</option>
+                      <option>行政 / 综合</option>
+                      <option>HR / 培训</option>
+                    </select>
+                  </label>
+                  <label>
+                    任务
+                    <input name="task" value="整理本周项目进展，形成给导师看的周报" />
+                  </label>
+                  <label>
+                    目标
+                    <textarea name="goal" rows="3">让导师快速看到我完成了什么、卡在哪里、下周计划是什么、需要什么支持。</textarea>
+                  </label>
+                  <label>
+                    输入材料
+                    <textarea name="material" rows="3">任务记录、会议纪要、代码提交说明、阻塞问题、导师反馈。</textarea>
+                  </label>
+                  <label>
+                    验收标准
+                    <textarea name="standard" rows="3">事实准确，结构清楚，有风险提醒，有下一步动作，不夸大结果。</textarea>
+                  </label>
+                  <label>
+                    边界
+                    <textarea name="boundary" rows="3">不能编造进展，不能替导师做优先级决定，不确定信息必须标注待确认。</textarea>
+                  </label>
+                </form>
+                <div class="task-actions">
+                  <button type="button" id="task-card-generate">生成任务卡</button>
+                  <button class="secondary" type="button" data-copy-target="task-card-output" data-copy-label="复制任务卡">复制任务卡</button>
+                </div>
+              </article>
+              <article class="tool-panel">
+                <h3>AI 协同任务卡</h3>
+                <pre class="task-output" id="task-card-output" tabindex="0"></pre>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section" id="action" aria-labelledby="action-title">
+          <div class="section-inner">
+            <div class="section-heading" data-reveal>
+              <div>
+                <p class="kicker">Action</p>
+                <h2 id="action-title">7 天行动：把课程变成新人工作习惯</h2>
+              </div>
+              <p>
+                不等工具全买齐，也不等能力全准备好。先用一个真实任务训练目标、材料、标准、边界和复盘。
+              </p>
+            </div>
+            <div class="action-grid" data-reveal>
+              <article class="action-card">
+                <h3>学习收益</h3>
+                <ol>
+                  <li>理解 AI 不是搜索框，而是可以先处理、可验收、可复盘的协同对象。</li>
+                  <li>掌握 AI 协同五步：目标、材料、任务、验收、边界。</li>
+                  <li>能解释 Claude Tag、Agent Team、Worktree、Harness Engineering、Loop Engineering 等新工作语言。</li>
+                  <li>能把一个岗位任务拆成小流程，并生成可复用任务卡。</li>
+                </ol>
+              </article>
+              <article class="action-card">
+                <h3>7 天练习计划</h3>
+                <ol id="seven-day-plan"></ol>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>AI Coding 素养课：从会用工具到 AI 协同工作</span>
+        <a href="#top">回到顶部</a>
+      </footer>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

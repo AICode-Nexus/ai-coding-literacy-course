@@ -1,0 +1,135 @@
+.site-shell {
+  min-height: 100vh;
+  overflow-x: clip;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-height: var(--header-height);
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) repeat(2, 44px);
+  align-items: center;
+  gap: 12px;
+  padding: 12px clamp(20px, 4vw, 56px);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.brand img {
+  width: 36px;
+  height: 36px;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: clamp(10px, 2vw, 24px);
+  min-width: 0;
+}
+
+.nav-links a {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+}
+
+.icon-button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.icon-button:hover {
+  border-color: color-mix(in srgb, var(--accent) 48%, var(--border));
+}
+
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.page-section {
+  padding: clamp(64px, 8vw, 112px) clamp(20px, 4vw, 56px);
+}
+
+.section-inner {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(260px, 0.7fr);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: end;
+  margin-bottom: clamp(28px, 4vw, 48px);
+}
+
+.section-heading h2 {
+  margin: 0;
+  max-width: 760px;
+  font-size: clamp(32px, 5vw, 64px);
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1.4vw, 18px);
+}
+
+.kicker {
+  display: inline-block;
+  margin: 0 0 12px;
+  color: var(--accent-2);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 28px clamp(20px, 4vw, 56px);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
+
+body.present-mode .site-header {
+  position: fixed;
+  width: 100%;
+}
+
+body.present-mode .hero {
+  min-height: 100vh;
+}
