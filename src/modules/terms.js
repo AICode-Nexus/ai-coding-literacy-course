@@ -51,6 +51,7 @@ export function setupTerms() {
             class="${term.name === selectedName ? "active" : ""}"
             type="button"
             data-term="${term.name}"
+            data-term-group="${term.group}"
             aria-pressed="${term.name === selectedName ? "true" : "false"}"
           >
             <span>${term.groupLabel}</span>
@@ -95,7 +96,9 @@ export function setupTerms() {
     if (!button) return;
 
     setPressedState(listWrap, button);
-    const term = allTerms.find((item) => item.name === button.dataset.term);
+    const term = allTerms.find(
+      (item) => item.group === button.dataset.termGroup && item.name === button.dataset.term,
+    );
     if (term) detail.innerHTML = renderTerm(term);
   });
 

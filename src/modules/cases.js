@@ -5,6 +5,8 @@ function renderList(items = []) {
 }
 
 function renderCase(item) {
+  if (!item) return "";
+
   return `
     <span class="case-role">${item.role}</span>
     <h3>${item.title}</h3>
@@ -64,7 +66,9 @@ export function setupCases() {
     )
     .join("");
 
-  output.innerHTML = renderCase(caseStudies[0]);
+  if (caseStudies.length > 0) {
+    output.innerHTML = renderCase(caseStudies[0]);
+  }
 
   tabs.addEventListener("click", (event) => {
     const button = event.target.closest("[data-case]");
