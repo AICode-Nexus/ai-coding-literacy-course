@@ -5,11 +5,16 @@ function getFormValue(form, name) {
 }
 
 function getSelectedTemplateId(form) {
-  return getFormValue(form, "template") || taskTemplates[0].id;
+  return getFormValue(form, "template");
 }
 
 function getTemplate(id) {
   return taskTemplates.find((template) => template.id === id) || taskTemplates[0];
+}
+
+function getSelectedTemplate(form) {
+  const id = getSelectedTemplateId(form);
+  return id ? getTemplate(id) : null;
 }
 
 function setInputValue(form, name, value) {
@@ -30,18 +35,44 @@ function numbered(items) {
   return items.map((item, index) => `${index + 1}. ${item}`).join("\n");
 }
 
+function getCheckedValues(form, name) {
+  const fields = form.elements.namedItem(name);
+  if (!fields) return [];
+
+  const controls = typeof fields.length === "number" && !fields.tagName ? Array.from(fields) : [fields];
+  return controls.filter((field) => field.checked).map((field) => field.value.trim()).filter(Boolean);
+}
+
+function getLegacyOutputSections(form) {
+  const outputMap = {
+    思路拆解: "拆出目标、背景、关键问题、缺失材料和待确认判断",
+    执行步骤: "输出按顺序可执行的步骤、负责人、依赖条件和下一步动作",
+    提示词示例: "给出可以直接复用的提示词示例，并标明需要补充的上下文",
+    风险与注意事项: "列出事实不确定、权限边界、口径风险和必须人工确认的事项",
+  };
+  const sections = getCheckedValues(form, "deliverables").map((item) => outputMap[item] || item);
+  return sections.length
+    ? sections
+    : ["拆出目标、材料、执行步骤、风险提醒和需要人工确认的问题"];
+}
+
 function buildTaskCard(form) {
-  const template = getTemplate(getSelectedTemplateId(form));
-  const role = getFormValue(form, "role") || template.role;
-  const task = getFormValue(form, "task") || template.task;
-  const goal = getFormValue(form, "goal") || template.goal;
-  const material = getFormValue(form, "material") || template.material;
-  const standard = getFormValue(form, "standard") || template.standard;
-  const boundary = getFormValue(form, "boundary") || template.boundary;
+  const template = getSelectedTemplate(form);
+  const fallback = template || taskTemplates[0];
+  const role = getFormValue(form, "role") || fallback.role;
+  const task = getFormValue(form, "task") || fallback.task;
+  const goal = getFormValue(form, "goal") || fallback.goal;
+  const material = getFormValue(form, "material") || fallback.material;
+  const standard = getFormValue(form, "standard") || fallback.standard;
+  const boundary = getFormValue(form, "boundary") || fallback.boundary;
+  const outputSections = template ? template.outputSections : getLegacyOutputSections(form);
+  const risk =
+    template?.risk ||
+    "AI 可以先整理结构和初稿，但事实、优先级、承诺时间、敏感信息和最终判断必须由人确认。";
 
   return `AI 协同任务卡
 
-模板：${template.title}
+模板：${template?.title || "自定义任务卡"}
 角色：${role}
 任务：${task}
 目标：${goal}
@@ -56,7 +87,7 @@ AI 先做：
 4. 标出不确定信息和需要人工确认的问题
 
 期望输出：
-${numbered(template.outputSections)}
+${numbered(outputSections)}
 
 我如何验收：
 ${standard}
@@ -65,7 +96,7 @@ ${standard}
 ${boundary}
 
 风险提醒：
-${template.risk}
+${risk}
 
 下次如何复用：
 把本次好输出、返工原因和新增检查项沉淀为模板，下一次先按模板跑预审。`;
