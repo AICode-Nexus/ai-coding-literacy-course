@@ -1,5 +1,9 @@
 import { caseStudies } from "../data/cases.js";
 
+function renderList(items = []) {
+  return items.map((item) => `<li>${item}</li>`).join("");
+}
+
 function renderCase(item) {
   return `
     <span class="case-role">${item.role}</span>
@@ -18,9 +22,24 @@ function renderCase(item) {
         <p>${item.humanRole}</p>
       </div>
     </div>
+    <div class="case-quality">
+      <div>
+        <strong>常见失败点</strong>
+        <ul>
+          ${renderList(item.failures)}
+        </ul>
+      </div>
+      <div>
+        <strong>验收清单</strong>
+        <ul>
+          ${renderList(item.checklist)}
+        </ul>
+      </div>
+    </div>
     <div class="template-box">
       <span>可复用模板</span>
-      <p>${item.template}</p>
+      <p id="case-template-text">${item.template}</p>
+      <button type="button" data-copy-target="case-template-text" data-copy-label="复制提示词">复制提示词</button>
     </div>
   `;
 }
@@ -33,7 +52,12 @@ export function setupCases() {
   tabs.innerHTML = caseStudies
     .map(
       (item, index) => `
-        <button class="${index === 0 ? "active" : ""}" type="button" data-case="${item.id}">
+        <button
+          class="${index === 0 ? "active" : ""}"
+          type="button"
+          data-case="${item.id}"
+          aria-pressed="${index === 0 ? "true" : "false"}"
+        >
           <span>${String(index + 1).padStart(2, "0")}</span>${item.title.split("：")[0]}
         </button>
       `,
@@ -46,7 +70,11 @@ export function setupCases() {
     const button = event.target.closest("[data-case]");
     if (!button) return;
 
-    tabs.querySelectorAll("button").forEach((item) => item.classList.toggle("active", item === button));
+    tabs.querySelectorAll("button").forEach((item) => {
+      const isSelected = item === button;
+      item.classList.toggle("active", isSelected);
+      item.setAttribute("aria-pressed", String(isSelected));
+    });
     const selected = caseStudies.find((item) => item.id === button.dataset.case);
     if (selected) output.innerHTML = renderCase(selected);
   });
