@@ -19,12 +19,11 @@
           <img src="./assets/logo.svg" alt="AI Coding 素养课" width="244" height="48" />
         </a>
         <nav class="nav-links" aria-label="课程导航">
-          <a class="active" href="#top">课程首页</a>
-          <a href="#t-shaped">课程模块</a>
-          <a href="#workflow">学习路径</a>
+          <a class="active" href="#top">课程总览</a>
+          <a href="#agenda">90分钟路径</a>
           <a href="#tools">工具箱</a>
-          <a href="#cases">岗位案例</a>
-          <a href="#action">关于课程</a>
+          <a href="#cases">岗位实战</a>
+          <a href="#training">课后训练</a>
         </nav>
         <div class="header-actions">
           <button class="header-icon" type="button" data-present-toggle aria-label="进入全屏展示" aria-pressed="false">
@@ -92,19 +91,17 @@
               </article>
             </div>
             <div class="hero-actions">
-              <a class="primary-action" href="#tools">
-                开启学习之旅
+              <a class="primary-action" href="#agenda">
+                开始90分钟路径
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                   <path d="M5 12h14"></path>
                   <path d="m13 6 6 6-6 6"></path>
                 </svg>
               </a>
-              <a class="secondary-action" href="./README.md" download>
-                下载课程大纲
+              <a class="secondary-action" href="#tools">
+                生成课堂任务卡
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M12 3v12"></path>
-                  <path d="m7 10 5 5 5-5"></path>
-                  <path d="M5 21h14"></path>
+                  <path d="M13 3 4 14h8l-1 7 9-12h-8z"></path>
                 </svg>
               </a>
             </div>
@@ -187,6 +184,26 @@
                 <rect x="338" y="288" width="152" height="38" rx="8" fill="#ffffff" stroke="#d9e2e2"></rect>
                 <text x="414" y="312" text-anchor="middle" class="svg-label">反馈迭代 / 验证优化</text>
               </svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="page-section agenda-section" id="agenda" aria-labelledby="agenda-title">
+          <div class="section-inner">
+            <div class="section-heading" data-reveal>
+              <div>
+                <p class="kicker">90 Minutes</p>
+                <h2 id="agenda-title">90 分钟路径：从会问问题到能交付任务卡</h2>
+              </div>
+              <p>每一段都有讲解、练习和产出，最终形成新人 AI 协同工作包。</p>
+            </div>
+            <div class="agenda-grid" id="workshop-agenda" aria-label="90 分钟课程路径">
+              <article><span>8 min</span><h3>为什么不是会用工具</h3><p>明确课程目标和最终产出。</p></article>
+              <article><span>15 min</span><h3>AI 协同工作法</h3><p>掌握 Goal 到 Loop 的工作链。</p></article>
+              <article><span>20 min</span><h3>从问题到任务卡</h3><p>把模糊请求改成任务说明。</p></article>
+              <article><span>25 min</span><h3>岗位实战案例</h3><p>拆解七个新人高频场景。</p></article>
+              <article><span>12 min</span><h3>质量验收与边界</h3><p>建立事实、风险、责任检查法。</p></article>
+              <article><span>10 min</span><h3>7 天训练计划</h3><p>带走可复用的工作包。</p></article>
             </div>
           </div>
         </section>
@@ -297,61 +314,50 @@
                     <em>工作方式</em>
                   </article>
                 </div>
-                <div class="library-controls" aria-label="术语卡片翻页">
-                  <span class="dot active"></span>
-                  <span class="dot"></span>
-                  <span class="dot"></span>
-                  <button type="button" aria-label="上一组术语">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"></path></svg>
-                  </button>
-                  <button type="button" aria-label="下一组术语">
-                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6"></path></svg>
-                  </button>
-                </div>
               </article>
 
               <article class="quick-task-panel" aria-labelledby="quick-task-title">
                 <div class="panel-head">
                   <div>
-                    <h3 id="quick-task-title">AI 任务卡片生成器</h3>
-                    <p>输入你的工作任务，生成 AI 协同任务卡</p>
+                    <h3 id="quick-task-title">AI 协同任务卡生成器</h3>
+                    <p>选择课堂模板，生成可复制的完整任务卡。</p>
                   </div>
-                  <a href="#action">使用指南</a>
                 </div>
                 <form class="task-form compact-task-form" id="task-card-form">
+                  <fieldset class="template-options" id="task-template-options" aria-label="选择任务模板"></fieldset>
                   <label>
-                    你的任务描述
-                    <input name="task" value="整理用户反馈，归纳产品需求并输出 PRD 草案" />
+                    角色
+                    <input name="role" />
                   </label>
-                  <input name="goal" type="hidden" value="把模糊任务整理成目标清楚、步骤明确、可验收的工作卡片。" />
-                  <input name="material" type="hidden" value="任务背景、已有资料、会议纪要、数据截图、负责人反馈、相关约束。" />
-                  <input name="standard" type="hidden" value="结论有依据，步骤能执行，风险说清楚，下一步动作明确。" />
-                  <input name="boundary" type="hidden" value="不编造事实，不替负责人做最终决策，不处理未授权的敏感数据。" />
-                  <fieldset class="segmented-field">
-                    <legend>选择场景</legend>
-                    <label><input type="radio" name="role" value="研发" />研发</label>
-                    <label><input type="radio" name="role" value="产品" checked />产品</label>
-                    <label><input type="radio" name="role" value="运营" />运营</label>
-                    <label><input type="radio" name="role" value="设计" />设计</label>
-                    <label><input type="radio" name="role" value="市场" />市场</label>
-                    <label><input type="radio" name="role" value="职能通用" />职能通用</label>
-                  </fieldset>
-                  <fieldset class="check-field">
-                    <legend>期望输出</legend>
-                    <label><input type="checkbox" name="deliverables" value="思路拆解" checked />思路拆解</label>
-                    <label><input type="checkbox" name="deliverables" value="执行步骤" />执行步骤</label>
-                    <label><input type="checkbox" name="deliverables" value="提示词示例" />提示词示例</label>
-                    <label><input type="checkbox" name="deliverables" value="风险与注意事项" />风险与注意事项</label>
-                  </fieldset>
+                  <label>
+                    任务
+                    <input name="task" />
+                  </label>
+                  <label>
+                    目标
+                    <textarea name="goal" rows="2"></textarea>
+                  </label>
+                  <label>
+                    输入材料
+                    <textarea name="material" rows="2"></textarea>
+                  </label>
+                  <label>
+                    验收标准
+                    <textarea name="standard" rows="2"></textarea>
+                  </label>
+                  <label>
+                    边界
+                    <textarea name="boundary" rows="2"></textarea>
+                  </label>
                 </form>
                 <div class="task-actions">
                   <button type="button" id="task-card-generate">
                     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                       <path d="M13 3 4 14h8l-1 7 9-12h-8z"></path>
                     </svg>
-                    生成任务卡片
+                    生成任务卡
                   </button>
-                  <button class="secondary" type="button" data-copy-target="task-card-output" data-copy-label="复制任务卡">复制</button>
+                  <button class="secondary" type="button" data-copy-target="task-card-output" data-copy-label="复制任务卡">复制任务卡</button>
                 </div>
                 <pre class="task-output" id="task-card-output" tabindex="0" hidden></pre>
               </article>
@@ -549,8 +555,8 @@
           <div class="section-inner">
             <div class="section-heading" data-reveal>
               <div>
-                <p class="kicker">Module 4</p>
-                <h2 id="cases-title">实际岗位案例：旧做法、AI 协同做法、人负责什么</h2>
+                <p class="kicker">Practice Cases</p>
+                <h2 id="cases-title">岗位实战：旧做法、AI 协同做法、人负责什么</h2>
               </div>
               <p>
                 每个案例都贴近校招生入职后的真实任务，并输出一段可以复制改写的任务模板。
@@ -563,32 +569,16 @@
           </div>
         </section>
 
-        <section class="page-section" id="action" aria-labelledby="action-title">
+        <section class="page-section training-section" id="training" aria-labelledby="training-title">
           <div class="section-inner">
             <div class="section-heading" data-reveal>
               <div>
-                <p class="kicker">Action</p>
-                <h2 id="action-title">7 天行动：把课程变成新人工作习惯</h2>
+                <p class="kicker">7-Day Training</p>
+                <h2 id="training-title">7 天训练：把课程变成新人工作习惯</h2>
               </div>
-              <p>
-                不等工具全买齐，也不等能力全准备好。先用一个真实任务训练目标、材料、标准、边界和复盘。
-              </p>
+              <p>每天有目标、任务、产出物、检查项和反馈问题，第 7 天形成自己的 AI 协同工作包。</p>
             </div>
-            <div class="action-grid" data-reveal>
-              <article class="action-card">
-                <h3>学习收益</h3>
-                <ol>
-                  <li>理解 AI 不是搜索框，而是可以先处理、可验收、可复盘的协同对象。</li>
-                  <li>掌握 AI 协同五步：目标、材料、任务、验收、边界。</li>
-                  <li>能解释 Claude Tag、Agent Team、Worktree、Harness Engineering、Loop Engineering 等新工作语言。</li>
-                  <li>能把一个岗位任务拆成小流程，并生成可复用任务卡。</li>
-                </ol>
-              </article>
-              <article class="action-card">
-                <h3>7 天练习计划</h3>
-                <ol id="seven-day-plan"></ol>
-              </article>
-            </div>
+            <div class="training-grid" id="seven-day-training" aria-label="7 天训练计划"></div>
           </div>
         </section>
       </main>
