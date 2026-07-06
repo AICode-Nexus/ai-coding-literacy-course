@@ -1,5 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AI Coding 素养课">
-  <rect width="64" height="64" rx="16" fill="#071314"/>
-  <path d="M16 44 28 16h8l12 28h-8l-2.4-6.4H26.2L23.8 44h-7.8Zm12.6-12.8h6.6L32 22.6l-3.4 8.6Z" fill="#2dd4bf"/>
-  <path d="M43 15h7v34h-7z" fill="#f97316"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AI Coding 素养课图标">
+  <defs>
+    <linearGradient id="tile" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071314"/>
+      <stop offset="1" stop-color="#0d2c2d"/>
+    </linearGradient>
+    <linearGradient id="ai" x1="14" y1="14" x2="47" y2="49" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2dd4bf"/>
+      <stop offset="1" stop-color="#0ea5e9"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#tile)"/>
+  <path d="M14 45 27 17h8l13 28h-8l-2.2-5.6H24.2L22 45h-8Zm12.6-12.2h8.8L31 22.4l-4.4 10.4Z" fill="url(#ai)"/>
+  <path d="M47 17h6v28h-6z" fill="#f97316"/>
+  <path d="M52 12v9" stroke="#e8fff8" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="52" cy="50" r="3" fill="#2dd4bf"/>
 </svg>
