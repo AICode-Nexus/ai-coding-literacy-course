@@ -5,8 +5,8 @@ function renderTerm(term) {
 
   return `
     <div class="term-detail__head">
-      <span>${term.groupLabel}</span>
-      <strong>${term.groupDescription}</strong>
+      <span>${term.groupLabel} · ${term.groupDescription}</span>
+      <strong>${term.name}</strong>
     </div>
     <h3>${term.title}</h3>
     <dl>

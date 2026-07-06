@@ -22,24 +22,24 @@ function renderCase(item) {
         <p>${item.humanRole}</p>
       </div>
     </div>
-    <div class="case-quality">
-      <div>
-        <strong>常见失败点</strong>
+    <div class="case-support-grid">
+      <section class="case-list-box">
+        <h4>常见失败点</h4>
         <ul>
           ${renderList(item.failures)}
         </ul>
-      </div>
-      <div>
-        <strong>验收清单</strong>
+      </section>
+      <section class="case-list-box">
+        <h4>验收清单</h4>
         <ul>
           ${renderList(item.checklist)}
         </ul>
-      </div>
+      </section>
     </div>
     <div class="template-box">
-      <span>可复用模板</span>
+      <span>可复制提示词</span>
       <p id="case-template-text">${item.template}</p>
-      <button type="button" data-copy-target="case-template-text" data-copy-label="复制提示词">复制提示词</button>
+      <button class="secondary-button" type="button" data-copy-target="case-template-text" data-copy-label="复制提示词">复制提示词</button>
     </div>
   `;
 }
