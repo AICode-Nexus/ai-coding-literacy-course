@@ -104,28 +104,40 @@ function renderTraining(container) {
     .join("");
 }
 
+function renderLegacyTrainingPlan(container) {
+  container.innerHTML = sevenDayTraining
+    .map((day) => `<li>Day ${day.day}：${day.goal}，完成${day.output}。</li>`)
+    .join("");
+}
+
 export function setupTaskCard() {
   const form = document.getElementById("task-card-form");
   const output = document.getElementById("task-card-output");
   const action = document.getElementById("task-card-generate");
   const templateOptions = document.getElementById("task-template-options");
   const training = document.getElementById("seven-day-training");
-  if (!form || !output || !action || !templateOptions) return;
+  const legacyPlan = document.getElementById("seven-day-plan");
+  if (!form || !output || !action) return;
 
-  renderTemplateOptions(templateOptions, taskTemplates[0].id);
-  applyTemplate(form, taskTemplates[0]);
+  if (templateOptions) {
+    renderTemplateOptions(templateOptions, taskTemplates[0].id);
+    applyTemplate(form, taskTemplates[0]);
+  }
   if (training) renderTraining(training);
+  if (legacyPlan) renderLegacyTrainingPlan(legacyPlan);
 
   const update = () => {
     output.textContent = buildTaskCard(form);
     output.hidden = false;
   };
 
-  templateOptions.addEventListener("change", () => {
-    const template = getTemplate(getSelectedTemplateId(form));
-    applyTemplate(form, template);
-    if (!output.hidden) update();
-  });
+  if (templateOptions) {
+    templateOptions.addEventListener("change", () => {
+      const template = getTemplate(getSelectedTemplateId(form));
+      applyTemplate(form, template);
+      if (!output.hidden) update();
+    });
+  }
 
   action.addEventListener("click", update);
   form.addEventListener("input", () => {
