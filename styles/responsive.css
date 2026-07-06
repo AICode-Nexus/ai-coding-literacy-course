@@ -51,6 +51,11 @@
   .mini-term-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .agenda-grid,
+  .training-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 980px) {
@@ -59,7 +64,7 @@
   .t-model,
   .language-map,
   .case-layout,
-  .action-grid {
+  .case-support-grid {
     grid-template-columns: 1fr;
   }
 
@@ -69,6 +74,13 @@
 
   .term-detail {
     min-height: auto;
+  }
+
+  .case-tabs {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(180px, 1fr);
+    overflow-x: auto;
+    padding-bottom: 4px;
   }
 }
 
@@ -156,6 +168,17 @@
   .segmented-field label,
   .check-field label {
     flex: 1 1 calc(50% - 8px);
+  }
+
+  .template-options,
+  .agenda-grid,
+  .training-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .agenda-grid article,
+  .training-day {
+    min-height: auto;
   }
 
   .section-heading h2 {
