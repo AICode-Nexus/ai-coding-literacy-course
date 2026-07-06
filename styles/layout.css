@@ -75,30 +75,7 @@
 .header-actions {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   white-space: nowrap;
-}
-
-.header-cta {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: var(--radius);
-  padding: 0 18px;
-  font-size: 14px;
-  font-weight: 850;
-}
-
-.header-cta svg {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 .header-icon {
@@ -120,19 +97,6 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-.header-cta--ghost {
-  border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--border));
-  background: var(--surface);
-  color: var(--accent);
-}
-
-.header-cta--primary {
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(0, 143, 148, 0.18);
 }
 
 .icon-button {

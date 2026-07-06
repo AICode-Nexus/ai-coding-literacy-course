@@ -78,7 +78,7 @@
   }
 
   .site-header {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) 44px;
     padding: 10px 14px;
     gap: 8px;
   }
@@ -88,19 +88,12 @@
   }
 
   .header-actions {
-    grid-column: 1;
-    justify-self: stretch;
-    display: grid;
-    grid-template-columns: 1fr 1fr 44px;
-    gap: 8px;
-  }
-
-  .header-cta {
-    padding-inline: 10px;
+    grid-column: 2;
+    justify-self: end;
   }
 
   .nav-links {
-    grid-column: 1;
+    grid-column: 1 / -1;
     gap: 18px;
   }
 
