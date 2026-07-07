@@ -42,6 +42,7 @@ for (const modulePath of [
   "src/main.js",
   "src/modules/cases.js",
   "src/modules/copy.js",
+  "src/modules/nav.js",
   "src/modules/presentMode.js",
   "src/modules/reveal.js",
   "src/modules/taskCard.js",

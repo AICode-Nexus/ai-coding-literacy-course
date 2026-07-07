@@ -155,7 +155,7 @@ test("interactive modules and containers are wired for real controls", async () 
   const main = await read("src/main.js");
   const html = await read("index.html");
 
-  for (const moduleName of ["theme", "presentMode", "reveal", "terms", "cases", "taskCard", "copy"]) {
+  for (const moduleName of ["theme", "nav", "presentMode", "reveal", "terms", "cases", "taskCard", "copy"]) {
     assert.match(main, new RegExp(`from "\\./modules/${moduleName}\\.js"`));
   }
 
