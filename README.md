@@ -60,7 +60,7 @@ npm run preview
 
 ```bash
 COURSE_BASE=/ai-coding-literacy-course/ npm run build
-npm run preview
+COURSE_BASE=/ai-coding-literacy-course/ npm run preview
 ```
 
 ## 内容维护

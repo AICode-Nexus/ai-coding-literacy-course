@@ -10,8 +10,8 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
   outDir: "../dist",
-  publicDir: "../assets",
   head: [
+    ["link", { rel: "icon", type: "image/svg+xml", href: `${base}favicon.svg` }],
     ["meta", { name: "theme-color", content: "#061319" }],
     ["meta", { name: "color-scheme", content: "light dark" }],
   ],

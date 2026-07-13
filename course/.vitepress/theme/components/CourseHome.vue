@@ -25,7 +25,7 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
         <div class="hero-grid" aria-hidden="true"></div>
         <div class="hero-copy">
           <p class="home-eyebrow">AI COLLABORATION · CAMPUS LEARNING 2026</p>
-          <h1>把 AI 从回答者，<br><em>变成可被驾驭的协作者</em></h1>
+          <h1>把 AI 从回答者，<br><em>变成可被驾驭的<br>协作者</em></h1>
           <p>{{ courseMeta.subtitle }}。面向 {{ courseMeta.audienceSize }} 人大课，也为课后独立学习保留完整细节。</p>
           <div class="hero-actions">
             <a class="action-primary" :href="withBase('/guide/00-start')">开始学习 <span>→</span></a>

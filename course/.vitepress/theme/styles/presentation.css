@@ -485,9 +485,14 @@ body:has(.present-deck) {
 
 /* Rings */
 .visual-rings { min-height: 27em; }
-.ring-item { position: absolute; display: flex; flex-direction: column; justify-content: center; width: calc(23em - var(--i) * 3.6em); height: calc(23em - var(--i) * 3.6em); padding: 1.2em; border: 1px solid rgba(66,228,209, calc(.22 + var(--i) * .1)); border-radius: 50%; }
-.ring-item strong { align-self: flex-end; color: var(--course-cyan); font-size: .82em; }
-.ring-item small { align-self: flex-end; color: #79949b; font-size: .64em; }
+.ring-item { position: absolute; width: calc(23em - var(--i) * 3.6em); height: calc(23em - var(--i) * 3.6em); border: 1px solid rgba(66,228,209, calc(.22 + var(--i) * .1)); border-radius: 50%; }
+.ring-label { position:absolute; z-index:3; display:flex; flex-direction:column; width:8.8em; padding:.65em .8em; border:1px solid rgba(66,228,209,.28); background:rgba(5,24,30,.94); box-shadow:0 .5em 2em rgba(0,0,0,.24); }
+.ring-label strong { color: var(--course-cyan); font-size: .76em; }
+.ring-label small { margin-top:.3em; color: #91a8ae; font-size: .58em; line-height:1.35; }
+.ring-item:nth-child(1) .ring-label { top:-.8em; left:50%; transform:translate(-50%,-100%); text-align:center; }
+.ring-item:nth-child(2) .ring-label { top:50%; right:-9.5em; transform:translateY(-50%); }
+.ring-item:nth-child(3) .ring-label { bottom:-.8em; left:50%; transform:translate(-50%,100%); text-align:center; }
+.ring-item:nth-child(4) .ring-label { top:50%; left:-9.5em; transform:translateY(-50%); text-align:right; }
 .ring-core { position: absolute; display: grid; place-items: center; width: 6em; height: 6em; color: var(--course-ink-950); background: var(--course-orange); border-radius: 50%; font: 900 .78em/1 var(--course-display); letter-spacing: .08em; }
 
 /* Signal */

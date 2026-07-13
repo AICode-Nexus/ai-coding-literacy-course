@@ -114,7 +114,7 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
 
     <template v-else-if="visual.type === 'rings'">
       <div v-for="(item, index) in visual.items" :key="item.name" class="ring-item" :style="{ '--i': index }">
-        <strong>{{ item.name }}</strong><small>{{ item.note }}</small>
+        <div class="ring-label"><strong>{{ item.name }}</strong><small>{{ item.note }}</small></div>
       </div>
       <div class="ring-core">RESULT</div>
     </template>

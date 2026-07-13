@@ -136,6 +136,8 @@ test("VitePress routes and dual layouts exist", async () => {
     "course/guide/06-quality.md",
     "course/guide/07-practice.md",
     "course/appendix/tool-radar.md",
+    "course/public/logo.svg",
+    "course/public/favicon.svg",
     "course/.vitepress/theme/components/CourseHome.vue",
     "course/.vitepress/theme/components/PresentDeck.vue",
   ]) {
