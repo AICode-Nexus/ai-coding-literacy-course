@@ -1,0 +1,66 @@
+:root {
+  --course-ink-950: #061319;
+  --course-ink-900: #0a1c23;
+  --course-ink-800: #102a33;
+  --course-paper: #f4f0e7;
+  --course-paper-deep: #e7e1d4;
+  --course-cyan: #42e4d1;
+  --course-blue: #55a8ff;
+  --course-orange: #ff7a3d;
+  --course-yellow: #f6d365;
+  --course-muted: #88a1a9;
+  --course-line: rgba(117, 224, 216, 0.2);
+  --course-shadow: 0 24px 80px rgba(0, 18, 24, 0.16);
+  --course-display: "Avenir Next Condensed", "DIN Condensed", "Arial Narrow", sans-serif;
+  --course-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+
+  --vp-c-brand-1: #0b7f78;
+  --vp-c-brand-2: #096c67;
+  --vp-c-brand-3: #075a56;
+  --vp-c-brand-soft: rgba(66, 228, 209, 0.15);
+  --vp-font-family-base: var(--course-sans);
+  --vp-font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --vp-home-hero-name-color: #08766f;
+  --vp-home-hero-name-background: none;
+}
+
+.dark {
+  --vp-c-bg: var(--course-ink-950);
+  --vp-c-bg-alt: var(--course-ink-900);
+  --vp-c-bg-elv: var(--course-ink-800);
+  --vp-c-bg-soft: rgba(16, 42, 51, 0.72);
+  --vp-c-text-1: var(--course-paper);
+  --vp-c-text-2: #aac0c6;
+  --vp-c-text-3: #718b93;
+  --vp-c-divider: rgba(117, 224, 216, 0.14);
+  --vp-c-brand-1: var(--course-cyan);
+  --vp-c-brand-2: #77efe0;
+  --vp-c-brand-3: #a5f7ec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
