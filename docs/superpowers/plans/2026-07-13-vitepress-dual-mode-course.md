@@ -280,7 +280,7 @@ export default defineConfig({
   description: "面向校招生的 AI 协同方法论课程与 16:9 讲师模式",
   base,
   cleanUrls: true,
-  outDir: "../../dist",
+  outDir: "../dist",
   lastUpdated: true,
   themeConfig: {
     logo: "/logo.svg",
@@ -758,4 +758,3 @@ git commit -m "test: verify course in docs and lecture modes"
 - Placeholder scan: no `TBD`, `TODO`, “implement later”, or unspecified error-handling instruction remains.
 - Interface consistency: data exports named in Task 1 are produced in Task 3 and consumed by Tasks 4–6; routes in Task 2 match route assertions and README instructions; `dist/` is consistent across config, CI, and QA.
 - Risk control: the plan uses the existing clean worktree, leaves dirty `main` untouched, avoids remote runtime assets, and defers legacy deletion until the VitePress build is green.
-

@@ -1,11 +1,16 @@
 {
   "name": "ai-coding-literacy-course",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node server.mjs",
-    "build": "node scripts/build-site.mjs",
+    "dev": "vitepress dev course --host 0.0.0.0",
+    "build": "vitepress build course",
+    "preview": "vitepress preview course --host 0.0.0.0",
     "test": "node --test"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4",
+    "vue": "3.5.39"
   }
 }
