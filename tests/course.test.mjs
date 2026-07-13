@@ -1,34 +1,227 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
+import path from "node:path";
 import { test } from "node:test";
 
-const read = (path) => readFile(path, "utf8");
+const read = (file) => readFile(file, "utf8");
 
-test("lecture agenda is 80 minutes plus 15 minutes exchange", async () => {
+const expectedNodes = [
+  ["t-shaped", "AI 时代的 T 型人才", 8, "/guide/01-t-shaped"],
+  ["collaboration-shift", "从工具使用到人机协同", 4, "/guide/02-collaboration-shift"],
+  ["ai-landscape", "AI 基础、模型与工具全景", 12, "/guide/03-ai-landscape"],
+  ["method", "AI 协同七步法", 10, "/guide/04-method"],
+  ["context", "Context：组织正确的信息", 9, "/guide/05-context"],
+  ["agent", "Agent：从回答走向行动", 12, "/guide/06-agent"],
+  ["quality", "质量、安全与人的责任", 11, "/guide/07-quality"],
+  ["workflow", "从一次提效到流程重构", 8, "/guide/08-workflow"],
+  ["transfer", "岗位迁移与行动计划", 6, "/guide/09-transfer"],
+];
+
+const expectedScenarioIds = [
+  "t-shaped-adjacent-loop",
+  "shift-answer-to-system",
+  "landscape-model-tool-choice",
+  "method-vague-request",
+  "context-signal-over-volume",
+  "agent-orchestration-choice",
+  "quality-delivery-confidence",
+  "workflow-reuse-or-restart",
+  "transfer-first-small-loop",
+];
+
+const expectedToolCategoryIds = [
+  "general-assistant",
+  "deep-research",
+  "coding-agent",
+  "agent-workflow",
+  "multimodal-creation",
+  "knowledge-connection",
+  "capability-reuse",
+];
+
+const requiredCoreConceptIds = [
+  "goal",
+  "context",
+  "prompt",
+  "output",
+  "eval",
+  "guardrails",
+  "loop",
+  "tool",
+  "agent",
+];
+
+async function listCourseSourceFiles(directory = "course") {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      if (fullPath === path.join("course", ".vitepress", "cache")) continue;
+      files.push(...await listCourseSourceFiles(fullPath));
+      continue;
+    }
+    if (/\.(?:css|js|md|mts|ts|vue)$/.test(entry.name)) files.push(fullPath);
+  }
+
+  return files;
+}
+
+test("course metadata preserves the approved nine-node 80 plus 15 contract", async () => {
   const { courseMeta, lectureSections } = await import("../course/.vitepress/data/course.js");
 
-  assert.equal(lectureSections.reduce((sum, section) => sum + section.minutes, 0), 80);
+  assert.equal(courseMeta.title, "AI 协同方法论：从“会用 AI”到“善用 AI”");
+  assert.equal(courseMeta.teachingMinutes, 80);
   assert.equal(courseMeta.exchangeMinutes, 15);
   assert.equal(courseMeta.audienceSize, 1050);
   assert.equal(courseMeta.stageAspect, "16:9");
+  assert.equal(lectureSections.reduce((sum, item) => sum + item.minutes, 0), 80);
+  assert.deepEqual(
+    lectureSections.map((item) => [item.id, item.title, item.minutes, item.guide]),
+    expectedNodes,
+  );
 });
 
-test("lecture scenes cover the complete visual teaching language", async () => {
-  const { lectureScenes } = await import("../course/.vitepress/data/scenes.js");
-  const kinds = new Set(lectureScenes.map((scene) => scene.kind));
-  const ids = new Set(lectureScenes.map((scene) => scene.id));
+test("scenario and template registries are normalized", async () => {
+  const { scenarios } = await import("../course/.vitepress/data/scenarios.js");
+  const { templates } = await import("../course/.vitepress/data/templates.js");
 
-  assert.ok(lectureScenes.length >= 28);
-  assert.equal(ids.size, lectureScenes.length);
+  assert.deepEqual(scenarios.map((item) => item.id), expectedScenarioIds);
+  assert.deepEqual(
+    scenarios.map((item) => item.sectionId),
+    expectedNodes.map(([id]) => id),
+  );
+  assert.deepEqual(
+    templates.map((item) => item.id),
+    ["task-card", "context-checklist", "eval-checklist", "risk-checklist", "retrospective"],
+  );
 
-  for (const kind of ["thesis", "compare", "flow", "architecture", "case", "audience", "checklist"]) {
-    assert.ok(kinds.has(kind), `missing scene kind ${kind}`);
+  for (const scenario of scenarios) {
+    assert.ok(["场景演示", "应用示例"].includes(scenario.label));
+    assert.ok(scenario.question.length >= 12);
+    assert.ok(scenario.ordinary.length >= 12);
+    assert.ok(scenario.collaborative.length >= 12);
+    assert.ok(scenario.roleDirections.length >= 4);
+    assert.ok(scenario.conceptIds.length >= 2);
+    assert.ok(scenario.toolCategoryIds.length >= 1);
+    assert.ok(scenario.checkpoints.length >= 2);
+    assert.ok(scenario.takeaway.length >= 16);
   }
+
+  for (const template of templates) {
+    assert.ok(template.title.length >= 4);
+    assert.ok(template.purpose.length >= 12);
+    assert.ok(template.fields.length >= 3);
+    assert.ok(template.copyText.length >= 30);
+    assert.ok(template.relatedNodeIds.length >= 1);
+  }
+});
+
+test("shared references resolve across scenario concept and tool registries", async () => {
+  const { conceptById } = await import("../course/.vitepress/data/concepts.js");
+  const { scenarioById, scenarios } = await import("../course/.vitepress/data/scenarios.js");
+  const { toolCategoryById } = await import("../course/.vitepress/data/tools.js");
+
+  for (const id of expectedScenarioIds) assert.ok(scenarioById[id], "missing scenario " + id);
+  for (const scenario of scenarios) {
+    for (const id of scenario.conceptIds) assert.ok(conceptById[id], "missing concept " + id);
+    for (const id of scenario.toolCategoryIds) assert.ok(toolCategoryById[id], "missing tool category " + id);
+  }
+});
+
+test("tool catalog uses capability categories and explicit freshness metadata", async () => {
+  const { toolCategories, toolEntryStatus } = await import("../course/.vitepress/data/tools.js");
+
+  assert.deepEqual(toolCategories.map((item) => item.id), expectedToolCategoryIds);
+  for (const category of toolCategories) {
+    assert.ok(category.purpose.length >= 12);
+    assert.ok(category.selectionCriteria.length >= 3);
+    assert.ok(category.risks.length >= 2);
+    assert.ok(category.representatives.length >= 1);
+    for (const entry of category.representatives) {
+      assert.match(entry.officialUrl, /^https:\/\//);
+      assert.match(entry.verifiedAt, /^2026-07-13$/);
+      assert.equal(entry.reviewDays, category.reviewDays);
+      assert.equal(toolEntryStatus(entry, new Date("2026-07-13T00:00:00Z")), "已核验");
+      assert.equal(toolEntryStatus(entry, new Date("2026-10-20T00:00:00Z")), "待重新核验");
+    }
+  }
+});
+
+test("concepts have definitions boundaries maturity and shared references", async () => {
+  const { boundaryComparisons, concepts } = await import("../course/.vitepress/data/concepts.js");
+  const ids = new Set(concepts.map((concept) => concept.id));
+
+  for (const id of requiredCoreConceptIds) assert.ok(ids.has(id), "missing core concept " + id);
+  for (const concept of concepts) {
+    assert.ok(concept.definition.length >= 20);
+    assert.ok(concept.solves.length >= 12);
+    assert.ok(concept.notFor.length >= 12);
+    assert.ok(["core", "advanced", "frontier"].includes(concept.level));
+    assert.ok(concept.nodeIds.length >= 1);
+    assert.ok(concept.scenarioIds.length >= 1);
+    assert.ok(concept.sourceIds.length >= 1);
+  }
+
+  assert.deepEqual(boundaryComparisons.map((item) => item.id), [
+    "prompt-context-harness-loop",
+    "mcp-tool-agent",
+    "single-subagent-team",
+    "rag-living-knowledge",
+  ]);
+});
+
+test("core concept reuse covers panorama and scenario scenes", async () => {
+  const { lectureScenes } = await import("../course/.vitepress/data/scenes.js");
+  const panorama = lectureScenes.find((scene) => scene.id === "concept-panorama");
+
+  assert.ok(panorama);
+  for (const id of requiredCoreConceptIds) {
+    assert.ok(panorama.conceptIds.includes(id), "panorama missing " + id);
+    assert.ok(
+      lectureScenes.filter((scene) => scene.conceptIds.includes(id)).length >= 2,
+      id + " must appear in panorama and a later scene",
+    );
+  }
+});
+
+test("lecture contract contains 32 generic scenes across all nine nodes", async () => {
+  const { conceptById } = await import("../course/.vitepress/data/concepts.js");
+  const { lectureScenes } = await import("../course/.vitepress/data/scenes.js");
+  const { scenarioById } = await import("../course/.vitepress/data/scenarios.js");
+  const { toolCategoryById } = await import("../course/.vitepress/data/tools.js");
+
+  const ids = new Set(lectureScenes.map((scene) => scene.id));
+  const kinds = new Set(lectureScenes.map((scene) => scene.kind));
+  const requiredKinds = ["thesis", "compare", "flow", "architecture", "audience", "demo", "checklist", "scenario"];
+  const noteFields = ["purpose", "substitutions", "optionalQuestion", "boundary", "advanced"];
+
+  assert.equal(lectureScenes.length, 32);
+  assert.equal(ids.size, 32);
+  assert.deepEqual(
+    new Set(lectureScenes.map((item) => item.section)),
+    new Set(expectedNodes.map(([id]) => id)),
+  );
+  for (const kind of requiredKinds) assert.ok(kinds.has(kind), "missing scene kind " + kind);
+  assert.ok(!lectureScenes.some((item) => item.kind === "case"));
+  assert.ok(!lectureScenes.some((item) => /真实案例|CASE THEATRE/i.test(JSON.stringify(item))));
 
   for (const scene of lectureScenes) {
     assert.ok(scene.title.length >= 4);
-    assert.ok(scene.section);
-    assert.ok(scene.speakerNote.length >= 8);
+    assert.ok(scene.body.length >= 12);
+    assert.ok(scene.takeaway.length >= 12);
+    assert.ok(expectedNodes.some(([id]) => id === scene.section));
+    assert.ok(Array.isArray(scene.conceptIds));
+    assert.ok(Array.isArray(scene.toolCategoryIds));
+    assert.ok(scene.visual && scene.visual.type);
+    if (scene.scenarioId) assert.ok(scenarioById[scene.scenarioId], "missing scenario " + scene.scenarioId);
+    for (const id of scene.conceptIds) assert.ok(conceptById[id], "missing concept " + id);
+    for (const id of scene.toolCategoryIds) assert.ok(toolCategoryById[id], "missing tool category " + id);
+    for (const field of noteFields) {
+      assert.ok(scene.notes[field], scene.id + " missing notes." + field);
+    }
+    assert.ok(Array.isArray(scene.notes.substitutions));
   }
 });
 
@@ -41,8 +234,10 @@ test("presentation navigation is deterministic", async () => {
   assert.equal(sceneFromSearch("?scene=oops", 30), 0);
   assert.equal(searchWithScene("?mode=teacher", 2), "?mode=teacher&scene=3");
   assert.equal(keyToAction("ArrowRight"), "next");
+  assert.equal(keyToAction("PageDown"), "next");
   assert.equal(keyToAction(" "), "next");
   assert.equal(keyToAction("ArrowLeft"), "previous");
+  assert.equal(keyToAction("PageUp"), "previous");
   assert.equal(keyToAction("Home"), "first");
   assert.equal(keyToAction("End"), "last");
   assert.equal(keyToAction("f"), "fullscreen");
@@ -50,104 +245,82 @@ test("presentation navigation is deterministic", async () => {
   assert.equal(keyToAction("x"), null);
 });
 
-test("concepts and boundaries are stable and beginner-first", async () => {
-  const { boundaryComparisons, concepts } = await import("../course/.vitepress/data/concepts.js");
-  const names = new Set(concepts.map((concept) => concept.name));
-
-  for (const name of ["Context Engineering", "Agent Loop", "Harness Engineering", "Evals", "Skills", "MCP", "Prompt Injection"]) {
-    assert.ok(names.has(name), `missing ${name}`);
-  }
-
-  for (const concept of concepts) {
-    assert.ok(concept.plain.length >= 20);
-    assert.ok(concept.example.length >= 20);
-    assert.ok(["core", "advanced", "frontier"].includes(concept.level));
-    assert.ok(concept.sourceIds.length >= 1);
-  }
-
-  assert.deepEqual(boundaryComparisons.map((item) => item.id), [
-    "prompt-context-harness-loop",
-    "mcp-tool-agent",
-    "single-subagent-team",
-    "rag-living-knowledge",
-  ]);
-});
-
-test("case theatre contains evidence, artifacts, checkpoints, and transfer lessons", async () => {
-  const { courseCases } = await import("../course/.vitepress/data/cases.js");
-
-  assert.ok(courseCases.length >= 7);
-  assert.equal(courseCases.filter((item) => item.origin === "internal").length, 3);
-
-  for (const item of courseCases) {
-    assert.ok(item.context.length >= 20);
-    assert.ok(item.moves.length >= 3);
-    assert.ok(item.artifacts.length >= 2);
-    assert.ok(item.checkpoints.length >= 2);
-    assert.ok(item.transfer.length >= 20);
-    assert.ok(item.sourceIds.length >= 1);
-  }
-});
-
-test("source registry separates stable sources from dynamic tool entries", async () => {
+test("source registry separates stable dynamic and internal evidence", async () => {
   const { sources } = await import("../course/.vitepress/data/sources.js");
 
   for (const source of sources) {
     assert.match(source.verifiedAt, /^2026-07-13$/);
     assert.ok(["stable", "dynamic", "internal"].includes(source.stability));
-    assert.ok(source.title && source.url);
+    assert.ok(source.title && source.url && source.description);
   }
 
-  assert.ok(sources.some((source) => source.id === "anthropic-context"));
-  assert.ok(sources.some((source) => source.id === "openai-evals"));
-  assert.ok(sources.some((source) => source.id === "mcp-architecture"));
+  for (const id of ["anthropic-context", "openai-agents", "openai-evals", "openai-sandboxes", "mcp-architecture", "claude-agent-teams", "vitepress"]) {
+    assert.ok(sources.some((source) => source.id === id), "missing source " + id);
+  }
 });
 
-test("task card generator returns a complete collaboration contract", async () => {
+test("task card generator returns the shared seven-field collaboration contract", async () => {
   const { buildTaskCard } = await import("../course/.vitepress/data/task-card.js");
   const card = buildTaskCard({
-    task: "把需求说明预审成待确认问题",
-    audience: "产品经理和导师",
-    materials: "需求原文、历史讨论和现有流程",
-    output: "问题清单、验收标准和风险",
-    checks: "每个结论有原文依据",
-    boundaries: "不得把讨论写成已确认事实",
+    task: "把一项模糊要求整理成待确认问题",
+    audience: "任务责任人与协作者",
+    materials: "原始要求、已有材料、历史约束",
+    actions: "先找缺口，再整理问题，最后形成可验收清单",
+    output: "问题清单、来源与待确认项",
+    checks: "每个判断都有来源，缺失内容显式标记",
+    boundaries: "不得把讨论内容写成已确认事实",
   });
 
-  assert.match(card, /目标/);
-  assert.match(card, /材料/);
-  assert.match(card, /交付物/);
-  assert.match(card, /验收/);
-  assert.match(card, /边界/);
-  assert.match(card, /产品经理和导师/);
+  for (const label of ["目标", "使用者或责任人", "材料与来源", "动作与顺序", "交付物与格式", "验收标准", "权限、边界与停止条件"]) {
+    assert.match(card, new RegExp(label));
+  }
 });
 
-test("VitePress routes and dual layouts exist", async () => {
-  for (const file of [
+test("VitePress routes mirror the nine-node lecture and reference structure", async () => {
+  const files = [
     "course/index.md",
     "course/present.md",
     "course/sources.md",
     "course/guide/00-start.md",
-    "course/guide/01-shift.md",
-    "course/guide/02-collaboration.md",
-    "course/guide/03-context.md",
-    "course/guide/04-agent-system.md",
-    "course/guide/05-cases.md",
-    "course/guide/06-quality.md",
-    "course/guide/07-practice.md",
+    "course/guide/01-t-shaped.md",
+    "course/guide/02-collaboration-shift.md",
+    "course/guide/03-ai-landscape.md",
+    "course/guide/04-method.md",
+    "course/guide/05-context.md",
+    "course/guide/06-agent.md",
+    "course/guide/07-quality.md",
+    "course/guide/08-workflow.md",
+    "course/guide/09-transfer.md",
+    "course/appendix/glossary.md",
     "course/appendix/tool-radar.md",
+    "course/appendix/templates.md",
     "course/public/logo.svg",
     "course/public/favicon.svg",
     "course/.vitepress/theme/components/CourseHome.vue",
     "course/.vitepress/theme/components/PresentDeck.vue",
-  ]) {
-    await access(file);
+  ];
+
+  for (const file of files) await access(file);
+
+  const chapterHeadings = [
+    "## 本章结论",
+    "## 通用工作场景",
+    "## 概念与关系",
+    "## 知识详解",
+    "## 工具与选择方法",
+    "## 常见误区与边界",
+    "## 岗位迁移",
+    "## 本章练习",
+    "## 来源与延伸阅读",
+  ];
+  for (const [, , , guide] of expectedNodes) {
+    const chapter = await read("course" + guide + ".md");
+    for (const heading of chapterHeadings) assert.match(chapter, new RegExp(heading));
   }
 
   const home = await read("course/index.md");
   const present = await read("course/present.md");
   const deck = await read("course/.vitepress/theme/components/PresentDeck.vue");
-
   assert.match(home, /layout: course-home/);
   assert.match(present, /layout: presentation/);
   assert.match(deck, /requestFullscreen/);
@@ -155,12 +328,34 @@ test("VitePress routes and dual layouts exist", async () => {
   assert.match(deck, /aria-live/);
 });
 
-test("project documentation and CI describe the VitePress teaching workflow", async () => {
+test("course source retires unsupported case framing and stale labels", async () => {
+  const forbiddenCoursePhrases = [
+    "真实案例剧场",
+    "CASE THEATRE",
+    "7 个真实案例",
+    'kind: "case"',
+    "Kooky",
+    "Claude Tag",
+  ];
+  const files = await listCourseSourceFiles();
+
+  for (const file of files) {
+    const source = await read(file);
+    for (const phrase of forbiddenCoursePhrases) {
+      assert.ok(!source.includes(phrase), file + " contains forbidden phrase: " + phrase);
+    }
+  }
+});
+
+test("project documentation describes the approved teaching workflow", async () => {
   const readme = await read("README.md");
   const workflow = await read(".github/workflows/package-and-deploy.yml");
 
+  assert.match(readme, /AI 协同方法论/);
+  assert.match(readme, /9 个课程节点/);
   assert.match(readme, /80 分钟授课/);
   assert.match(readme, /15 分钟交流/);
+  assert.match(readme, /32 个讲台场景/);
   assert.match(readme, /1920×1080/);
   assert.match(readme, /讲师模式/);
   assert.match(readme, /npm run preview/);
@@ -169,8 +364,8 @@ test("project documentation and CI describe the VitePress teaching workflow", as
   assert.match(workflow, /actions\/upload-pages-artifact@v3/);
 });
 
-test("legacy static-site runtime is retired after migration", async () => {
-  for (const path of ["index.html", "server.mjs", "styles.css", "styles", "src", "scripts/build-site.mjs", "tests/site.test.mjs"]) {
-    await assert.rejects(access(path), `legacy path should be removed: ${path}`);
+test("legacy static-site runtime remains retired", async () => {
+  for (const legacyPath of ["index.html", "server.mjs", "styles.css", "styles", "src", "scripts/build-site.mjs", "tests/site.test.mjs"]) {
+    await assert.rejects(access(legacyPath), "legacy path should be removed: " + legacyPath);
   }
 });
