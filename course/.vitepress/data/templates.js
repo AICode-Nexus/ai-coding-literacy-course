@@ -1,0 +1,86 @@
+const taskCardFields = ["目标", "使用者或责任人", "材料与来源", "动作与顺序", "交付物与格式", "验收标准", "权限、边界与停止条件"];
+
+export const templates = [
+  {
+    id: "task-card",
+    title: "AI 协同任务卡",
+    purpose: "把模糊要求整理成人与 AI 都能执行和检查的一份协同契约。",
+    fields: taskCardFields,
+    copyText: [
+      "# AI 协同任务卡",
+      "## 目标",
+      "## 使用者或责任人",
+      "## 材料与来源",
+      "## 动作与顺序",
+      "## 交付物与格式",
+      "## 验收标准",
+      "## 权限、边界与停止条件",
+    ].join("\n"),
+    relatedNodeIds: ["method", "transfer"],
+  },
+  {
+    id: "context-checklist",
+    title: "高信号材料清单",
+    purpose: "在开始协作前区分权威事实、任务材料、参考样例、历史讨论与信息缺口。",
+    fields: ["权威来源", "当前任务材料", "合格样例", "历史决策", "冲突与缺口", "按需检索入口"],
+    copyText: [
+      "# 高信号材料清单",
+      "- 权威来源：",
+      "- 当前任务材料：",
+      "- 合格样例：",
+      "- 历史决策：",
+      "- 冲突与缺口：",
+      "- 按需检索入口：",
+    ].join("\n"),
+    relatedNodeIds: ["ai-landscape", "context"],
+  },
+  {
+    id: "eval-checklist",
+    title: "三层验收清单",
+    purpose: "把便宜稳定的检查、AI 语义检查和责任人确认放进同一条交付链。",
+    fields: ["确定性检查", "AI 语义检查", "责任人确认", "证据与来源", "失败处置"],
+    copyText: [
+      "# 三层验收清单",
+      "- 确定性检查：格式、规则、计算、测试是否通过？",
+      "- AI 语义检查：逻辑、覆盖、矛盾和风险是否被检查？",
+      "- 责任人确认：哪些关键判断必须由人签字？",
+      "- 证据与来源：每项重要结论能否追溯？",
+      "- 失败处置：不通过时停止、返工还是升级？",
+    ].join("\n"),
+    relatedNodeIds: ["quality", "workflow"],
+  },
+  {
+    id: "risk-checklist",
+    title: "权限与风险清单",
+    purpose: "在 AI 采取行动前明确数据边界、权限范围、审批点、停止条件和回滚方式。",
+    fields: ["数据敏感度", "工具权限", "外部副作用", "人工审批点", "预算与停止条件", "回滚方案"],
+    copyText: [
+      "# 权限与风险清单",
+      "- 数据敏感度：",
+      "- 工具权限：",
+      "- 外部副作用：",
+      "- 人工审批点：",
+      "- 预算与停止条件：",
+      "- 回滚方案：",
+    ].join("\n"),
+    relatedNodeIds: ["agent", "quality"],
+  },
+  {
+    id: "retrospective",
+    title: "复盘与沉淀模板",
+    purpose: "把一次协作中的有效做法、失败信号和人工判断沉淀为下一次可复用资产。",
+    fields: ["目标与结果", "有效上下文", "失败与返工", "人工判断", "可沉淀资产", "下一轮流程调整"],
+    copyText: [
+      "# 复盘与沉淀",
+      "- 目标与结果：",
+      "- 哪些上下文真正有效：",
+      "- 哪一步失败或返工：",
+      "- 哪些判断必须由人完成：",
+      "- 可以沉淀为模板、规则、清单、脚本或 Skill 的内容：",
+      "- 下一轮要删除、合并、重排或自动化的步骤：",
+    ].join("\n"),
+    relatedNodeIds: ["workflow", "transfer"],
+  },
+];
+
+export const templateById = Object.fromEntries(templates.map((template) => [template.id, template]));

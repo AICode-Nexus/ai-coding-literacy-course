@@ -83,7 +83,7 @@ test("course metadata preserves the approved nine-node 80 plus 15 contract", asy
   );
 });
 
-test("scenario and template registries are normalized", async () => {
+test("scenario and template registry is normalized", async () => {
   const { scenarios } = await import("../course/.vitepress/data/scenarios.js");
   const { templates } = await import("../course/.vitepress/data/templates.js");
 
@@ -245,7 +245,7 @@ test("presentation navigation is deterministic", async () => {
   assert.equal(keyToAction("x"), null);
 });
 
-test("source registry separates stable dynamic and internal evidence", async () => {
+test("source evidence separates stable dynamic and internal material", async () => {
   const { sources } = await import("../course/.vitepress/data/sources.js");
 
   for (const source of sources) {
@@ -276,7 +276,7 @@ test("task card generator returns the shared seven-field collaboration contract"
   }
 });
 
-test("VitePress routes mirror the nine-node lecture and reference structure", async () => {
+test("VitePress routes mirror the approved lecture and reference structure", async () => {
   const files = [
     "course/index.md",
     "course/present.md",
