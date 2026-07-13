@@ -1,5 +1,7 @@
 # AI 协同方法论双模式课程站设计规格
 
+> **已部分替代：** 2026-07-13 经用户确认的课程目标、章节结构、案例策略、教材目录与内容验收要求，改由 [`2026-07-13-ai-collaboration-scenario-course-restructure-design.md`](./2026-07-13-ai-collaboration-scenario-course-restructure-design.md) 约束。本文件仅继续提供 VitePress 双模式架构、16:9 舞台、离线能力和基础交互设计；冲突内容以新规格为准。
+
 ## 背景
 
 课程位于校招生 AI 学习日的中段：上午先建立通用人工智能与公司技术认知，本课程负责把认知转成可复用的工作方法，后续再进入 Kooky AI Coding 实操。授课时段为 80 分钟讲授与 15 分钟交流，现场约 1050 人，主屏按 16:9 信号输出。
@@ -202,4 +204,3 @@ Vue 组件放在 `course/.vitepress/theme/components/`：
 - 《规范驱动开发全链路实践与Skill沉淀技巧》
 - 《AI驱动的效果评测与接口自动化》
 - 《AI原生软件开发全生命周期业务实践》
-
