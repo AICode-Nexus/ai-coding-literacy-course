@@ -1,0 +1,143 @@
+export const courseMeta = {
+  title: "AI 协同方法论",
+  subtitle: "从会用 AI，到把 AI 组织成一套可验收的工作系统",
+  audience: "具备对话式 AI 基础的校招生",
+  audienceSize: 1050,
+  teachingMinutes: 80,
+  exchangeMinutes: 15,
+  stageAspect: "16:9",
+  stageResolution: "1920×1080",
+  primaryTrack: "从一次性问答升级到可验收交付",
+  advancedTrack: "Context、Agent 编排、Harness、Evals 与安全",
+  outputs: ["一张 AI 协同任务卡", "一份验收清单", "一套边界判断", "一个 7 天迁移计划"],
+};
+
+export const lectureSections = [
+  {
+    id: "opening",
+    order: "00",
+    minutes: 6,
+    title: "你属于哪一类 AI 用户",
+    question: "同一个模型，为什么有人得到一句答案，有人得到一份可交付成果？",
+    color: "cyan",
+  },
+  {
+    id: "shift",
+    order: "01",
+    minutes: 10,
+    title: "工作方式迁移",
+    question: "AI 时代真正拉开差距的，还是工具熟练度吗？",
+    color: "blue",
+  },
+  {
+    id: "method",
+    order: "02",
+    minutes: 18,
+    title: "AI 协同七步法",
+    question: "怎样把模糊请求改造成 AI 能做、人能验收的任务？",
+    color: "cyan",
+  },
+  {
+    id: "context",
+    order: "03",
+    minutes: 14,
+    title: "Context 与持久上下文",
+    question: "上下文越来越长，为什么 AI 反而可能越来越糊涂？",
+    color: "yellow",
+  },
+  {
+    id: "agent-system",
+    order: "04",
+    minutes: 14,
+    title: "Agent 工作系统",
+    question: "Tool、MCP、Skill、Subagent、Team 和 Harness 到底是什么关系？",
+    color: "blue",
+  },
+  {
+    id: "cases",
+    order: "05",
+    minutes: 10,
+    title: "真实案例剧场",
+    question: "真实团队如何把方法变成需求、代码、测试和知识资产？",
+    color: "orange",
+  },
+  {
+    id: "quality",
+    order: "06",
+    minutes: 8,
+    title: "质量、安全与行动",
+    question: "什么时候可以自动继续，什么时候必须让人接管？",
+    color: "orange",
+  },
+];
+
+export const courseOutputs = courseMeta.outputs;
+
+export const collaborationSteps = [
+  {
+    id: "goal",
+    order: "01",
+    title: "定目标",
+    short: "从愿望变成结果",
+    question: "交付给谁？什么变化算完成？",
+    example: "不是“帮我看需求”，而是“输出给产品和导师确认的缺口清单”。",
+  },
+  {
+    id: "context",
+    order: "02",
+    title: "给材料",
+    short: "提供高信号上下文",
+    question: "哪些材料可信？哪些信息缺失？",
+    example: "给需求原文、现状代码、历史决策与一个合格样例，不把整个网盘一次塞进去。",
+  },
+  {
+    id: "task",
+    order: "03",
+    title: "签任务",
+    short: "明确动作与格式",
+    question: "AI 先做哪一段？按什么结构交付？",
+    example: "先列待确认问题，再补验收标准；每条问题必须引用原文位置。",
+  },
+  {
+    id: "output",
+    order: "04",
+    title: "看产出",
+    short: "先让成果可检查",
+    question: "输出是草稿、表格、代码，还是可运行结果？",
+    example: "要求交付问题清单、风险分级、建议确认对象，而不是一段泛泛分析。",
+  },
+  {
+    id: "eval",
+    order: "05",
+    title: "做验收",
+    short: "先定义什么叫好",
+    question: "事实、结构、功能和风险如何检查？",
+    example: "先跑确定性检查，再做语义审查，最后由责任人确认关键判断。",
+  },
+  {
+    id: "guardrails",
+    order: "06",
+    title: "控边界",
+    short: "限制权限与副作用",
+    question: "做到哪里必须停？哪些动作要审批？",
+    example: "可以起草回复，但发送、删除、付费、发布和接触敏感数据必须人工批准。",
+  },
+  {
+    id: "loop",
+    order: "07",
+    title: "再沉淀",
+    short: "把一次经验变成资产",
+    question: "下次怎样少问一次、少返工一次？",
+    example: "把好样例、失败点、检查清单和脚本沉淀为任务卡或 Skill。",
+  },
+];
+
+export const sevenDayTraining = [
+  { day: 1, title: "选真任务", output: "一个本周必须完成、能够验收的任务" },
+  { day: 2, title: "补上下文", output: "材料清单、可信来源与缺口" },
+  { day: 3, title: "签任务卡", output: "目标、动作、交付物、验收和边界" },
+  { day: 4, title: "让 AI 先做", output: "一版可检查的中间产物" },
+  { day: 5, title: "三层验收", output: "确定性检查、语义检查、人工确认" },
+  { day: 6, title: "封装复用", output: "模板、清单、脚本或 Skill 草稿" },
+  { day: 7, title: "复盘漂移", output: "失败点、修改原因与下一次规则" },
+];
