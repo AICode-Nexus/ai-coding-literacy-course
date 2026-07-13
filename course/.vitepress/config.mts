@@ -4,8 +4,8 @@ const base = process.env.COURSE_BASE || "/";
 
 export default defineConfig({
   lang: "zh-CN",
-  title: "AI 协同工作法",
-  description: "面向校招生的 AI 协同方法论课程与 16:9 讲师模式",
+  title: "AI 协同方法论",
+  description: "从会用 AI 到善用 AI：面向校招生的人机协作课程与 16:9 讲师模式",
   base,
   cleanUrls: true,
   lastUpdated: true,
@@ -32,7 +32,7 @@ export default defineConfig({
     },
     nav: [
       { text: "课程地图", link: "/guide/00-start" },
-      { text: "教材", link: "/guide/01-shift" },
+      { text: "教材", link: "/guide/01-t-shaped" },
       { text: "讲师模式", link: "/present" },
       { text: "来源", link: "/sources" },
     ],
@@ -43,25 +43,27 @@ export default defineConfig({
           items: [{ text: "课程地图", link: "/guide/00-start" }],
         },
         {
-          text: "方法",
+          text: "九个课程节点",
           items: [
-            { text: "01 工作方式迁移", link: "/guide/01-shift" },
-            { text: "02 AI 协同七步法", link: "/guide/02-collaboration" },
-            { text: "03 Context 与持久上下文", link: "/guide/03-context" },
-            { text: "04 Agent 工作系统", link: "/guide/04-agent-system" },
-          ],
-        },
-        {
-          text: "实践",
-          items: [
-            { text: "05 真实案例", link: "/guide/05-cases" },
-            { text: "06 质量与安全", link: "/guide/06-quality" },
-            { text: "07 课后训练", link: "/guide/07-practice" },
+            { text: "01 AI 时代的 T 型人才", link: "/guide/01-t-shaped" },
+            { text: "02 从工具使用到人机协同", link: "/guide/02-collaboration-shift" },
+            { text: "03 AI 基础、模型与工具全景", link: "/guide/03-ai-landscape" },
+            { text: "04 AI 协同七步法", link: "/guide/04-method" },
+            { text: "05 Context：组织正确的信息", link: "/guide/05-context" },
+            { text: "06 Agent：从回答走向行动", link: "/guide/06-agent" },
+            { text: "07 质量、安全与人的责任", link: "/guide/07-quality" },
+            { text: "08 从一次提效到流程重构", link: "/guide/08-workflow" },
+            { text: "09 岗位迁移与行动计划", link: "/guide/09-transfer" },
           ],
         },
         {
           text: "附录",
-          items: [{ text: "工具雷达", link: "/appendix/tool-radar" }],
+          items: [
+            { text: "概念词典", link: "/appendix/glossary" },
+            { text: "工具雷达", link: "/appendix/tool-radar" },
+            { text: "模板库", link: "/appendix/templates" },
+            { text: "来源与核验", link: "/sources" },
+          ],
         },
       ],
     },
