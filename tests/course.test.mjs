@@ -172,7 +172,7 @@ test("concepts have definitions boundaries maturity and shared references", asyn
   ]);
 });
 
-test("core concept reuse covers panorama and scenario scenes", async () => {
+test("lecture contract reuses core knowledge in panorama and scenario scenes", async () => {
   const { lectureScenes } = await import("../course/.vitepress/data/scenes.js");
   const panorama = lectureScenes.find((scene) => scene.id === "concept-panorama");
 
