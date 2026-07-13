@@ -1,5 +1,6 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { lectureSections } from "../../data/course.js";
 import { lectureScenes } from "../../data/scenes.js";
 import { clampScene, keyToAction, sceneFromSearch, searchWithScene } from "../../data/presentation.js";
 import StageScene from "./StageScene.vue";
@@ -12,6 +13,14 @@ const liveMessage = ref("");
 
 const activeScene = computed(() => lectureScenes[activeIndex.value]);
 const progress = computed(() => ((activeIndex.value + 1) / lectureScenes.length) * 100);
+const overviewSections = computed(() =>
+  lectureSections.map((section) => ({
+    ...section,
+    scenes: lectureScenes
+      .map((scene, index) => ({ scene, index }))
+      .filter((item) => item.scene.section === section.id),
+  })),
+);
 
 function announce() {
   liveMessage.value = `第 ${activeIndex.value + 1} 页：${activeScene.value.title}`;
@@ -103,25 +112,59 @@ onBeforeUnmount(() => {
       </nav>
 
       <aside v-if="showNotes" class="speaker-notes">
-        <span>SPEAKER NOTE · {{ activeIndex + 1 }}</span>
-        <p>{{ activeScene.speakerNote }}</p>
-        <small>N / Esc 关闭</small>
+        <header>
+          <span>SPEAKER NOTES · {{ activeIndex + 1 }}</span>
+          <small>N / Esc 关闭</small>
+        </header>
+        <section>
+          <div class="note-block note-purpose">
+            <b>讲授目的</b>
+            <p>{{ activeScene.notes.purpose }}</p>
+          </div>
+          <div class="note-block">
+            <b>可替换说法</b>
+            <ul>
+              <li v-for="item in activeScene.notes.substitutions" :key="item">{{ item }}</li>
+            </ul>
+          </div>
+          <div class="note-block note-question">
+            <b>可选提问</b>
+            <p>{{ activeScene.notes.optionalQuestion }}</p>
+          </div>
+          <div class="note-block">
+            <b>讲解边界</b>
+            <p>{{ activeScene.notes.boundary }}</p>
+          </div>
+          <div class="note-block note-advanced">
+            <b>进阶补充</b>
+            <p>{{ activeScene.notes.advanced }}</p>
+          </div>
+        </section>
       </aside>
 
       <section v-if="overview" class="deck-overview" aria-label="场景总览">
-        <header><span>SCENE MAP</span><strong>选择要跳转的场景</strong><small>O / Esc 关闭</small></header>
-        <div>
-          <button
-            v-for="(scene, index) in lectureScenes"
-            :key="scene.id"
-            type="button"
-            :class="{ active: index === activeIndex }"
-            @click="goTo(index)"
-          >
-            <span>{{ String(index + 1).padStart(2, "0") }}</span>
-            <strong>{{ scene.title }}</strong>
-            <small>{{ scene.eyebrow }}</small>
-          </button>
+        <header><span>COURSE MAP</span><strong>九个节点 · 32 个讲台场景</strong><small>O / Esc 关闭</small></header>
+        <div class="overview-sections">
+          <section v-for="section in overviewSections" :key="section.id" class="overview-section">
+            <div class="overview-section-head">
+              <span>{{ section.order }}</span>
+              <strong>{{ section.title }}</strong>
+              <small>{{ section.minutes }} MIN</small>
+            </div>
+            <div class="overview-scenes">
+              <button
+                v-for="item in section.scenes"
+                :key="item.scene.id"
+                type="button"
+                :class="{ active: item.index === activeIndex }"
+                @click="goTo(item.index)"
+              >
+                <span>{{ String(item.index + 1).padStart(2, "0") }}</span>
+                <strong>{{ item.scene.title }}</strong>
+                <small>{{ item.scene.kind }}</small>
+              </button>
+            </div>
+          </section>
         </div>
       </section>
     </div>

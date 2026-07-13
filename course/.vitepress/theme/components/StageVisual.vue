@@ -55,6 +55,36 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
       </div>
     </template>
 
+    <template v-else-if="visual.type === 'modelSelector'">
+      <div class="selector-core"><span>SELECT BY</span><strong>{{ visual.center }}</strong></div>
+      <div
+        v-for="(item, index) in visual.items"
+        :key="item.name"
+        class="selector-item"
+        :style="{ '--i': index, '--total': visual.items.length }"
+      >
+        <span>{{ String(index + 1).padStart(2, '0') }}</span>
+        <strong>{{ item.name }}</strong>
+        <small>{{ item.note }}</small>
+      </div>
+    </template>
+
+    <template v-else-if="visual.type === 'toolLandscape'">
+      <div class="landscape-core"><span>CAPABILITY MAP</span><strong>{{ visual.center }}</strong></div>
+      <div class="landscape-grid">
+        <div v-for="item in visual.items" :key="item.key" class="landscape-item">
+          <span>{{ item.key }}</span><strong>{{ item.name }}</strong><small>{{ item.note }}</small>
+        </div>
+      </div>
+    </template>
+
+    <template v-else-if="visual.type === 'knowledgeMap'">
+      <div v-for="lane in visual.lanes" :key="lane.name" class="knowledge-lane">
+        <strong>{{ lane.name }}</strong>
+        <div><span v-for="item in lane.items" :key="item">{{ item }}</span></div>
+      </div>
+    </template>
+
     <template v-else-if="visual.type === 'beforeAfter'">
       <div class="flow-lane flow-lane-before">
         <span class="lane-label">旧方式</span>
@@ -174,12 +204,19 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
       <div class="console-status">{{ visual.status }}</div>
     </template>
 
-    <template v-else-if="visual.type === 'case'">
-      <div class="case-context"><span>CONTEXT</span><strong>{{ visual.context }}</strong></div>
-      <div class="case-moves">
-        <div v-for="(move, index) in visual.moves" :key="move"><span>{{ index + 1 }}</span><strong>{{ move }}</strong></div>
+    <template v-else-if="visual.type === 'scenario'">
+      <div class="scenario-question"><span>SCENE QUESTION</span><strong>{{ visual.question }}</strong></div>
+      <div class="scenario-compare">
+        <div class="scenario-side scenario-ordinary">
+          <span>惯常方式</span><p>{{ visual.ordinary }}</p>
+        </div>
+        <div class="scenario-arrow">→</div>
+        <div class="scenario-side scenario-collaborative">
+          <span>协同方式</span><p>{{ visual.collaborative }}</p>
+        </div>
       </div>
-      <div class="case-artifacts"><span>ARTIFACTS</span><i v-for="item in visual.artifacts" :key="item">{{ item }}</i></div>
+      <div class="scenario-roles"><span v-for="role in visual.roles" :key="role">{{ role }}</span></div>
+      <div class="scenario-checks"><b>CHECK</b><span v-for="item in visual.checkpoints" :key="item">{{ item }}</span></div>
     </template>
 
     <template v-else-if="visual.type === 'trace'">
@@ -199,6 +236,28 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
       <div class="handoff-side"><span>AI · 扩大检查面</span><i v-for="item in visual.ai" :key="item">{{ item }}</i></div>
       <div class="handoff-bridge">{{ visual.bridge }}<b>⇄</b></div>
       <div class="handoff-side handoff-human"><span>HUMAN · 承担后果</span><i v-for="item in visual.human" :key="item">{{ item }}</i></div>
+    </template>
+
+    <template v-else-if="visual.type === 'assetLoop'">
+      <div class="asset-column asset-work">
+        <span>WORK</span><strong v-for="(item, index) in visual.work" :key="item"><i>{{ index + 1 }}</i>{{ item }}</strong>
+      </div>
+      <div class="asset-loop-core"><b>↻</b><strong>{{ visual.center }}</strong><small>版本化 · 验证 · 更新</small></div>
+      <div class="asset-column asset-store">
+        <span>ASSETS</span><strong v-for="item in visual.assets" :key="item">{{ item }}</strong>
+      </div>
+    </template>
+
+    <template v-else-if="visual.type === 'roleTransfer'">
+      <div class="role-method">
+        <span>SHARED METHOD</span>
+        <strong v-for="item in visual.center" :key="item">{{ item }}</strong>
+      </div>
+      <div class="role-grid">
+        <div v-for="role in visual.roles" :key="role.name" class="role-card">
+          <span>{{ role.name }}</span><strong>{{ role.note }}</strong>
+        </div>
+      </div>
     </template>
 
     <template v-else-if="visual.type === 'closing'">
