@@ -245,6 +245,19 @@ test("presentation navigation is deterministic", async () => {
   assert.equal(keyToAction("x"), null);
 });
 
+test("tutorial components expose shared scenarios knowledge tools and templates", async () => {
+  const components = ["ScenarioFrame", "KnowledgeAtlas", "ToolLandscape", "TemplateLibrary"];
+  const theme = await read("course/.vitepress/theme/index.ts");
+
+  for (const name of components) {
+    await access(`course/.vitepress/theme/components/${name}.vue`);
+    assert.match(theme, new RegExp(`app\\.component\\(\"${name}\"`));
+  }
+
+  await assert.rejects(access("course/.vitepress/theme/components/CaseTheatre.vue"));
+  assert.doesNotMatch(theme, /CaseTheatre/);
+});
+
 test("source evidence separates stable dynamic and internal material", async () => {
   const { sources } = await import("../course/.vitepress/data/sources.js");
 
