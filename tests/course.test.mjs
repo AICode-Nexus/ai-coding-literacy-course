@@ -152,3 +152,23 @@ test("VitePress routes and dual layouts exist", async () => {
   assert.match(deck, /keyToAction/);
   assert.match(deck, /aria-live/);
 });
+
+test("project documentation and CI describe the VitePress teaching workflow", async () => {
+  const readme = await read("README.md");
+  const workflow = await read(".github/workflows/package-and-deploy.yml");
+
+  assert.match(readme, /80 分钟授课/);
+  assert.match(readme, /15 分钟交流/);
+  assert.match(readme, /1920×1080/);
+  assert.match(readme, /讲师模式/);
+  assert.match(readme, /npm run preview/);
+  assert.match(workflow, /npm ci/);
+  assert.match(workflow, /COURSE_BASE:\s*\/ai-coding-literacy-course\//);
+  assert.match(workflow, /actions\/upload-pages-artifact@v3/);
+});
+
+test("legacy static-site runtime is retired after migration", async () => {
+  for (const path of ["index.html", "server.mjs", "styles.css", "styles", "src", "scripts/build-site.mjs", "tests/site.test.mjs"]) {
+    await assert.rejects(access(path), `legacy path should be removed: ${path}`);
+  }
+});

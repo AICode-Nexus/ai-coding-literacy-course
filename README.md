@@ -1,53 +1,79 @@
-# AI Coding 素养课：从会用工具到 AI 协同工作
+# AI 协同工作法课程站
 
-面向校招生的 90 分钟 AI 协同工作坊课程站。课程重点不是工具清单或纯代码技巧，而是训练新人用 AI 做目标定义、上下文组织、任务拆解、执行辅助、质量验收和复盘沉淀。
+面向具备对话式 AI 基础的校招生，以 **80 分钟授课 + 15 分钟交流**完成从“会用 AI”到“能把 AI 组织成可验收工作系统”的迁移。
 
-## 课程产出
+课程站采用 VitePress 同源双模式：
 
-- 一张可复用 AI 协同任务卡
-- 一组可复制提示词
-- 一份质量验收清单
-- 一份 7 天复盘记录
+- **讲师模式**：逻辑画布 1920×1080、16:9 等比缩放，包含 32 个视觉场景、键盘翻页、总览和讲师备注；
+- **教程模式**：8 章可搜索教材、概念边界卡、7 个案例、任务卡实验室、课后训练与来源记录。
 
-## 90 分钟结构
+## 课程主线
 
-- 8 分钟：为什么不是“会用工具”
-- 15 分钟：AI 协同工作法
-- 20 分钟：从问题到任务卡
-- 25 分钟：岗位实战案例
-- 12 分钟：质量验收与边界
-- 10 分钟：7 天训练计划
+`Goal → Context → Task → Output → Eval → Guardrails → Loop`
 
-## 内容结构
+- 主线服务多数以对话式 AI 为主的 A 类学员；
+- 蓝色进阶层兼顾已有 Cursor、Claude Code、Codex 等 Coding Agent 基础的 B 类学员；
+- 内容以稳定方法为主，动态工具能力标记核验日期，不固化模型排名、价格或窗口参数。
 
-- AI 时代的 T 型人才：一专更深，多能成链
-- AI 新工作语言：Goal、Context、Prompt、Agent、Eval、Guardrails、Tracing、Harness Engineering、Loop Engineering、Subagent、Worktree
-- 方法工具箱：任务卡模板、提示词结构、验收清单
-- 岗位案例：新人周报、需求理解、竞品调研、代码/文档预审、会议纪要、运营复盘、用户反馈整理
-- 课后训练：7 天行动计划和 AI 协同工作包
-
-## Preview
+## 本地开发
 
 ```bash
+npm install
 npm run dev
 ```
 
-访问 `http://localhost:4173/`。
+VitePress 会输出本地访问地址，默认通常为 `http://localhost:5173/`。
 
-## Test
+主要入口：
+
+- `/`：课程首页；
+- `/guide/00-start`：课后教程；
+- `/present?scene=1`：讲师模式；
+- `/sources`：官方与内部来源。
+
+## 讲师模式操作
+
+建议浏览器缩放保持 100%，投屏输出设为 **1920×1080**，进入页面后按 `F` 全屏。
+
+| 操作 | 按键 |
+| --- | --- |
+| 下一页 | `→`、`↓`、`PageDown`、空格 |
+| 上一页 | `←`、`↑`、`PageUp` |
+| 第一页 / 最后一页 | `Home` / `End` |
+| 场景总览 | `O` |
+| 讲师备注 | `N` |
+| 浏览器全屏 | `F` |
+
+场景页码写入 URL 的 `?scene=`，刷新、分享链接或现场跳页后都能恢复位置。
+
+## 测试与构建
 
 ```bash
 npm test
+npm run build
+npm run preview
 ```
 
-## Build
+构建产物位于 `dist/`。生产构建不依赖运行时 API、远程字体或外部图片；外部链接只用于课后查阅来源。
+
+模拟 GitHub Pages 子路径：
 
 ```bash
-npm run build
+COURSE_BASE=/ai-coding-literacy-course/ npm run build
+npm run preview
 ```
 
-构建产物输出到 `dist/`，用于 GitHub Pages workflow 部署。
+## 内容维护
 
-## Publish
+- 共享数据：`course/.vitepress/data/`
+- 讲课场景：`course/.vitepress/data/scenes.js`
+- 教材章节：`course/guide/`
+- 交互组件：`course/.vitepress/theme/components/`
+- 视觉系统：`course/.vitepress/theme/styles/`
+- 来源与核验：`course/.vitepress/data/sources.js`
 
-`.github/workflows/package-and-deploy.yml` 会在 `main` 分支运行测试、打包并通过 GitHub Pages 发布。
+新增重要概念时，先在来源注册表中记录官方或内部原始来源，再写入概念、案例或场景。动态来源在每次正式授课前复核；过时事实直接删除，不为保留历史而干扰课程主线。
+
+## GitHub Pages
+
+`.github/workflows/package-and-deploy.yml` 使用 Node 22，依次执行 `npm ci`、测试、带 `/ai-coding-literacy-course/` base 的 VitePress 构建，并在 `main` 分支发布 GitHub Pages。
