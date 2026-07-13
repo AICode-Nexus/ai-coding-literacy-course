@@ -332,7 +332,7 @@
 .component-error { padding:16px; color:var(--course-orange); border:1px solid currentColor; }
 
 /* Task card lab */
-.task-card-lab { display:grid; grid-template-columns:.85fr 1.15fr; margin:2em calc(50% - 48vw); border:1px solid var(--vp-c-divider); background:var(--vp-c-bg-soft); }
+.task-card-lab { display:grid; grid-template-columns:.85fr 1.15fr; width:min(1180px,calc(100vw - 48px)); margin:2em 50%; border:1px solid var(--vp-c-divider); background:var(--vp-c-bg-soft); transform:translateX(-50%); }
 .task-form, .task-preview { padding:clamp(22px,3vw,42px); }
 .task-form { border-right:1px solid var(--vp-c-divider); }
 .task-form header span, .task-preview header > span { color:var(--vp-c-brand-1); font:900 10px/1 var(--course-display); letter-spacing:.12em; }
@@ -403,7 +403,7 @@
   .mode-card { padding:22px; }
   .boundary-grid { grid-template-columns:1fr; }
   .source-cards { grid-template-columns:1fr; }
-  .task-card-lab { margin-right:-24px; margin-left:-24px; }
+  .task-card-lab { width:calc(100vw - 28px); }
   .home-footer { flex-direction:column; gap:10px; }
   .advanced-track > header { grid-template-columns:auto 1fr; }
   .advanced-track > header small { grid-column:1/-1; }

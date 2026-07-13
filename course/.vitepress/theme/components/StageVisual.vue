@@ -205,18 +205,10 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
     </template>
 
     <template v-else-if="visual.type === 'scenario'">
-      <div class="scenario-question"><span>SCENE QUESTION</span><strong>{{ visual.question }}</strong></div>
-      <div class="scenario-compare">
-        <div class="scenario-side scenario-ordinary">
-          <span>惯常方式</span><p>{{ visual.ordinary }}</p>
-        </div>
-        <div class="scenario-arrow">→</div>
-        <div class="scenario-side scenario-collaborative">
-          <span>协同方式</span><p>{{ visual.collaborative }}</p>
-        </div>
-      </div>
-      <div class="scenario-roles"><span v-for="role in visual.roles" :key="role">{{ role }}</span></div>
-      <div class="scenario-checks"><b>CHECK</b><span v-for="item in visual.checkpoints" :key="item">{{ item }}</span></div>
+      <div class="scenario-demo-cell scenario-target"><span>01 · 目标</span><strong>{{ visual.target }}</strong></div>
+      <div class="scenario-demo-cell"><span>02 · 输入</span><strong>{{ visual.input }}</strong></div>
+      <div class="scenario-demo-cell scenario-artifact"><span>03 · 预期交付物</span><strong>{{ visual.artifact }}</strong></div>
+      <div class="scenario-demo-cell scenario-fallback"><span>04 · 静态兜底</span><strong>{{ visual.fallback }}</strong></div>
     </template>
 
     <template v-else-if="visual.type === 'trace'">

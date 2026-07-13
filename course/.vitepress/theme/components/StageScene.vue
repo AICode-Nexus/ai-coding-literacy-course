@@ -31,7 +31,7 @@ const section = computed(() => lectureSections.find((item) => item.id === props.
     </main>
 
     <footer class="stage-takeaway">
-      <span>TAKEAWAY</span>
+      <span>本页结论</span>
       <strong>{{ scene.takeaway }}</strong>
     </footer>
   </article>

@@ -228,6 +228,24 @@ test("lecture contract contains 32 generic scenes across all nine nodes", async 
   }
 });
 
+test("lecture blueprint locks sourced evidence static fallback and process visuals", async () => {
+  const { lectureScenes } = await import("../course/.vitepress/data/scenes.js");
+  const sceneById = Object.fromEntries(lectureScenes.map((scene) => [scene.id, scene]));
+
+  assert.equal(sceneById["adjacent-loop"].visual.type, "beforeAfter");
+  assert.equal(sceneById["collaboration-gap"].visual.type, "beforeAfter");
+  assert.equal(sceneById["workflow-redesign"].visual.type, "beforeAfter");
+  assert.deepEqual(
+    sceneById["learner-evidence"].visual.items.map((item) => item.level),
+    ["＞90%", "78.21%", "21.23%", "25.70%"],
+  );
+  assert.deepEqual(
+    Object.keys(sceneById["method-static-demo"].visual).sort(),
+    ["artifact", "fallback", "input", "target", "type"],
+  );
+  assert.match(sceneById["method-static-demo"].visual.fallback, /预制任务卡与验收清单/);
+});
+
 test("presentation navigation is deterministic", async () => {
   const { clampScene, keyToAction, sceneFromSearch, searchWithScene } = await import("../course/.vitepress/data/presentation.js");
 
@@ -337,11 +355,18 @@ test("VitePress routes mirror the approved lecture and reference structure", asy
   const home = await read("course/index.md");
   const present = await read("course/present.md");
   const deck = await read("course/.vitepress/theme/components/PresentDeck.vue");
+  const presentationCss = await read("course/.vitepress/theme/styles/presentation.css");
   assert.match(home, /layout: course-home/);
   assert.match(present, /layout: presentation/);
   assert.match(deck, /requestFullscreen/);
+  assert.match(deck, /fullscreenNotice/);
+  assert.match(deck, /overview-section-head/);
+  assert.match(deck, /section\.scenes\[0\]\.index/);
   assert.match(deck, /keyToAction/);
   assert.match(deck, /aria-live/);
+  assert.match(presentationCss, /--stage-readable:\s*1\.46em/);
+  assert.match(presentationCss, /--stage-safe-x:\s*8em/);
+  assert.match(presentationCss, /--stage-safe-y:\s*4\.5em/);
 });
 
 test("course source retires unsupported case framing and stale labels", async () => {

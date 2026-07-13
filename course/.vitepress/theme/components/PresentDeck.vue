@@ -10,6 +10,8 @@ const overview = ref(false);
 const showNotes = ref(false);
 const stageRoot = ref(null);
 const liveMessage = ref("");
+const fullscreenNotice = ref("");
+let fullscreenNoticeTimer;
 
 const activeScene = computed(() => lectureScenes[activeIndex.value]);
 const progress = computed(() => ((activeIndex.value + 1) / lectureScenes.length) * 100);
@@ -51,11 +53,29 @@ function runAction(action) {
 
 async function toggleFullscreen() {
   if (typeof document === "undefined") return;
-  if (document.fullscreenElement) {
-    await document.exitFullscreen();
-  } else {
-    await document.documentElement.requestFullscreen();
+  const root = document.documentElement;
+  if (!document.fullscreenEnabled || typeof root.requestFullscreen !== "function") {
+    showFullscreenNotice("当前浏览器未开放网页全屏，请使用浏览器自身的全屏快捷键");
+    return;
   }
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await root.requestFullscreen();
+    }
+  } catch {
+    showFullscreenNotice("未能进入网页全屏，请检查浏览器权限或使用浏览器自身的全屏快捷键");
+  }
+}
+
+function showFullscreenNotice(message) {
+  fullscreenNotice.value = message;
+  liveMessage.value = message;
+  window.clearTimeout(fullscreenNoticeTimer);
+  fullscreenNoticeTimer = window.setTimeout(() => {
+    fullscreenNotice.value = "";
+  }, 5000);
 }
 
 function onKeydown(event) {
@@ -93,6 +113,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", onKeydown);
   window.removeEventListener("popstate", onPopstate);
+  window.clearTimeout(fullscreenNoticeTimer);
 });
 </script>
 
@@ -110,6 +131,8 @@ onBeforeUnmount(() => {
         <button type="button" title="讲师备注（N）" @click="showNotes = !showNotes">N</button>
         <button type="button" title="全屏（F）" @click="toggleFullscreen">⛶</button>
       </nav>
+
+      <p v-if="fullscreenNotice" class="stage-notice" role="status">{{ fullscreenNotice }}</p>
 
       <aside v-if="showNotes" class="speaker-notes">
         <header>
@@ -146,11 +169,16 @@ onBeforeUnmount(() => {
         <header><span>COURSE MAP</span><strong>九个节点 · 32 个讲台场景</strong><small>O / Esc 关闭</small></header>
         <div class="overview-sections">
           <section v-for="section in overviewSections" :key="section.id" class="overview-section">
-            <div class="overview-section-head">
+            <button
+              type="button"
+              class="overview-section-head"
+              :aria-label="`跳到${section.title}的第一幕`"
+              @click="goTo(section.scenes[0].index)"
+            >
               <span>{{ section.order }}</span>
               <strong>{{ section.title }}</strong>
               <small>{{ section.minutes }} MIN</small>
-            </div>
+            </button>
             <div class="overview-scenes">
               <button
                 v-for="item in section.scenes"

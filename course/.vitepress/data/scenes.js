@@ -1,19 +1,5 @@
-import { scenarioById } from "./scenarios.js";
-
 function notes(purpose, substitutions, optionalQuestion, boundary, advanced) {
   return { purpose, substitutions, optionalQuestion, boundary, advanced };
-}
-
-function scenarioVisual(id) {
-  const scenario = scenarioById[id];
-  return {
-    type: "scenario",
-    question: scenario.question,
-    ordinary: scenario.ordinary,
-    collaborative: scenario.collaborative,
-    roles: scenario.roleDirections,
-    checkpoints: scenario.checkpoints,
-  };
 }
 
 export const lectureScenes = [
@@ -70,7 +56,7 @@ export const lectureScenes = [
   {
     id: "adjacent-loop",
     section: "t-shaped",
-    kind: "scenario",
+    kind: "compare",
     eyebrow: "通用工作场景 · 相邻小闭环",
     title: "先跨一个相邻环节，而不是一次跨越所有岗位",
     body: "从自己负责的任务出发，向前理解输入，向后验证输出，再让 AI 帮助补齐中间的信息与表达。",
@@ -78,7 +64,11 @@ export const lectureScenes = [
     scenarioId: "t-shaped-adjacent-loop",
     conceptIds: ["goal", "context", "output", "eval", "guardrails"],
     toolCategoryIds: ["general-assistant", "capability-reuse"],
-    visual: scenarioVisual("t-shaped-adjacent-loop"),
+    visual: {
+      type: "beforeAfter",
+      before: ["完成本职", "向外交付", "等待反馈"],
+      after: ["理解输入", "AI 补齐中间产物", "验证输出", "形成小闭环"],
+    },
     notes: notes(
       "用宽泛场景让不同岗位自行代入，不制造具体组织、人物或效果数字。",
       ["研发：需求—实现—验证", "产品：问题—方案—反馈", "运营：目标—素材—复盘", "职能：规则—材料—服务"],
@@ -115,24 +105,25 @@ export const lectureScenes = [
     section: "collaboration-shift",
     kind: "audience",
     eyebrow: "学员现状 · 从熟悉动作出发",
-    title: "大家已经在用 AI，但大多仍停在单点提效",
-    body: "问答、搜索、润色和生成初稿已经普及；真正稀缺的是目标澄清、证据组织、过程验证和经验沉淀。",
-    takeaway: "本课不从“会不会用”讲起，而从“能不能稳定完成工作”讲起。",
+    title: "学员并非从零开始，四项使用情况给出了真实起点",
+    body: "统计来自《AI Coding 素养课程参考材料》；本页只呈现材料中可读取的四项结果。",
+    takeaway: "本课不从“第一次使用 AI”讲起，而从单点使用怎样进入完整工作链讲起。",
     conceptIds: ["prompt", "context", "output", "eval", "loop"],
     toolCategoryIds: ["general-assistant", "deep-research", "coding-agent"],
     visual: {
       type: "columns",
       items: [
-        { level: "01", title: "问与写", result: "得到一段内容", signal: "普遍起点" },
-        { level: "02", title: "做任务", result: "得到一份成果", signal: "正在形成" },
-        { level: "03", title: "进流程", result: "成果可验收复用", signal: "本课目标" },
+        { level: "＞90%", title: "通用大模型", result: "使用过", signal: "学员统计" },
+        { level: "78.21%", title: "AI Coding", result: "使用过", signal: "学员统计" },
+        { level: "21.23%", title: "智能体或工作流", result: "使用过", signal: "学员统计" },
+        { level: "25.70%", title: "AI 图像或视频", result: "接触过", signal: "学员统计" },
       ],
     },
     notes: notes(
-      "承接已有学员统计材料的方向，只表达总体学习起点，不现场虚构精确比例。",
-      ["根据现场举手结果调整三列停留时间", "若学员偏技术，可把第二列换成代码与测试"],
-      "你最近一次用 AI，最后拿到的是内容、成果，还是可复用流程？",
-      "没有可公开核验的数据时不报具体百分比，也不把单次调查推断为所有学员。",
+      "准确呈现已有学员统计，让课程起点建立在真实材料而不是讲师猜测上。",
+      ["先读四项数字，再邀请学员用举手补充现场情况", "若时间紧，只强调通用模型普及与工作流使用之间的落差"],
+      "这些使用经历中，哪一种已经真正进入过你的工作流程？",
+      "四项口径并不完全相同：前三项是“使用过”，图像或视频是“接触过”；不能直接互相比较成熟度。",
       "进阶学员可观察自己是否已经具备工具调用、状态管理和自动验证，而不只是长对话。",
     ),
   },
@@ -169,7 +160,11 @@ export const lectureScenes = [
     scenarioId: "shift-answer-to-system",
     conceptIds: ["goal", "context", "prompt", "output", "eval", "loop"],
     toolCategoryIds: ["general-assistant", "coding-agent", "capability-reuse"],
-    visual: scenarioVisual("shift-answer-to-system"),
+    visual: {
+      type: "beforeAfter",
+      before: ["一句请求", "生成答案", "人工返工"],
+      after: ["明确目标", "组织材料", "AI 行动", "证据验收", "沉淀复用"],
+    },
     notes: notes(
       "把工具使用与人机协同清晰分开，建立全课的核心问题。",
       ["把普通方式讲成“最后一步让 AI 润色”", "把协同方式讲成“从澄清到复盘都有证据”"],
@@ -410,7 +405,13 @@ export const lectureScenes = [
     scenarioId: "method-vague-request",
     conceptIds: ["goal", "context", "prompt", "task-contract", "output", "eval", "guardrails", "loop"],
     toolCategoryIds: ["general-assistant", "coding-agent", "capability-reuse"],
-    visual: scenarioVisual("method-vague-request"),
+    visual: {
+      type: "scenario",
+      target: "把模糊要求改造成可确认的任务",
+      input: "原始要求 · 已有材料 · 缺失信息",
+      artifact: "任务卡 + 第一版交付物",
+      fallback: "若现场工具不可用，直接展示预制任务卡与验收清单",
+    },
     notes: notes(
       "用预先准备的静态场景保证千人大课节奏稳定，讲师可以自由替换为熟悉任务。",
       ["需求预审", "材料核对", "内容交付", "一次小改动"],
@@ -755,7 +756,11 @@ export const lectureScenes = [
     scenarioId: "workflow-reuse-or-restart",
     conceptIds: ["goal", "context", "output", "eval", "guardrails", "loop", "skill", "harness"],
     toolCategoryIds: ["agent-workflow", "knowledge-connection", "capability-reuse"],
-    visual: scenarioVisual("workflow-reuse-or-restart"),
+    visual: {
+      type: "beforeAfter",
+      before: ["保留全部步骤", "逐步加 AI", "断点与返工仍在"],
+      after: ["删除低价值", "合并重复", "调整顺序", "自动化稳定段", "保留责任点"],
+    },
     notes: notes(
       "让学员用宽泛工作场景理解流程重构，不依赖具体企业案例。",
       ["研发：改动与验证", "产品：需求与决策", "运营：素材与发布", "职能：材料与审批"],

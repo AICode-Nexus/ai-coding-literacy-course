@@ -82,7 +82,7 @@ const rawToolCategories = [
     reviewDays,
     representatives: [
       { name: "RAG / 文件检索", officialUrl: "https://developers.openai.com/api/docs/guides/retrieval", verifiedAt, note: "按需检索证据片段的实现类别" },
-      { name: "知识库", officialUrl: "https://docs.dify.ai/guides/knowledge-base/retrieval", verifiedAt, note: "结构化知识接入与检索示例" },
+      { name: "知识库", officialUrl: "https://docs.dify.ai/api-reference/knowledge-bases/retrieve-chunks-from-a-knowledge-base-test-retrieval", verifiedAt, note: "结构化知识接入与检索示例" },
       { name: "MCP", officialUrl: "https://modelcontextprotocol.io/docs/learn/architecture", verifiedAt, note: "tools、resources 与 prompts 的连接协议" },
       { name: "企业数据连接器", officialUrl: "https://developers.openai.com/api/docs/guides/tools-connectors-mcp", verifiedAt, note: "受权限控制的外部系统连接类别" },
     ],
@@ -96,7 +96,7 @@ const rawToolCategories = [
     reviewDays,
     representatives: [
       { name: "Prompt 模板", officialUrl: "https://developers.openai.com/api/docs/guides/prompting", verifiedAt, note: "重复任务说明的轻量复用方式" },
-      { name: "项目规则文件", officialUrl: "https://learn.chatgpt.com/docs/agents-md", verifiedAt, note: "AGENTS.md、CLAUDE.md 等持久指令方式" },
+      { name: "项目规则文件", officialUrl: "https://learn.chatgpt.com/docs/agent-configuration/agents-md", verifiedAt, note: "AGENTS.md、CLAUDE.md 等持久指令方式" },
       { name: "Skill", officialUrl: "https://learn.chatgpt.com/docs/build-skills", verifiedAt, note: "指令、参考、脚本与资产的按需复用方式" },
       { name: "检查清单", officialUrl: "https://developers.openai.com/api/docs/guides/agent-evals", verifiedAt, note: "把验收规则变成可重复检查资产" },
     ],
