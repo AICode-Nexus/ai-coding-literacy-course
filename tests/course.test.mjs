@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
+import { execFile } from "node:child_process";
 import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { test } from "node:test";
+import { promisify } from "node:util";
 
 const read = (file) => readFile(file, "utf8");
+const execFileAsync = promisify(execFile);
 
 const expectedNodes = [
   ["t-shaped", "AI 时代的 T 型人才", 8, "/guide/01-t-shaped"],
@@ -358,6 +361,40 @@ test("course source retires unsupported case framing and stale labels", async ()
       assert.ok(!source.includes(phrase), file + " contains forbidden phrase: " + phrase);
     }
   }
+});
+
+test("appendix routes render shared concept tool and template registries", async () => {
+  const glossary = await read("course/appendix/glossary.md");
+  const toolRadar = await read("course/appendix/tool-radar.md");
+  const templates = await read("course/appendix/templates.md");
+  const sourcePage = await read("course/sources.md");
+
+  assert.match(glossary, /import \{ concepts \}/);
+  assert.match(glossary, /KnowledgeAtlas/);
+  assert.match(toolRadar, /import \{ toolCategories, toolEntryStatus \}/);
+  assert.match(toolRadar, /ToolLandscape/);
+  assert.match(templates, /import \{ templates \}/);
+  assert.match(templates, /TemplateLibrary/);
+  assert.match(sourcePage, /verifiedAt/);
+  assert.match(sourcePage, /stability/);
+});
+
+test("link checker fails internal fixtures and warns on external fixtures", async () => {
+  const packageJson = JSON.parse(await read("package.json"));
+  assert.equal(packageJson.scripts["check:links"], "node scripts/check-course-links.mjs");
+  assert.equal(packageJson.scripts["check:links:external"], "node scripts/check-course-links.mjs --external");
+
+  await assert.rejects(
+    execFileAsync(process.execPath, ["scripts/check-course-links.mjs", "--fixture-broken-internal"]),
+    (error) => {
+      assert.equal(error.code, 1);
+      assert.match(`${error.stdout}\n${error.stderr}`, /broken internal|不存在的内部链接/i);
+      return true;
+    },
+  );
+
+  const external = await execFileAsync(process.execPath, ["scripts/check-course-links.mjs", "--fixture-broken-external"]);
+  assert.match(`${external.stdout}\n${external.stderr}`, /warning|警告|unreachable/i);
 });
 
 test("project documentation describes the approved teaching workflow", async () => {

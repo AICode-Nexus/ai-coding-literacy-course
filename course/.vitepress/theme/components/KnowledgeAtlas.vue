@@ -3,6 +3,8 @@ import { computed } from "vue";
 import { withBase } from "vitepress";
 import { concepts, conceptById } from "../../data/concepts.js";
 import { sectionById } from "../../data/course.js";
+import { scenarioById } from "../../data/scenarios.js";
+import { sourceById } from "../../data/sources.js";
 
 const props = defineProps({
   conceptIds: { type: Array, default: () => [] },
@@ -47,9 +49,19 @@ const maturity = (level) => ({ core: "A · 核心", advanced: "B · 进阶", fro
             <div><dt>解决</dt><dd>{{ concept.solves }}</dd></div>
             <div><dt>不能替代</dt><dd>{{ concept.notFor }}</dd></div>
           </dl>
-          <footer>
-            <span>相关节点</span>
-            <a v-for="nodeId in concept.nodeIds" :key="nodeId" :href="withBase(sectionById[nodeId].guide)">{{ sectionById[nodeId].title }}</a>
+          <footer class="knowledge-links">
+            <div>
+              <span>相关节点</span>
+              <a v-for="nodeId in concept.nodeIds" :key="nodeId" :href="withBase(sectionById[nodeId].guide)">{{ sectionById[nodeId].title }}</a>
+            </div>
+            <div>
+              <span>关联场景</span>
+              <i v-for="scenarioId in concept.scenarioIds" :key="scenarioId">{{ scenarioById[scenarioId]?.question }}</i>
+            </div>
+            <div>
+              <span>一手来源</span>
+              <a v-for="sourceId in concept.sourceIds" :key="sourceId" :href="sourceById[sourceId]?.url" target="_blank" rel="noreferrer">{{ sourceById[sourceId]?.publisher }} ↗</a>
+            </div>
           </footer>
         </article>
       </div>

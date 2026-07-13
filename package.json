@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vitepress dev course --host 0.0.0.0",
     "build": "vitepress build course",
+    "check:links": "node scripts/check-course-links.mjs",
+    "check:links:external": "node scripts/check-course-links.mjs --external",
     "preview": "vitepress preview course --host 0.0.0.0",
     "test": "node --test"
   },
