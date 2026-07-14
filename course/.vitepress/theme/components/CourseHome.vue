@@ -21,7 +21,7 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
         <a :href="withBase('/guide/01-t-shaped')">课后教材</a>
         <a :href="withBase('/appendix/tool-radar')">工具雷达</a>
         <a :href="withBase('/sources')">来源</a>
-        <a class="nav-stage" :href="presentLink">开始讲课 <span>↗</span></a>
+        <a class="nav-stage course-button course-button--primary" :href="presentLink">开始讲课 <span>↗</span></a>
       </nav>
     </header>
 
@@ -50,8 +50,8 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
           </div>
           <p>从“会用AI”到“善用AI”</p>
           <div class="kv-course-actions">
-            <a :href="withBase('/guide/00-start')">查看课程</a>
-            <a :href="presentLink">开始讲课 <span>↗</span></a>
+            <a class="course-button course-button--secondary" :href="withBase('/guide/00-start')">查看课程</a>
+            <a class="course-button course-button--primary" :href="presentLink">开始讲课 <span>↗</span></a>
           </div>
         </div>
       </section>
@@ -63,8 +63,8 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
           <h1>从“会用 AI”，<br><em>到“善用 AI”</em></h1>
           <p>{{ courseMeta.goal }}课程以讲课为主，同时保留一套可以课后搜索、阅读、练习和复用的完整教程。</p>
           <div class="hero-actions">
-            <a class="action-primary" :href="presentLink">开始讲课 <span>→</span></a>
-            <a class="action-secondary" :href="withBase('/guide/00-start')">课后学习 <span>↗</span></a>
+            <a class="action-primary course-button course-button--primary" :href="presentLink">开始讲课 <span>→</span></a>
+            <a class="action-secondary course-button course-button--secondary" :href="withBase('/guide/00-start')">课后学习 <span>↗</span></a>
           </div>
           <div class="hero-proof">
             <span><b>9</b> 个课程节点</span>
@@ -145,7 +145,7 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
             <small>{{ item.roleDirections.join(' · ') }}</small>
           </article>
         </div>
-        <a class="scenario-link" :href="withBase('/guide/01-t-shaped')">从第一个场景开始 <span>→</span></a>
+        <a class="scenario-link course-button course-button--secondary" :href="withBase('/guide/01-t-shaped')">从第一个场景开始 <span>→</span></a>
       </section>
 
       <section class="output-section">
@@ -164,7 +164,7 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
         <div><span>GOAL</span><i></i><span>CONTEXT</span><i></i><span>TASK</span><i></i><span>OUTPUT</span><i></i><span>EVAL</span><i></i><span>GUARDRAILS</span><i></i><span>LOOP</span></div>
         <h2>明天，先改造一个低风险的小流程</h2>
         <p>不要从收集更多工具开始；从一个可验收、会再次发生的岗位任务开始。</p>
-        <a :href="withBase('/guide/09-transfer')">打开 7 天行动计划 <span>→</span></a>
+        <a class="course-button course-button--primary" :href="withBase('/guide/09-transfer')">打开 7 天行动计划 <span>→</span></a>
       </section>
     </main>
 
