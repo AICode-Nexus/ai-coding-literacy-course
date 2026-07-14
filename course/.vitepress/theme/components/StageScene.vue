@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from "vue";
+import { withBase } from "vitepress";
 import { lectureSections } from "../../data/course.js";
 import StageVisual from "./StageVisual.vue";
 
@@ -16,7 +17,7 @@ const section = computed(() => lectureSections.find((item) => item.id === props.
   <article class="stage-scene" :class="[`scene-${scene.kind}`, `scene-${scene.visual.type}`]">
     <div class="stage-grid" aria-hidden="true"></div>
     <header class="stage-header">
-      <div class="stage-brand"><span>AI</span> COLLABORATION</div>
+      <div class="stage-brand"><img :src="withBase('/brand/ai-collaboration-mark.svg')" alt=""> AI COLLABORATION</div>
       <div class="stage-section"><b>{{ section?.order }}</b>{{ section?.title }}</div>
       <div class="stage-counter">{{ String(number).padStart(2, "0") }} / {{ String(total).padStart(2, "0") }}</div>
     </header>

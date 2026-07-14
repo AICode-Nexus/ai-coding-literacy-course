@@ -4,19 +4,24 @@ const base = process.env.COURSE_BASE || "/";
 
 export default defineConfig({
   lang: "zh-CN",
-  title: "AI 协同方法论",
+  title: "AI协同方法论：从“会用AI”到“善用AI”",
   description: "从会用 AI 到善用 AI：面向校招生的人机协作课程与 16:9 讲师模式",
   base,
+  appearance: "dark",
   cleanUrls: true,
   lastUpdated: true,
   outDir: "../dist",
   head: [
-    ["link", { rel: "icon", type: "image/svg+xml", href: `${base}favicon.svg` }],
-    ["meta", { name: "theme-color", content: "#061319" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: `${base}brand/ai-collaboration-mark.svg` }],
+    ["meta", { name: "theme-color", content: "#078DFF" }],
     ["meta", { name: "color-scheme", content: "light dark" }],
+    ["meta", { property: "og:image", content: `${base}kv/kv-stage.jpg` }],
+    ["meta", { property: "og:image:alt", content: "2026届校招新人训练营：热AI之路，翼起来" }],
+    ["meta", { name: "twitter:card", content: "summary_large_image" }],
   ],
   themeConfig: {
-    logo: "/logo.svg",
+    logo: "/brand/ai-collaboration-mark.svg",
+    siteTitle: false,
     search: {
       provider: "local",
       options: {

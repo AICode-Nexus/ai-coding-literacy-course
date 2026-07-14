@@ -1,5 +1,8 @@
 dist/
 node_modules/
 .worktrees/
+course/.vitepress/cache/
+output/
+outputs/
 .DS_Store
 *.log

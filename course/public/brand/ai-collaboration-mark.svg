@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 64" role="img" aria-labelledby="title description">
+  <title id="title">AI协同方法论</title>
+  <desc id="description">由蓝色字母A、深蓝色字母i与橙色目标圆点组成的课程标志</desc>
+  <path
+    fill="#078DFF"
+    fill-rule="evenodd"
+    d="M4 56 30.4 7.6A8 8 0 0 1 37.4 3h5.2a8 8 0 0 1 7 4.3L67 39.1V56H54V42.4L40 16.5 18.5 56H4Zm24.1-13h22.8l-6.7-12.4h-9.3L28.1 43Z"
+  />
+  <rect x="74" y="23" width="14" height="33" rx="3.5" fill="#063E8C"/>
+  <circle cx="81" cy="11" r="7" fill="#FF9A1F"/>
+</svg>

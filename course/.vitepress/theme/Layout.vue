@@ -3,6 +3,7 @@ import DefaultTheme from "vitepress/theme";
 import { useData } from "vitepress";
 import CourseHome from "./components/CourseHome.vue";
 import PresentDeck from "./components/PresentDeck.vue";
+import SiteBrand from "./components/SiteBrand.vue";
 
 const { frontmatter } = useData();
 </script>
@@ -10,5 +11,9 @@ const { frontmatter } = useData();
 <template>
   <CourseHome v-if="frontmatter.layout === 'course-home'" />
   <PresentDeck v-else-if="frontmatter.layout === 'presentation'" />
-  <DefaultTheme.Layout v-else />
+  <DefaultTheme.Layout v-else>
+    <template #nav-bar-title-after>
+      <SiteBrand />
+    </template>
+  </DefaultTheme.Layout>
 </template>

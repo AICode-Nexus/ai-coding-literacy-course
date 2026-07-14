@@ -86,6 +86,35 @@ test("course metadata preserves the approved nine-node 80 plus 15 contract", asy
   );
 });
 
+test("VitePress defaults to dark appearance while keeping the theme switch available", async () => {
+  const config = await read("course/.vitepress/config.mts");
+
+  assert.match(config, /appearance:\s*["']dark["']/);
+  assert.match(config, /darkModeSwitchLabel:/);
+});
+
+test("course homepage maps the supplied KV formats to responsive contexts and uses the AI mark", async () => {
+  const home = await read("course/.vitepress/theme/components/CourseHome.vue");
+  const stage = await read("course/.vitepress/theme/components/StageScene.vue");
+  const config = await read("course/.vitepress/config.mts");
+  const mark = await read("course/public/brand/ai-collaboration-mark.svg");
+
+  for (const asset of ["kv-wide.jpg", "kv-mobile.jpg", "kv-stage.jpg", "kv-ultrawide.jpg"]) {
+    await access(path.join("course/public/kv", asset));
+    assert.match(home, new RegExp(asset.replace(".", "\\.")));
+  }
+
+  assert.match(home, /fetchpriority=["']high["']/);
+  assert.match(home, /brand\/ai-collaboration-mark\.svg/);
+  assert.match(stage, /brand\/ai-collaboration-mark\.svg/);
+  assert.match(config, /logo:\s*["']\/brand\/ai-collaboration-mark\.svg["']/);
+  assert.match(config, /og:image/);
+  assert.match(mark, /#078DFF/);
+  assert.match(mark, /#063E8C/);
+  assert.match(mark, /#FF9A1F/);
+  assert.doesNotMatch(mark, /linearGradient|filter|image/);
+});
+
 test("scenario and template registry is normalized", async () => {
   const { scenarios } = await import("../course/.vitepress/data/scenarios.js");
   const { templates } = await import("../course/.vitepress/data/templates.js");
@@ -277,6 +306,18 @@ test("tutorial components expose shared scenarios knowledge tools and templates"
 
   await assert.rejects(access("course/.vitepress/theme/components/CaseTheatre.vue"));
   assert.doesNotMatch(theme, /CaseTheatre/);
+});
+
+test("tutorial materials stay inside the readable document column", async () => {
+  const styles = await read("course/.vitepress/theme/styles/components.css");
+  const sharedSurfaceRule = styles.match(/\.scenario-frame,\s*\.knowledge-atlas,\s*\.tool-landscape,\s*\.template-library\s*\{([^}]+)\}/s)?.[1] ?? "";
+  const taskCardRule = styles.match(/\.task-card-lab\s*\{([^}]+)\}/s)?.[1] ?? "";
+
+  for (const rule of [sharedSurfaceRule, taskCardRule]) {
+    assert.match(rule, /width:\s*100%/);
+    assert.match(rule, /max-width:\s*100%/);
+    assert.doesNotMatch(rule, /100vw|translateX|1180px/);
+  }
 });
 
 test("source evidence separates stable dynamic and internal material", async () => {

@@ -3,6 +3,7 @@ import { withBase } from "vitepress";
 import { computed } from "vue";
 import { courseMeta, lectureSections } from "../../data/course.js";
 import { scenarios } from "../../data/scenarios.js";
+import SiteBrand from "./SiteBrand.vue";
 
 const total = computed(() => courseMeta.teachingMinutes + courseMeta.exchangeMinutes);
 const presentLink = computed(() => `${withBase("/present")}?scene=1`);
@@ -11,7 +12,10 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
 <template>
   <div class="course-home">
     <header class="home-nav">
-      <a class="home-brand" :href="withBase('/')"><span>AI</span><b>协同方法论</b></a>
+      <a class="home-brand" :href="withBase('/')" aria-label="AI协同方法论：从“会用AI”到“善用AI”">
+        <img class="home-brand-mark" :src="withBase('/brand/ai-collaboration-mark.svg')" alt="">
+        <SiteBrand />
+      </a>
       <nav aria-label="主导航">
         <a :href="withBase('/guide/00-start')">课程地图</a>
         <a :href="withBase('/guide/01-t-shaped')">课后教材</a>
@@ -22,6 +26,36 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
     </header>
 
     <main>
+      <section class="kv-hero" aria-label="2026届校招新人训练营主视觉">
+        <picture class="kv-picture">
+          <source media="(min-aspect-ratio: 3 / 1)" :srcset="withBase('/kv/kv-ultrawide.jpg')">
+          <source media="(max-width: 700px)" :srcset="withBase('/kv/kv-mobile.jpg')">
+          <source media="(max-width: 1100px)" :srcset="withBase('/kv/kv-stage.jpg')">
+          <img
+            :src="withBase('/kv/kv-wide.jpg')"
+            width="2400"
+            height="964"
+            alt="2026届校招新人训练营主视觉：热AI之路，翼起来"
+            fetchpriority="high"
+          >
+        </picture>
+
+        <div class="kv-course-dock">
+          <div class="kv-course-identity">
+            <img :src="withBase('/brand/ai-collaboration-mark.svg')" alt="">
+            <div>
+              <small>2026 CAMPUS LEARNING</small>
+              <strong>AI协同方法论</strong>
+            </div>
+          </div>
+          <p>从“会用AI”到“善用AI”</p>
+          <div class="kv-course-actions">
+            <a :href="withBase('/guide/00-start')">查看课程</a>
+            <a :href="presentLink">开始讲课 <span>↗</span></a>
+          </div>
+        </div>
+      </section>
+
       <section class="home-hero">
         <div class="hero-grid" aria-hidden="true"></div>
         <div class="hero-copy">

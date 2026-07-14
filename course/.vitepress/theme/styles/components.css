@@ -19,29 +19,141 @@
 
 .home-brand {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   color: var(--course-ink-950);
   text-decoration: none;
 }
 
-.home-brand > span {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  color: var(--course-ink-950);
-  background: var(--course-cyan);
-  border-radius: 50%;
-  font: 900 14px/1 var(--course-display);
+.home-brand-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 45px;
+  height: 30px;
+  object-fit: contain;
 }
 
-.home-brand b { font-size: 16px; }
+.home-brand .site-brand-lockup { gap: 5px; }
+.home-brand .site-brand-lockup strong { color: var(--course-ink-950); font-size: 16px; }
+.home-brand .site-brand-lockup small { color: #567078; font-size: 10px; }
 .home-nav nav { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 40px); }
 .home-nav nav a { color: #31484f; font-size: 14px; font-weight: 650; text-decoration: none; }
 .home-nav nav a:hover { color: #08766f; }
 .home-nav .nav-stage { padding: 10px 16px; color: var(--course-paper); background: var(--course-ink-950); }
 .home-nav .nav-stage:hover { color: var(--course-cyan); }
+
+.kv-hero {
+  position: relative;
+  padding-bottom: clamp(62px, 6vw, 92px);
+  background: linear-gradient(180deg, #078dff 0%, #0cc6f0 76%, #f4f0e7 76%);
+}
+
+.kv-picture,
+.kv-picture img {
+  display: block;
+  width: 100%;
+}
+
+.kv-picture {
+  overflow: hidden;
+  background: #078dff;
+}
+
+.kv-picture img {
+  height: auto;
+  object-fit: contain;
+}
+
+.kv-course-dock {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) auto;
+  gap: clamp(22px, 3vw, 48px);
+  align-items: center;
+  width: min(1180px, calc(100% - 48px));
+  min-height: 112px;
+  margin: -34px auto 0;
+  padding: 22px 26px;
+  color: #063e8c;
+  border: 1px solid rgba(7, 141, 255, 0.15);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 24px 70px rgba(0, 92, 174, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.kv-course-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.kv-course-identity > img {
+  width: 66px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.kv-course-identity > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.kv-course-identity small {
+  color: #078dff;
+  font: 900 10px/1 var(--course-display);
+  letter-spacing: 0.14em;
+}
+
+.kv-course-identity strong {
+  color: #063e8c;
+  font-size: 21px;
+  letter-spacing: -0.035em;
+}
+
+.kv-course-dock > p {
+  margin: 0;
+  color: #47718d;
+  font-size: clamp(17px, 1.6vw, 22px);
+  font-weight: 720;
+  text-align: center;
+}
+
+.kv-course-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.kv-course-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 16px;
+  color: #075eb6;
+  border: 1px solid rgba(7, 141, 255, 0.24);
+  border-radius: 999px;
+  background: #eef8ff;
+  font-size: 14px;
+  font-weight: 780;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kv-course-actions a:last-child {
+  color: #fff;
+  border-color: #078dff;
+  background: #078dff;
+  box-shadow: 0 10px 24px rgba(7, 141, 255, 0.24);
+}
+
+.kv-course-actions a:hover {
+  transform: translateY(-2px);
+}
 
 .home-hero {
   position: relative;
@@ -217,10 +329,10 @@
 .knowledge-atlas,
 .tool-landscape,
 .template-library {
-  width:min(1180px,calc(100vw - 48px));
-  max-width:none;
-  margin:2.4em 50%;
-  transform:translateX(-50%);
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:2.4em 0;
 }
 
 .scenario-frame {
@@ -332,7 +444,7 @@
 .component-error { padding:16px; color:var(--course-orange); border:1px solid currentColor; }
 
 /* Task card lab */
-.task-card-lab { display:grid; grid-template-columns:.85fr 1.15fr; width:min(1180px,calc(100vw - 48px)); margin:2em 50%; border:1px solid var(--vp-c-divider); background:var(--vp-c-bg-soft); transform:translateX(-50%); }
+.task-card-lab { display:grid; grid-template-columns:.85fr 1.15fr; width:100%; max-width:100%; min-width:0; margin:2em 0; border:1px solid var(--vp-c-divider); background:var(--vp-c-bg-soft); }
 .task-form, .task-preview { padding:clamp(22px,3vw,42px); }
 .task-form { border-right:1px solid var(--vp-c-divider); }
 .task-form header span, .task-preview header > span { color:var(--vp-c-brand-1); font:900 10px/1 var(--course-display); letter-spacing:.12em; }
@@ -374,6 +486,8 @@
 
 @media (max-width: 900px) {
   .home-nav nav a:not(.nav-stage) { display:none; }
+  .kv-course-dock { grid-template-columns: 1fr auto; }
+  .kv-course-dock > p { grid-column: 1 / -1; grid-row: 2; text-align: left; }
   .home-hero { grid-template-columns:1fr; }
   .hero-console { max-width:680px; transform:none; }
   .mode-grid, .route-section { grid-template-columns:1fr; }
@@ -394,8 +508,16 @@
 
 @media (max-width: 620px) {
   .home-nav { height:64px; }
-  .home-brand b { font-size:14px; }
+  .home-brand .site-brand-lockup strong { font-size:14px; }
+  .home-brand .site-brand-lockup small { font-size:9px; }
   .home-nav .nav-stage { padding:9px 11px; font-size:12px; }
+  .kv-hero { padding-bottom: 0; background: #fff; }
+  .kv-course-dock { grid-template-columns: 1fr; width: 100%; margin: 0; padding: 20px; border-width: 0 0 1px; border-radius: 0; box-shadow: none; }
+  .kv-course-dock > p { grid-column: auto; grid-row: auto; }
+  .kv-course-identity > img { width: 57px; height: 38px; }
+  .kv-course-identity strong { font-size: 19px; }
+  .kv-course-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .kv-course-actions a { justify-content: center; }
   .home-hero { min-height:auto; padding-top:80px; }
   .hero-copy h1 { font-size:46px; }
   .hero-console { padding:14px; }
@@ -403,11 +525,11 @@
   .mode-card { padding:22px; }
   .boundary-grid { grid-template-columns:1fr; }
   .source-cards { grid-template-columns:1fr; }
-  .task-card-lab { width:calc(100vw - 28px); }
+  .task-card-lab { width:100%; }
   .home-footer { flex-direction:column; gap:10px; }
   .advanced-track > header { grid-template-columns:auto 1fr; }
   .advanced-track > header small { grid-column:1/-1; }
-  .scenario-frame, .knowledge-atlas, .tool-landscape, .template-library { width:calc(100vw - 28px); }
+  .scenario-frame, .knowledge-atlas, .tool-landscape, .template-library { width:100%; }
   .scenario-frame-contrast { grid-template-columns:1fr; }
   .scenario-frame-contrast > i { transform:rotate(90deg); }
   .scenario-frame > footer { grid-template-columns:1fr; gap:8px; }
