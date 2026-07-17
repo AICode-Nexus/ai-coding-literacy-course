@@ -354,7 +354,13 @@ test("course map exposes nine data-driven chapter links and container-aware tuto
   assert.match(toolLandscape, /打开官网 ↗/);
   assert.match(styles, /container-type:inline-size/);
   assert.match(styles, /@container \(max-width: 820px\)/);
+  assert.match(styles, /\.flow-rail \{[^}]*grid-template-columns:repeat\(12,minmax\(0,1fr\)\)/);
   assert.match(styles, /\.flow-rail button:nth-child\(n \+ 5\) \{ grid-column:span 4/);
+  const tabletViewportRules = styles.slice(
+    styles.indexOf("@media (max-width: 900px)"),
+    styles.indexOf("@media (max-width: 620px)"),
+  );
+  assert.doesNotMatch(tabletViewportRules, /\.flow-rail/);
   assert.match(styles, /last-child:nth-child\(odd\)/);
 });
 

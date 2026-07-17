@@ -620,7 +620,6 @@
   .boundary-tabs button { min-width:190px; }
   .task-card-lab { grid-template-columns:1fr; }
   .task-form { border-right:0; border-bottom:1px solid var(--vp-c-divider); }
-  .flow-rail { grid-template-columns:repeat(7,minmax(110px,1fr)); overflow:auto; }
   .output-grid { grid-template-columns:repeat(2,1fr); }
   .knowledge-atlas > header, .tool-landscape > header, .template-library > header { grid-template-columns:1fr; gap:12px; }
   .scenario-frame-head { grid-template-columns:1fr; gap:14px; }
