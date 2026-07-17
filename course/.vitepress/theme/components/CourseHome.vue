@@ -7,6 +7,45 @@ import SiteBrand from "./SiteBrand.vue";
 
 const total = computed(() => courseMeta.teachingMinutes + courseMeta.exchangeMinutes);
 const presentLink = computed(() => `${withBase("/present")}?scene=1`);
+
+const outputCards = [
+  {
+    title: courseMeta.outputs[0],
+    label: "TASK CONTRACT",
+    description: "把模糊需求改写成 AI 与人都能逐项确认的任务契约。",
+    metric: "7 个必填字段",
+    href: "/appendix/templates",
+    visual: "task",
+    items: ["目标", "材料", "动作", "交付", "验收", "边界"],
+  },
+  {
+    title: courseMeta.outputs[1],
+    label: "QUALITY GATES",
+    description: "把“感觉还行”拆成机器、AI 和责任人的三道质量关。",
+    metric: "3 层独立验收",
+    href: "/guide/07-quality",
+    visual: "quality",
+    items: ["确定性检查", "AI 语义检查", "责任人确认"],
+  },
+  {
+    title: courseMeta.outputs[2],
+    label: "WORKFLOW REDESIGN",
+    description: "标出删除、合并、AI 执行与人工决策的新流程。",
+    metric: "1 个可复用闭环",
+    href: "/guide/08-workflow",
+    visual: "workflow",
+    items: ["输入", "AI 初稿", "检查", "交付"],
+  },
+  {
+    title: courseMeta.outputs[3],
+    label: "7-DAY SPRINT",
+    description: "选一个低风险真实任务，七天跑完并留下可复用资产。",
+    metric: "7 天完成小闭环",
+    href: "/guide/09-transfer",
+    visual: "plan",
+    items: ["1", "2", "3", "4", "5", "6", "7"],
+  },
+];
 </script>
 
 <template>
@@ -105,7 +144,25 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
           </a>
           <a class="mode-card mode-study" :href="withBase('/guide/00-start')">
             <span class="mode-index">02 / SELF-STUDY</span>
-            <div class="mode-preview study-preview"><span></span><i></i><i></i><i></i></div>
+            <div class="mode-preview study-preview" aria-hidden="true">
+              <div class="study-browser-bar">
+                <span><i></i><i></i><i></i></span>
+                <strong>AI 协同教程</strong>
+                <b>64%</b>
+              </div>
+              <div class="study-browser-body">
+                <div class="study-sidebar">
+                  <span>01</span><span>02</span><span class="active">03</span><span>04</span><span>05</span>
+                </div>
+                <div class="study-chapters">
+                  <small>CHAPTER 03</small>
+                  <strong>模型与工具全景</strong>
+                  <div><span>01</span><b>先判断任务</b><i>已完成</i></div>
+                  <div class="current"><span>02</span><b>再选择工具</b><i>学习中</i></div>
+                  <div><span>03</span><b>最后定义验收</b><i>待开始</i></div>
+                </div>
+              </div>
+            </div>
             <h3>课后学习</h3>
             <p>九章教程、概念图谱、工具全景、宽泛场景、五份模板、练习与可追溯来源。</p>
             <b>打开教程网站 <span>→</span></b>
@@ -154,9 +211,42 @@ const presentLink = computed(() => `${withBase("/present")}?scene=1`);
           <h2>学完不是多记几个名词，而是带走四份工作部件</h2>
         </header>
         <div class="output-grid">
-          <article v-for="(item, index) in courseMeta.outputs" :key="item">
-            <span>{{ String(index + 1).padStart(2, '0') }}</span><strong>{{ item }}</strong>
-          </article>
+          <a
+            v-for="(item, index) in outputCards"
+            :key="item.title"
+            class="output-card"
+            :href="withBase(item.href)"
+          >
+            <header>
+              <span>{{ String(index + 1).padStart(2, '0') }}</span>
+              <small>{{ item.label }}</small>
+            </header>
+
+            <div class="output-visual" :class="`output-visual--${item.visual}`" aria-hidden="true">
+              <template v-if="item.visual === 'task'">
+                <span v-for="field in item.items" :key="field">{{ field }}</span>
+              </template>
+              <template v-else-if="item.visual === 'quality'">
+                <div v-for="(layer, layerIndex) in item.items" :key="layer">
+                  <i>{{ layerIndex + 1 }}</i><span>{{ layer }}</span><b>✓</b>
+                </div>
+              </template>
+              <template v-else-if="item.visual === 'workflow'">
+                <div v-for="(step, stepIndex) in item.items" :key="step">
+                  <i>{{ stepIndex + 1 }}</i><span>{{ step }}</span>
+                </div>
+              </template>
+              <template v-else>
+                <span v-for="day in item.items" :key="day" :class="{ active: Number(day) <= 4 }">D{{ day }}</span>
+              </template>
+            </div>
+
+            <div class="output-card-copy">
+              <strong>{{ item.title }}</strong>
+              <p>{{ item.description }}</p>
+            </div>
+            <footer><span>{{ item.metric }}</span><b>打开模板 <i>↗</i></b></footer>
+          </a>
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import type { Theme } from "vitepress";
 import AdvancedTrack from "./components/AdvancedTrack.vue";
 import BoundaryBoard from "./components/BoundaryBoard.vue";
 import CollaborationFlow from "./components/CollaborationFlow.vue";
+import CourseRouteMap from "./components/CourseRouteMap.vue";
 import KnowledgeAtlas from "./components/KnowledgeAtlas.vue";
 import Layout from "./Layout.vue";
 import ScenarioFrame from "./components/ScenarioFrame.vue";
@@ -22,6 +23,7 @@ export default {
     app.component("AdvancedTrack", AdvancedTrack);
     app.component("BoundaryBoard", BoundaryBoard);
     app.component("CollaborationFlow", CollaborationFlow);
+    app.component("CourseRouteMap", CourseRouteMap);
     app.component("KnowledgeAtlas", KnowledgeAtlas);
     app.component("ScenarioFrame", ScenarioFrame);
     app.component("TaskCardLab", TaskCardLab);

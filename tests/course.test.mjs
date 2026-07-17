@@ -275,6 +275,36 @@ test("lecture blueprint locks sourced evidence static fallback and process visua
   assert.match(sceneById["method-static-demo"].visual.fallback, /预制任务卡与验收清单/);
 });
 
+test("presentation feedback uses explicit emphasis and one worked training-material scenario", async () => {
+  const { lectureScenes } = await import("../course/.vitepress/data/scenes.js");
+  const sceneById = Object.fromEntries(lectureScenes.map((scene) => [scene.id, scene]));
+  const stageScene = await read("course/.vitepress/theme/components/StageScene.vue");
+  const stageVisual = await read("course/.vitepress/theme/components/StageVisual.vue");
+  const styles = await read("course/.vitepress/theme/styles/presentation.css");
+
+  assert.ok(sceneById["t-shaped-question"].visual.items.every((item) => !item.emphasized));
+  assert.ok(sceneById["learner-evidence"].visual.items.every((item) => !item.emphasized));
+  assert.deepEqual(sceneById["learner-evidence"].titleLines, ["学员并非从零开始", "四项使用情况给出了真实起点"]);
+  assert.equal(sceneById["usage-maturity"].visual.variant, "maturity");
+  assert.ok(sceneById["usage-maturity"].visual.items.every((item) => item.title && item.example));
+  assert.equal(sceneById["vague-request"].visual.bad, "把新人培训材料整理一下，明天下午给我。");
+  assert.deepEqual(sceneById["vague-request"].visual.tags.map((item) => item.title), ["对象", "材料", "格式", "验收", "边界"]);
+  assert.equal(sceneById["seven-step-map"].visual.variant, "worked");
+  assert.deepEqual(
+    sceneById["seven-step-map"].visual.items.map((item) => item.example),
+    ["新人一周清单可确认", "议程 / 链接 / FAQ", "先核对，再整理", "表格 + 待确认项", "来源、链接可追溯", "不发送、不补猜", "复用清单模板"],
+  );
+  assert.equal(sceneById["task-contract"].visual.type, "promptContract");
+  assert.equal(sceneById["task-contract"].visual.fields.length, 7);
+  assert.match(sceneById["task-contract"].visual.prompt.join("\n"), /只起草，不发送、不发布/);
+
+  assert.match(stageScene, /scene\.titleLines/);
+  assert.match(stageVisual, /item\.emphasized/);
+  assert.doesNotMatch(stageVisual, /SELECT BY/);
+  assert.doesNotMatch(styles, /\.poll-card:nth-child|\.column-card:last-child|\.decision-card:first-child/);
+  assert.doesNotMatch(styles, /\.stage-visual\s+:is\([^}]+!important/s);
+});
+
 test("presentation navigation is deterministic", async () => {
   const { clampScene, keyToAction, sceneFromSearch, searchWithScene } = await import("../course/.vitepress/data/presentation.js");
 
@@ -296,7 +326,7 @@ test("presentation navigation is deterministic", async () => {
 });
 
 test("tutorial components expose shared scenarios knowledge tools and templates", async () => {
-  const components = ["ScenarioFrame", "KnowledgeAtlas", "ToolLandscape", "TemplateLibrary"];
+  const components = ["CourseRouteMap", "ScenarioFrame", "KnowledgeAtlas", "ToolLandscape", "TemplateLibrary"];
   const theme = await read("course/.vitepress/theme/index.ts");
 
   for (const name of components) {
@@ -306,6 +336,26 @@ test("tutorial components expose shared scenarios knowledge tools and templates"
 
   await assert.rejects(access("course/.vitepress/theme/components/CaseTheatre.vue"));
   assert.doesNotMatch(theme, /CaseTheatre/);
+});
+
+test("course map exposes nine data-driven chapter links and container-aware tutorial layouts", async () => {
+  const routeMap = await read("course/.vitepress/theme/components/CourseRouteMap.vue");
+  const guide = await read("course/guide/00-start.md");
+  const toolLandscape = await read("course/.vitepress/theme/components/ToolLandscape.vue");
+  const styles = await read("course/.vitepress/theme/styles/components.css");
+
+  assert.match(routeMap, /import \{ lectureSections \}/);
+  assert.match(routeMap, /v-for="section in lectureSections"/);
+  assert.match(routeMap, /withBase\(section\.guide\)/);
+  assert.doesNotMatch(routeMap, /defineProps/);
+  assert.match(guide, /<CourseRouteMap \/>/);
+  assert.match(guide, /第一章讨论人才能力边界/);
+  assert.match(guide, /第二章讨论 AI 使用成熟度/);
+  assert.match(toolLandscape, /打开官网 ↗/);
+  assert.match(styles, /container-type:inline-size/);
+  assert.match(styles, /@container \(max-width: 820px\)/);
+  assert.match(styles, /\.flow-rail button:nth-child\(n \+ 5\) \{ grid-column:span 4/);
+  assert.match(styles, /last-child:nth-child\(odd\)/);
 });
 
 test("tutorial materials stay inside the readable document column", async () => {
@@ -400,6 +450,9 @@ test("VitePress routes mirror the approved lecture and reference structure", asy
   assert.match(home, /layout: course-home/);
   assert.match(present, /layout: presentation/);
   assert.match(deck, /requestFullscreen/);
+  assert.match(deck, /class="stage-exit"/);
+  assert.match(deck, /withBase\('\/'\)/);
+  assert.match(deck, /返回课程首页/);
   assert.match(deck, /fullscreenNotice/);
   assert.match(deck, /overview-section-head/);
   assert.match(deck, /section\.scenes\[0\]\.index/);

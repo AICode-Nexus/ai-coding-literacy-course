@@ -25,7 +25,10 @@ const section = computed(() => lectureSections.find((item) => item.id === props.
     <main class="stage-content">
       <div class="stage-copy">
         <p class="stage-eyebrow">{{ scene.eyebrow }}</p>
-        <h1>{{ scene.title }}</h1>
+        <h1 v-if="scene.titleLines" class="stage-title-lines">
+          <span v-for="line in scene.titleLines" :key="line">{{ line }}</span>
+        </h1>
+        <h1 v-else>{{ scene.title }}</h1>
         <p class="stage-body">{{ scene.body }}</p>
       </div>
       <StageVisual :visual="scene.visual" />

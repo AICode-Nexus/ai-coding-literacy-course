@@ -1,5 +1,6 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from "vue";
+import { withBase } from "vitepress";
 import { lectureSections } from "../../data/course.js";
 import { lectureScenes } from "../../data/scenes.js";
 import { clampScene, keyToAction, sceneFromSearch, searchWithScene } from "../../data/presentation.js";
@@ -123,6 +124,8 @@ onBeforeUnmount(() => {
       <StageScene :scene="activeScene" :number="activeIndex + 1" :total="lectureScenes.length" />
 
       <div class="stage-progress" aria-hidden="true"><i :style="{ width: `${progress}%` }"></i></div>
+
+      <a class="stage-exit" :href="withBase('/')">← 返回课程首页</a>
 
       <nav class="stage-controls" aria-label="演示控制">
         <button type="button" title="上一页（←）" :disabled="activeIndex === 0" @click="goTo(activeIndex - 1)">←</button>

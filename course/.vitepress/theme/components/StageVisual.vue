@@ -7,7 +7,11 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
 </script>
 
 <template>
-  <div class="stage-visual" :class="`visual-${visual.type}`" aria-hidden="true">
+  <div
+    class="stage-visual"
+    :class="[`visual-${visual.type}`, visual.variant ? `is-${visual.variant}` : null]"
+    aria-hidden="true"
+  >
     <template v-if="visual.type === 'split'">
       <div class="visual-panel visual-panel-muted">
         <span class="visual-label">{{ visual.left.label }}</span>
@@ -23,7 +27,12 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
     </template>
 
     <template v-else-if="visual.type === 'poll'">
-      <div v-for="(item, index) in visual.items" :key="itemKey(item, index)" class="poll-card">
+      <div
+        v-for="(item, index) in visual.items"
+        :key="itemKey(item, index)"
+        class="poll-card"
+        :class="{ 'is-emphasized': item.emphasized }"
+      >
         <span>{{ item.key }}</span>
         <strong>{{ item.title }}</strong>
         <small>{{ item.note }}</small>
@@ -31,7 +40,12 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
     </template>
 
     <template v-else-if="visual.type === 'columns'">
-      <div v-for="(item, index) in visual.items" :key="itemKey(item, index)" class="column-card">
+      <div
+        v-for="(item, index) in visual.items"
+        :key="itemKey(item, index)"
+        class="column-card"
+        :class="{ 'is-emphasized': item.emphasized }"
+      >
         <span class="column-index">{{ item.level }}</span>
         <strong>{{ item.title }}</strong>
         <div class="column-result">{{ item.result }}</div>
@@ -56,7 +70,7 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
     </template>
 
     <template v-else-if="visual.type === 'modelSelector'">
-      <div class="selector-core"><span>SELECT BY</span><strong>{{ visual.center }}</strong></div>
+      <div class="selector-core"><strong>{{ visual.center }}</strong></div>
       <div
         v-for="(item, index) in visual.items"
         :key="item.name"
@@ -88,18 +102,34 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
     <template v-else-if="visual.type === 'beforeAfter'">
       <div class="flow-lane flow-lane-before">
         <span class="lane-label">旧方式</span>
-        <div v-for="(item, index) in visual.before" :key="item" class="flow-node">{{ item }}<i v-if="index < visual.before.length - 1">→</i></div>
+        <div class="flow-nodes">
+          <template v-for="(item, index) in visual.before" :key="item">
+            <div class="flow-node">{{ item }}</div>
+            <i v-if="index < visual.before.length - 1" class="flow-connector">→</i>
+          </template>
+        </div>
       </div>
       <div class="flow-lane flow-lane-after">
         <span class="lane-label">新方式</span>
-        <div v-for="(item, index) in visual.after" :key="item" class="flow-node">{{ item }}<i v-if="index < visual.after.length - 1">→</i></div>
+        <div class="flow-nodes">
+          <template v-for="(item, index) in visual.after" :key="item">
+            <div class="flow-node">{{ item }}</div>
+            <i v-if="index < visual.after.length - 1" class="flow-connector">→</i>
+          </template>
+        </div>
       </div>
     </template>
 
     <template v-else-if="visual.type === 'steps' || visual.type === 'timeline'">
-      <div v-for="(item, index) in visual.items" :key="item" class="step-node">
+      <div
+        v-for="(item, index) in visual.items"
+        :key="itemKey(item, index)"
+        class="step-node"
+        :style="{ '--step': index }"
+      >
         <span>{{ String(index + 1).padStart(2, '0') }}</span>
-        <strong>{{ item }}</strong>
+        <strong>{{ typeof item === 'string' ? item : item.title }}</strong>
+        <small v-if="typeof item !== 'string' && item.example">{{ item.example }}</small>
       </div>
     </template>
 
@@ -107,7 +137,12 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
       <div class="rewrite-row rewrite-bad"><span>模糊请求</span><strong>{{ visual.bad }}</strong></div>
       <div class="rewrite-arrow">↓</div>
       <div class="rewrite-row rewrite-good"><span>任务结果</span><strong>{{ visual.good }}</strong></div>
-      <div class="tag-row"><span v-for="tag in visual.tags" :key="tag">{{ tag }}</span></div>
+      <div class="tag-row">
+        <span v-for="(tag, index) in visual.tags" :key="itemKey(tag, index)">
+          <b>{{ typeof tag === 'string' ? tag : tag.title }}</b>
+          <small v-if="typeof tag !== 'string'">{{ tag.example }}</small>
+        </span>
+      </div>
     </template>
 
     <template v-else-if="visual.type === 'stack' || visual.type === 'layers'">
@@ -123,6 +158,18 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
         <span>{{ item.key }}</span>
         <strong>{{ item.name }}</strong>
         <small>{{ item.note }}</small>
+      </div>
+    </template>
+
+    <template v-else-if="visual.type === 'promptContract'">
+      <div class="prompt-summary">
+        <span v-for="(item, index) in visual.fields" :key="itemKey(item, index)">
+          <b>{{ item.key }}</b><strong>{{ item.value }}</strong>
+        </span>
+      </div>
+      <div class="prompt-example">
+        <span>可直接使用的 Prompt</span>
+        <p v-for="(line, index) in visual.prompt" :key="line"><b>{{ index + 1 }}</b>{{ line }}</p>
       </div>
     </template>
 
@@ -185,7 +232,12 @@ const itemKey = (item, index) => item?.key || item?.name || item?.title || item?
     </template>
 
     <template v-else-if="visual.type === 'decision'">
-      <div v-for="(item, index) in visual.items" :key="item.name" class="decision-card">
+      <div
+        v-for="(item, index) in visual.items"
+        :key="item.name"
+        class="decision-card"
+        :class="{ 'is-emphasized': item.emphasized }"
+      >
         <span>{{ String(index + 1).padStart(2, '0') }}</span>
         <strong>{{ item.name }}</strong>
         <p>{{ item.when }}</p>

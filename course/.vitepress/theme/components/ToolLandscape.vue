@@ -33,6 +33,7 @@ const selected = computed(() => {
             <span>{{ entry.name }}</span>
             <small>{{ entry.note }}</small>
             <i>{{ entry.verifiedAt }} · {{ toolEntryStatus(entry) }}</i>
+            <b>打开官网 ↗</b>
           </a>
         </footer>
       </article>
