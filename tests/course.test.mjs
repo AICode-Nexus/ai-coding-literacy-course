@@ -93,11 +93,43 @@ test("VitePress defaults to dark appearance while keeping the theme switch avail
   assert.match(config, /darkModeSwitchLabel:/);
 });
 
-test("course homepage maps the supplied KV formats to responsive contexts and uses the AI mark", async () => {
+test("tutorial navigation exposes an accessible fullscreen control", async () => {
+  const layout = await read("course/.vitepress/theme/Layout.vue");
+  const fullscreen = await read("course/.vitepress/theme/components/FullscreenButton.vue");
+  const buttonRule = fullscreen.match(/\.course-fullscreen-button\s*\{([^}]+)\}/s)?.[1] ?? "";
+  const iconRule = fullscreen.match(/\.course-fullscreen-button svg\s*\{([^}]+)\}/s)?.[1] ?? "";
+  const labelRule = fullscreen.match(/\.course-fullscreen-button span\s*\{([^}]+)\}/s)?.[1] ?? "";
+
+  assert.match(layout, /import FullscreenButton/);
+  assert.match(layout, /#nav-bar-content-after/);
+  assert.match(layout, /<FullscreenButton\s*\/>/);
+  assert.match(fullscreen, /document\.documentElement/);
+  assert.match(fullscreen, /requestFullscreen/);
+  assert.match(fullscreen, /exitFullscreen/);
+  assert.match(fullscreen, /fullscreenchange/);
+  assert.match(fullscreen, /:aria-label="actionLabel"/);
+  assert.match(fullscreen, /进入全屏/);
+  assert.match(fullscreen, /退出全屏/);
+  assert.match(buttonRule, /width:\s*52px/);
+  assert.match(buttonRule, /height:\s*var\(--vp-nav-height\)/);
+  assert.match(buttonRule, /padding:\s*0/);
+  assert.match(buttonRule, /font-size:\s*14px/);
+  assert.match(buttonRule, /font-weight:\s*500/);
+  assert.match(buttonRule, /color:\s*var\(--vp-c-text-1\)/);
+  assert.match(buttonRule, /border:\s*0/);
+  assert.match(buttonRule, /background:\s*transparent/);
+  assert.doesNotMatch(buttonRule, /border-radius|vp-c-brand-soft/);
+  assert.match(iconRule, /display:\s*block/);
+  assert.match(iconRule, /width:\s*18px/);
+  assert.match(labelRule, /position:\s*absolute/);
+  assert.match(labelRule, /clip:\s*rect\(0, 0, 0, 0\)/);
+});
+
+test("course homepage maps the supplied KV formats to responsive contexts and uses the supplied logo", async () => {
   const home = await read("course/.vitepress/theme/components/CourseHome.vue");
   const stage = await read("course/.vitepress/theme/components/StageScene.vue");
   const config = await read("course/.vitepress/config.mts");
-  const mark = await read("course/public/brand/ai-collaboration-mark.svg");
+  const logo = await readFile("course/public/logo.png");
 
   for (const asset of ["kv-wide.jpg", "kv-mobile.jpg", "kv-stage.jpg", "kv-ultrawide.jpg"]) {
     await access(path.join("course/public/kv", asset));
@@ -105,14 +137,14 @@ test("course homepage maps the supplied KV formats to responsive contexts and us
   }
 
   assert.match(home, /fetchpriority=["']high["']/);
-  assert.match(home, /brand\/ai-collaboration-mark\.svg/);
-  assert.match(stage, /brand\/ai-collaboration-mark\.svg/);
-  assert.match(config, /logo:\s*["']\/brand\/ai-collaboration-mark\.svg["']/);
+  assert.match(home, /withBase\(["']\/logo\.png["']\)/);
+  assert.match(stage, /withBase\(["']\/logo\.png["']\)/);
+  assert.match(config, /logo:\s*["']\/logo\.png["']/);
+  assert.match(config, /type:\s*["']image\/png["']/);
   assert.match(config, /og:image/);
-  assert.match(mark, /#078DFF/);
-  assert.match(mark, /#063E8C/);
-  assert.match(mark, /#FF9A1F/);
-  assert.doesNotMatch(mark, /linearGradient|filter|image/);
+  assert.deepEqual([...logo.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.equal(logo.readUInt32BE(16), 1498);
+  assert.equal(logo.readUInt32BE(20), 1280);
 });
 
 test("scenario and template registry is normalized", async () => {
@@ -336,6 +368,86 @@ test("tutorial components expose shared scenarios knowledge tools and templates"
 
   await assert.rejects(access("course/.vitepress/theme/components/CaseTheatre.vue"));
   assert.doesNotMatch(theme, /CaseTheatre/);
+});
+
+test("tutorial chapters keep shared registries compact and reserve full tool entries for the panorama", async () => {
+  const { conceptById } = await import("../course/.vitepress/data/concepts.js");
+  const { lectureSections } = await import("../course/.vitepress/data/course.js");
+  const scenarioFrame = await read("course/.vitepress/theme/components/ScenarioFrame.vue");
+  const knowledgeAtlas = await read("course/.vitepress/theme/components/KnowledgeAtlas.vue");
+  const toolLandscape = await read("course/.vitepress/theme/components/ToolLandscape.vue");
+  const guideSources = [];
+
+  for (const section of lectureSections) {
+    const source = await read("course" + section.guide + ".md");
+    guideSources.push(source);
+    assert.match(source, /<KnowledgeAtlas mode="compact"/);
+
+    const selectedConcepts = source.match(/<KnowledgeAtlas[^>]*:concept-ids="\[([^\]]+)\]"/)?.[1] ?? "";
+    const conceptIds = [...selectedConcepts.matchAll(/'([^']+)'/g)].map((match) => match[1]);
+    assert.ok(conceptIds.length >= 5, section.id + " needs a focused concept index");
+    for (const id of conceptIds) {
+      assert.ok(conceptById[id]?.nodeIds.includes(section.id), `${id} must link back to ${section.id}`);
+    }
+
+    if (section.id === "ai-landscape") {
+      assert.match(source, /<ToolLandscape\s*\/>/);
+      assert.doesNotMatch(source, /<ToolLandscape mode="compact"/);
+    } else {
+      assert.match(source, /<ToolLandscape mode="compact"/);
+    }
+  }
+
+  assert.equal(guideSources.join("\n").match(/<TaskCardLab\s*\/>/g)?.length, 1);
+  assert.match(scenarioFrame, /showLinks:\s*\{\s*type:\s*Boolean,\s*default:\s*false\s*\}/);
+  assert.match(scenarioFrame, /v-if="showLinks" class="scenario-frame-links"/);
+  assert.match(knowledgeAtlas, /knowledge-atlas-compact/);
+  assert.match(knowledgeAtlas, /v-if="!isCompact" class="knowledge-links"/);
+  assert.match(toolLandscape, /tool-landscape-compact/);
+  assert.match(toolLandscape, /<footer v-if="!isCompact">/);
+});
+
+test("tutorial typography gives keywords and chapter viewpoints a shared visual hierarchy", async () => {
+  const tokens = await read("course/.vitepress/theme/styles/tokens.css");
+  const docs = await read("course/.vitepress/theme/styles/docs.css");
+  const { lectureSections } = await import("../course/.vitepress/data/course.js");
+
+  assert.match(tokens, /--course-keyword-bg:/);
+  assert.match(tokens, /--course-viewpoint-bg-strong:/);
+  assert.match(docs, /:where\(p, li, td, dd\) > :is\(strong, mark\)/);
+  assert.match(docs, /background:\s*var\(--course-keyword-bg\)/);
+  assert.match(docs, /\.vp-doc blockquote::before\s*{[^}]*content:\s*"核心观点"/s);
+  assert.match(docs, /h2\[id="本章结论"\] \+ \.custom-block\.tip/);
+
+  for (const section of lectureSections) {
+    const source = await read("course" + section.guide + ".md");
+    assert.match(source, /## 本章结论\s+::: tip 本章核心观点/);
+    assert.match(source, /::: tip 本章核心观点[\s\S]+?:::\s+## 通用工作场景/);
+  }
+});
+
+test("each tutorial chapter owns substantial lecture-ready material", async () => {
+  const { lectureSections } = await import("../course/.vitepress/data/course.js");
+  const requiredChapterLanguage = new Map([
+    ["t-shaped", ["读懂这个“T”", "纵向专业", "横向协作"]],
+    ["collaboration-shift", ["超过 90%", "78.21%", "差距为什么"]],
+    ["ai-landscape", ["四层问题地图", "模型基础层", "流程进化层"]],
+    ["method", ["贯穿七步的教学示例", "前一步的产物会成为后一步的输入"]],
+    ["context", ["一次上下文装配示例", "候选信息"]],
+    ["agent", ["本章只负责“行动系统”", "Agent Loop 的六个部件"]],
+    ["quality", ["可执行的证据契约", "失败时怎样处理"]],
+    ["workflow", ["改造下一次工作", "复用阶梯"]],
+    ["transfer", ["已填写", "建议的第一个小任务", "第一份资产"]],
+  ]);
+
+  for (const section of lectureSections) {
+    const source = await read("course" + section.guide + ".md");
+    const chineseCharacterCount = source.match(/[\u3400-\u9fff]/g)?.length ?? 0;
+    assert.ok(chineseCharacterCount >= 1800, `${section.id} needs enough readable teaching content`);
+    for (const phrase of requiredChapterLanguage.get(section.id) ?? []) {
+      assert.ok(source.includes(phrase), `${section.id} missing chapter-owned content: ${phrase}`);
+    }
+  }
 });
 
 test("course map exposes nine data-driven chapter links and container-aware tutorial layouts", async () => {

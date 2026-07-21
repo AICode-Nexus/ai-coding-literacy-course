@@ -120,12 +120,39 @@ body {
   line-height: 1.8;
 }
 
+.vp-doc :where(p, li, td, dd) > :is(strong, mark) {
+  padding: 0.08em 0.3em 0.12em;
+  color: var(--vp-c-brand-1);
+  border-radius: 0.24em;
+  background: var(--course-keyword-bg);
+  font-weight: 760;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.vp-doc mark {
+  font: inherit;
+}
+
 .vp-doc blockquote {
+  position: relative;
   margin: 2em 0;
-  padding: 1.4em 1.6em;
+  padding: 2.8em 1.6em 1.4em;
   color: var(--vp-c-text-1);
+  border: 1px solid var(--course-viewpoint-line);
   border-left: 4px solid var(--course-cyan);
-  background: linear-gradient(90deg, rgba(66, 228, 209, 0.12), var(--vp-c-bg-soft));
+  background: linear-gradient(135deg, var(--course-viewpoint-bg-strong), var(--course-viewpoint-bg));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.vp-doc blockquote::before {
+  content: "核心观点";
+  position: absolute;
+  top: 1.2em;
+  left: 1.8em;
+  color: var(--vp-c-brand-1);
+  font: 850 0.7rem/1 var(--course-display);
+  letter-spacing: 0.12em;
 }
 
 .vp-doc blockquote p {
@@ -171,6 +198,43 @@ body {
 .vp-doc .custom-block.tip {
   border-left-color: var(--course-cyan);
   background: rgba(66, 228, 209, 0.08);
+}
+
+.vp-doc h2[id="本章结论"] + .custom-block.tip {
+  margin: 1.2em 0 2.6em;
+  padding: 1.6em 1.75em 1.7em;
+  border-color: var(--course-viewpoint-line);
+  border-left: 4px solid var(--vp-c-brand-1);
+  background: linear-gradient(135deg, var(--course-viewpoint-bg-strong), var(--course-viewpoint-bg));
+  box-shadow: 0 18px 48px rgba(0, 18, 24, 0.08);
+}
+
+.vp-doc h2[id="本章结论"] + .custom-block.tip .custom-block-title {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  margin-bottom: 1em;
+  color: var(--vp-c-brand-1);
+  font-size: 1rem;
+  font-weight: 820;
+}
+
+.vp-doc h2[id="本章结论"] + .custom-block.tip .custom-block-title::before {
+  content: "TAKEAWAY";
+  padding: 0.42em 0.58em;
+  color: var(--vp-c-bg);
+  background: var(--vp-c-brand-1);
+  font: 900 0.62rem/1 var(--course-display);
+  letter-spacing: 0.1em;
+}
+
+.vp-doc h2[id="本章结论"] + .custom-block.tip > :last-child {
+  margin-bottom: 0;
+}
+
+.vp-doc h2[id="本章结论"] + .custom-block.tip blockquote {
+  margin: 1.25em 0 0;
+  box-shadow: none;
 }
 
 .vp-doc .custom-block.warning {
@@ -296,6 +360,9 @@ body {
 @media (max-width: 700px) {
   .vp-doc h1 { font-size: 2.5rem; }
   .vp-doc table { display:block; max-width:100%; overflow-x:auto; }
+  .vp-doc blockquote,
+  .vp-doc h2[id="本章结论"] + .custom-block.tip { padding-right:1.2em; padding-left:1.2em; }
+  .vp-doc blockquote::before { left:1.4em; }
   .concept-grid, .practice-grid, .source-legend, .three-layer-check { grid-template-columns: 1fr; }
   .chapter-lead { grid-template-columns: 1fr; }
 }

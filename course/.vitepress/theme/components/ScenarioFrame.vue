@@ -6,6 +6,7 @@ import { toolCategoryById } from "../../data/tools.js";
 
 const props = defineProps({
   scenarioId: { type: String, required: true },
+  showLinks: { type: Boolean, default: false },
 });
 
 const scenario = computed(() => scenarioById[props.scenarioId]);
@@ -32,7 +33,7 @@ const relatedTools = computed(() => scenario.value?.toolCategoryIds.map((id) => 
       </article>
     </div>
 
-    <div class="scenario-frame-links">
+    <div v-if="showLinks" class="scenario-frame-links">
       <div><b>相关概念</b><span v-for="concept in relatedConcepts" :key="concept.id">{{ concept.label }}</span></div>
       <div><b>能力类别</b><span v-for="category in relatedTools" :key="category.id">{{ category.name }}</span></div>
     </div>

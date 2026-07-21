@@ -12,7 +12,7 @@ export default defineConfig({
   lastUpdated: true,
   outDir: "../dist",
   head: [
-    ["link", { rel: "icon", type: "image/svg+xml", href: `${base}brand/ai-collaboration-mark.svg` }],
+    ["link", { rel: "icon", type: "image/png", href: `${base}logo.png` }],
     ["meta", { name: "theme-color", content: "#078DFF" }],
     ["meta", { name: "color-scheme", content: "light dark" }],
     ["meta", { property: "og:image", content: `${base}kv/kv-stage.jpg` }],
@@ -20,7 +20,7 @@ export default defineConfig({
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
   ],
   themeConfig: {
-    logo: "/brand/ai-collaboration-mark.svg",
+    logo: "/logo.png",
     siteTitle: false,
     search: {
       provider: "local",

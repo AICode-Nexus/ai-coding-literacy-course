@@ -52,7 +52,7 @@ const outputCards = [
   <div class="course-home">
     <header class="home-nav">
       <a class="home-brand" :href="withBase('/')" aria-label="AI协同方法论：从“会用AI”到“善用AI”">
-        <img class="home-brand-mark" :src="withBase('/brand/ai-collaboration-mark.svg')" alt="">
+        <img class="home-brand-mark" :src="withBase('/logo.png')" alt="">
         <SiteBrand />
       </a>
       <nav aria-label="主导航">
@@ -81,7 +81,7 @@ const outputCards = [
 
         <div class="kv-course-dock">
           <div class="kv-course-identity">
-            <img :src="withBase('/brand/ai-collaboration-mark.svg')" alt="">
+            <img :src="withBase('/logo.png')" alt="">
             <div>
               <small>2026 CAMPUS LEARNING</small>
               <strong>AI协同方法论</strong>

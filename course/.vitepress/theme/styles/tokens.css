@@ -11,6 +11,10 @@
   --course-muted: #88a1a9;
   --course-line: rgba(117, 224, 216, 0.2);
   --course-shadow: 0 24px 80px rgba(0, 18, 24, 0.16);
+  --course-keyword-bg: rgba(0, 106, 203, 0.12);
+  --course-viewpoint-bg: rgba(0, 106, 203, 0.07);
+  --course-viewpoint-bg-strong: rgba(0, 106, 203, 0.13);
+  --course-viewpoint-line: rgba(0, 106, 203, 0.28);
   --course-home-surface: #f7fbff;
   --course-home-surface-deep: #e9f5ff;
   --course-display: "Avenir Next Condensed", "DIN Condensed", "Arial Narrow", sans-serif;
@@ -38,6 +42,10 @@
   --vp-c-brand-1: var(--course-cyan);
   --vp-c-brand-2: #77efe0;
   --vp-c-brand-3: #a5f7ec;
+  --course-keyword-bg: rgba(66, 228, 209, 0.14);
+  --course-viewpoint-bg: rgba(66, 228, 209, 0.07);
+  --course-viewpoint-bg-strong: rgba(66, 228, 209, 0.12);
+  --course-viewpoint-line: rgba(66, 228, 209, 0.24);
 }
 
 * {

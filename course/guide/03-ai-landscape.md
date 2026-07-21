@@ -11,6 +11,7 @@ description: 先看任务约束，再选择能力组合
 
 ## 本章结论
 
+::: tip 本章核心观点
 面对一项任务，先回答六个问题：
 
 1. 任务需要简单生成还是复杂推理？
@@ -21,6 +22,7 @@ description: 先看任务约束，再选择能力组合
 6. 总成本是多少，包括等待、返工、上下文准备和风险？
 
 然后选择能力组合，最后再看代表产品。**没有长期不变的最强模型，也没有适合所有任务的单一工具。**
+:::
 
 ## 通用工作场景
 
@@ -30,13 +32,24 @@ description: 先看任务约束，再选择能力组合
 
 ## 概念与关系
 
-<KnowledgeAtlas :concept-ids="['llm','token','context-window','reasoning','multimodal','hallucination','tool','agent','mcp','skill','rag']" />
+AI 全景不是一张产品树，而是四层问题地图。当你听到一个新名词时，先问它属于哪一层，再问它补了哪个缺口。
 
-这些概念可以连成一条能力链：
+| 层次 | 主要问题 | 核心概念 | 本课在哪里继续讲 |
+| --- | --- | --- | --- |
+| 模型基础层 | 模型能处理什么，固有限制是什么？ | LLM、Token、Context Window、Reasoning、Multimodal、Hallucination | 本章详讲 |
+| 任务协同层 | 怎样把模型能力组织成可验收任务？ | Goal、Context、Prompt、Output、Eval、Guardrails、Loop | 第 04、05、07 章 |
+| 行动系统层 | 模型怎样连接信息、工具和环境？ | Tool、Agent、MCP、Skill、Harness、Tracing | 第 05、06、07 章 |
+| 流程进化层 | 这次的证据和经验怎样进入下一次？ | Project Rules、AI-maintained Wiki、Loop Engineering | 第 08 章 |
 
-`LLM 处理 Token 与 Context → Reasoning 增强复杂任务处理 → Multimodal 扩展信息形态 → Tool 获取事实并采取动作 → Agent 围绕目标组织循环 → MCP / RAG / Skill 提供连接、检索与复用`
+本章只把第一层的六个基础概念展开。后三层在这里只定位，后面再带着任务讲，避免在全景章把每个名词都讲成一堆定义。
 
-Hallucination 始终提醒我们：能力链变长，不代表事实自动可靠。
+<KnowledgeAtlas mode="compact" :concept-ids="['llm','token','context-window','reasoning','multimodal','hallucination']" />
+
+模型基础层可以连成一条能力链：
+
+`LLM 通过 Token 处理 Context → Reasoning 为复杂问题分配更多计算 → Multimodal 扩展可读取和可生成的信息形态`
+
+Hallucination 始终提醒我们：语言流畅、推理更长、窗口更大或支持更多模态，都不代表事实自动可靠。
 
 ## 知识详解
 
