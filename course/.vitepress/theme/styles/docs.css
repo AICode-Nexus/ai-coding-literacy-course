@@ -14,9 +14,11 @@ body {
 
 .VPNavBarTitle .logo {
   flex: 0 0 auto;
-  width: 48px;
+  width: auto;
+  max-width: 48px;
   height: 32px;
   margin-right: 0 !important;
+  object-fit: contain;
 }
 
 .site-brand-lockup {
@@ -49,7 +51,8 @@ body {
   }
 
   .VPNavBarTitle .logo {
-    width: 45px;
+    width: auto;
+    max-width: 45px;
     height: 30px;
   }
 
