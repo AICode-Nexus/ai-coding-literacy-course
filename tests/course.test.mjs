@@ -93,9 +93,15 @@ test("VitePress defaults to dark appearance while keeping the theme switch avail
   assert.match(config, /darkModeSwitchLabel:/);
 });
 
-test("tutorial navigation exposes an accessible fullscreen control", async () => {
+test("every site layout exposes the appropriate fullscreen and theme controls", async () => {
   const layout = await read("course/.vitepress/theme/Layout.vue");
   const fullscreen = await read("course/.vitepress/theme/components/FullscreenButton.vue");
+  const utilities = await read("course/.vitepress/theme/components/HeaderUtilities.vue");
+  const themeToggle = await read("course/.vitepress/theme/components/ThemeToggle.vue");
+  const home = await read("course/.vitepress/theme/components/CourseHome.vue");
+  const instructor = await read("course/.vitepress/theme/components/InstructorProfile.vue");
+  const presentation = await read("course/.vitepress/theme/components/PresentDeck.vue");
+  const presentPage = await read("course/present.md");
   const buttonRule = fullscreen.match(/\.course-fullscreen-button\s*\{([^}]+)\}/s)?.[1] ?? "";
   const iconRule = fullscreen.match(/\.course-fullscreen-button svg\s*\{([^}]+)\}/s)?.[1] ?? "";
   const labelRule = fullscreen.match(/\.course-fullscreen-button span\s*\{([^}]+)\}/s)?.[1] ?? "";
@@ -103,6 +109,15 @@ test("tutorial navigation exposes an accessible fullscreen control", async () =>
   assert.match(layout, /import FullscreenButton/);
   assert.match(layout, /#nav-bar-content-after/);
   assert.match(layout, /<FullscreenButton\s*\/>/);
+  assert.match(utilities, /import FullscreenButton/);
+  assert.match(utilities, /import ThemeToggle/);
+  assert.match(utilities, /<FullscreenButton\s*\/>/);
+  assert.match(utilities, /<ThemeToggle\s*\/>/);
+  assert.match(utilities, /aria-label="显示设置"/);
+  assert.match(home, /import HeaderUtilities/);
+  assert.match(home, /<HeaderUtilities tone="light"\s*\/>/);
+  assert.match(instructor, /import HeaderUtilities/);
+  assert.match(instructor, /<HeaderUtilities tone="dark"\s*\/>/);
   assert.match(fullscreen, /document\.documentElement/);
   assert.match(fullscreen, /requestFullscreen/);
   assert.match(fullscreen, /exitFullscreen/);
@@ -115,7 +130,7 @@ test("tutorial navigation exposes an accessible fullscreen control", async () =>
   assert.match(buttonRule, /padding:\s*0/);
   assert.match(buttonRule, /font-size:\s*14px/);
   assert.match(buttonRule, /font-weight:\s*500/);
-  assert.match(buttonRule, /color:\s*var\(--vp-c-text-1\)/);
+  assert.match(buttonRule, /color:\s*var\(--course-header-control-color,\s*var\(--vp-c-text-1\)\)/);
   assert.match(buttonRule, /border:\s*0/);
   assert.match(buttonRule, /background:\s*transparent/);
   assert.doesNotMatch(buttonRule, /border-radius|vp-c-brand-soft/);
@@ -123,6 +138,23 @@ test("tutorial navigation exposes an accessible fullscreen control", async () =>
   assert.match(iconRule, /width:\s*18px/);
   assert.match(labelRule, /position:\s*absolute/);
   assert.match(labelRule, /clip:\s*rect\(0, 0, 0, 0\)/);
+  assert.match(themeToggle, /const \{ isDark, theme \} = useData\(\)/);
+  assert.match(themeToggle, /const hydrated = ref\(false\)/);
+  assert.match(themeToggle, /onMounted\(\(\) => \{\s*hydrated\.value = true/);
+  assert.match(themeToggle, /const checkedState = computed\(\(\) => hydrated\.value && isDark\.value\)/);
+  assert.match(themeToggle, /isDark\.value = !isDark\.value/);
+  assert.match(themeToggle, /role="switch"/);
+  assert.match(themeToggle, /:aria-label="actionLabel"/);
+  assert.match(themeToggle, /:aria-checked="checkedState"/);
+  assert.match(themeToggle, /切换到浅色模式/);
+  assert.match(themeToggle, /切换到深色模式/);
+  assert.doesNotMatch(themeToggle, /<svg\s+v-(?:if|else)/);
+  assert.match(presentPage, /navbar:\s*false/);
+  assert.match(presentation, /requestFullscreen/);
+  assert.match(presentation, /fullscreenchange/);
+  assert.match(presentation, /:aria-label="fullscreenActionLabel"/);
+  assert.match(presentation, /:aria-pressed="isFullscreen"/);
+  assert.match(presentation, /返回课程首页/);
 });
 
 test("course homepage maps the supplied KV formats to responsive contexts and uses the supplied logo", async () => {
@@ -148,6 +180,102 @@ test("course homepage maps the supplied KV formats to responsive contexts and us
   assert.equal(logo.readUInt32BE(20), 1280);
   assert.equal(logo[25], 6);
   assert.match(docs, /\.VPNavBarTitle \.logo\s*{[^}]*width:\s*auto[^}]*height:\s*32px[^}]*object-fit:\s*contain/s);
+});
+
+test("instructor profile exposes the approved compact identity open-source and contact contract", async () => {
+  const { instructorProfile } = await import("../course/.vitepress/data/instructor.js");
+  const component = await read("course/.vitepress/theme/components/InstructorProfile.vue");
+  const styles = await read("course/.vitepress/theme/styles/instructor.css");
+  const layout = await read("course/.vitepress/theme/Layout.vue");
+  const config = await read("course/.vitepress/config.mts");
+  const home = await read("course/.vitepress/theme/components/CourseHome.vue");
+
+  assert.equal(instructorProfile.name, "刘亚东");
+  assert.equal(instructorProfile.partyMembership, "共产党员");
+  assert.match(instructorProfile.introduction, /AI 编码率达 100%/);
+  assert.deepEqual(instructorProfile.metrics.map((item) => item.value), ["100%", "15 年", "全流程"]);
+
+  for (const role of ["集团 AI 超级顾问", "集团 AI 超级个体", "集团面试官", "集团技术讲师", "技术专家", "集团技术委员会委员", "序列专家"]) {
+    assert.ok(instructorProfile.roles.includes(role), "missing instructor role: " + role);
+  }
+
+  for (const honor of ["CBG 超级个体和评审官", "集团 2025 年大模型效能领航团队奖", "2025 年集团技术明星奖", "2025 年度技术攻关奖"]) {
+    assert.ok(instructorProfile.honors.includes(honor), "missing instructor honor: " + honor);
+  }
+
+  assert.deepEqual(instructorProfile.contacts.map((item) => item.label), ["微信公众号", "微信", "i 讯飞"]);
+  assert.equal("experience" in instructorProfile, false);
+  assert.deepEqual(instructorProfile.projects.map((item) => item.name), [
+    "Silen",
+    "mini-wiki",
+    "ai-native-frontend-bootcamp",
+    "ui-consistency",
+    "vekui",
+  ]);
+  const silen = instructorProfile.projects[0];
+  assert.equal(silen.featured, true);
+  assert.deepEqual(silen.links, [
+    { label: "GitHub", url: "https://github.com/AICode-Nexus/silen" },
+    { label: "npm", url: "https://www.npmjs.com/package/@aicode-nexus/silen?activeTab=readme" },
+  ]);
+  assert.ok(instructorProfile.projects.some((item) => item.links.some((link) => link.url === "https://github.com/trsoliu/mini-wiki")));
+  assert.ok(instructorProfile.projects.some((item) => item.links.some((link) => link.url === "https://github.com/vekui/vekui")));
+  assert.ok(instructorProfile.projects.every((item) => Array.isArray(item.links) && item.links.length > 0));
+
+  for (const asset of ["liu-yadong.jpg", "ai-dev-hub-qr.jpg", "wechat-qr.jpg", "iflytek-qr.jpg"]) {
+    const image = await readFile(path.join("course/public/instructor", asset));
+    assert.ok(image.length > 5_000, asset + " must contain a real image");
+    assert.deepEqual([...image.subarray(0, 3)], [255, 216, 255]);
+  }
+
+  assert.match(config, /nav:\s*primaryNavigation\.map/);
+  assert.match(home, /<PrimaryNavigation\s*\/>/);
+  assert.match(component, /<PrimaryNavigation active-id="instructor"\s*\/>/);
+  assert.match(layout, /<InstructorProfile v-else-if="frontmatter\.layout === 'instructor'" \/>/);
+  assert.match(component, /loading="lazy"/);
+  assert.match(component, /rel="noreferrer"/);
+  assert.match(component, /instructor-project-links/);
+  assert.match(styles, /@media \(max-width: 680px\)/);
+  assert.match(styles, /\.instructor-portrait\s*{[^}]*width:\s*min\(100%, 330px\)/s);
+  assert.match(styles, /\.contact-qr-frame img\s*{[^}]*max-width:\s*100%[^}]*max-height:\s*100%/s);
+  assert.match(styles, /@media \(min-width: 1640px\)[\s\S]*grid-template-columns:\s*minmax\(0, 1fr\) 220px 330px/);
+  assert.match(styles, /@media \(min-width: 1640px\)[\s\S]*\.instructor-portrait\s*{[^}]*align-self:\s*stretch/s);
+  assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)/);
+  assert.match(styles, /\.instructor-section--opensource\s*{[^}]*background:\s*linear-gradient\([^}]*var\(--course-ink-900\)/s);
+  assert.match(styles, /\.instructor-profile-links a\s*{[^}]*background:\s*var\(--instructor-panel\)/s);
+  assert.doesNotMatch(styles, /\.instructor-project-grid\s*>\s*article\.is-featured\s*{[^}]*radial-gradient/s);
+  assert.match(styles, /\.instructor-contact-grid\s*{[^}]*grid-template-columns:\s*repeat\(3/s);
+
+  const publicCopy = JSON.stringify(instructorProfile) + component;
+  assert.doesNotMatch(publicCopy, /EMPLOYMENT HISTORY|任职经历|EditVerse|AI 编辑器平台研发负责人/);
+  assert.doesNotMatch(publicCopy, /13721070887|trsoliu@gmail\.com/);
+});
+
+test("all page headers reuse one canonical primary navigation", async () => {
+  const { primaryNavigation } = await import("../course/.vitepress/data/navigation.js");
+  const component = await read("course/.vitepress/theme/components/PrimaryNavigation.vue");
+  const config = await read("course/.vitepress/config.mts");
+  const docs = await read("course/.vitepress/theme/styles/docs.css");
+  const homeStyles = await read("course/.vitepress/theme/styles/components.css");
+  const instructorStyles = await read("course/.vitepress/theme/styles/instructor.css");
+
+  assert.deepEqual(
+    primaryNavigation.map(({ id, text, link }) => ({ id, text, link })),
+    [
+      { id: "map", text: "课程地图", link: "/guide/00-start" },
+      { id: "materials", text: "课后教材", link: "/guide/01-t-shaped" },
+      { id: "instructor", text: "讲师", link: "/instructor" },
+      { id: "sources", text: "来源", link: "/sources" },
+      { id: "present", text: "开始讲课", link: "/present" },
+    ],
+  );
+  assert.match(config, /import\s*\{\s*primaryNavigation\s*\}\s*from\s*["']\.\/data\/navigation\.js["']/);
+  assert.ok(primaryNavigation.every((item) => !("emphasis" in item)));
+  assert.match(component, /v-for="item in primaryNavigation"/);
+  assert.match(component, /item\.query\s*\?\s*`\$\{href\}\?\$\{item\.query\}`/);
+  assert.doesNotMatch(component, /item\.emphasis|nav-stage|course-button|↗/);
+  assert.doesNotMatch(docs, /\.VPNavBarMenuLink\[href\*=["']\/present["']/);
+  assert.doesNotMatch(homeStyles + instructorStyles, /\.home-nav \.nav-stage|\.instructor-nav \.nav-stage/);
 });
 
 test("scenario and template registry is normalized", async () => {
@@ -527,6 +655,7 @@ test("task card generator returns the shared seven-field collaboration contract"
 test("VitePress routes mirror the approved lecture and reference structure", async () => {
   const files = [
     "course/index.md",
+    "course/instructor.md",
     "course/present.md",
     "course/sources.md",
     "course/guide/00-start.md",
@@ -545,6 +674,7 @@ test("VitePress routes mirror the approved lecture and reference structure", asy
     "course/public/logo.svg",
     "course/public/favicon.svg",
     "course/.vitepress/theme/components/CourseHome.vue",
+    "course/.vitepress/theme/components/InstructorProfile.vue",
     "course/.vitepress/theme/components/PresentDeck.vue",
   ];
 

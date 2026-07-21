@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
   width: 52px;
   height: var(--vp-nav-height);
   padding: 0;
-  color: var(--vp-c-text-1);
+  color: var(--course-header-control-color, var(--vp-c-text-1));
   border: 0;
   background: transparent;
   font-family: var(--course-sans);
@@ -106,11 +106,11 @@ onBeforeUnmount(() => {
 .course-fullscreen-button:hover,
 .course-fullscreen-button:focus-visible,
 .course-fullscreen-button.active {
-  color: var(--vp-c-brand-1);
+  color: var(--course-header-control-accent, var(--vp-c-brand-1));
 }
 
 .course-fullscreen-button:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
+  outline: 2px solid var(--course-header-control-accent, var(--vp-c-brand-1));
   outline-offset: 2px;
 }
 

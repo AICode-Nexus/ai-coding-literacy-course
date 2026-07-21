@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import { primaryNavigation } from "./data/navigation.js";
 
 const base = process.env.COURSE_BASE || "/";
 
@@ -35,12 +36,11 @@ export default defineConfig({
         },
       },
     },
-    nav: [
-      { text: "课程地图", link: "/guide/00-start" },
-      { text: "教材", link: "/guide/01-t-shaped" },
-      { text: "讲师模式", link: "/present" },
-      { text: "来源", link: "/sources" },
-    ],
+    nav: primaryNavigation.map((item) => ({
+      text: item.text,
+      link: item.query ? `${item.link}?${item.query}` : item.link,
+      activeMatch: item.activeMatch,
+    })),
     sidebar: {
       "/guide/": [
         {
