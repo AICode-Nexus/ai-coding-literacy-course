@@ -12,10 +12,12 @@ const showNotes = ref(false);
 const stageRoot = ref(null);
 const liveMessage = ref("");
 const fullscreenNotice = ref("");
+const isFullscreen = ref(false);
 let fullscreenNoticeTimer;
 
 const activeScene = computed(() => lectureScenes[activeIndex.value]);
 const progress = computed(() => ((activeIndex.value + 1) / lectureScenes.length) * 100);
+const fullscreenActionLabel = computed(() => (isFullscreen.value ? "退出全屏" : "进入全屏"));
 const overviewSections = computed(() =>
   lectureSections.map((section) => ({
     ...section,
@@ -79,6 +81,10 @@ function showFullscreenNotice(message) {
   }, 5000);
 }
 
+function syncFullscreenState() {
+  isFullscreen.value = Boolean(document.fullscreenElement);
+}
+
 function onKeydown(event) {
   const tag = event.target?.tagName?.toLowerCase();
   if (tag === "input" || tag === "textarea" || event.metaKey || event.ctrlKey || event.altKey) return;
@@ -108,12 +114,15 @@ onMounted(() => {
   announce();
   window.addEventListener("keydown", onKeydown);
   window.addEventListener("popstate", onPopstate);
+  document.addEventListener("fullscreenchange", syncFullscreenState);
+  syncFullscreenState();
   nextTick(() => stageRoot.value?.focus({ preventScroll: true }));
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener("keydown", onKeydown);
   window.removeEventListener("popstate", onPopstate);
+  document.removeEventListener("fullscreenchange", syncFullscreenState);
   window.clearTimeout(fullscreenNoticeTimer);
 });
 </script>
@@ -132,7 +141,15 @@ onBeforeUnmount(() => {
         <button type="button" title="总览（O）" @click="overview = !overview">{{ String(activeIndex + 1).padStart(2, "0") }}</button>
         <button type="button" title="下一页（→ 或空格）" :disabled="activeIndex === lectureScenes.length - 1" @click="goTo(activeIndex + 1)">→</button>
         <button type="button" title="讲师备注（N）" @click="showNotes = !showNotes">N</button>
-        <button type="button" title="全屏（F）" @click="toggleFullscreen">⛶</button>
+        <button
+          type="button"
+          :aria-label="fullscreenActionLabel"
+          :aria-pressed="isFullscreen"
+          :title="`${fullscreenActionLabel}（F）`"
+          @click="toggleFullscreen"
+        >
+          ⛶
+        </button>
       </nav>
 
       <p v-if="fullscreenNotice" class="stage-notice" role="status">{{ fullscreenNotice }}</p>

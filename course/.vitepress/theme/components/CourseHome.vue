@@ -3,6 +3,8 @@ import { withBase } from "vitepress";
 import { computed } from "vue";
 import { courseMeta, lectureSections } from "../../data/course.js";
 import { scenarios } from "../../data/scenarios.js";
+import HeaderUtilities from "./HeaderUtilities.vue";
+import PrimaryNavigation from "./PrimaryNavigation.vue";
 import SiteBrand from "./SiteBrand.vue";
 
 const total = computed(() => courseMeta.teachingMinutes + courseMeta.exchangeMinutes);
@@ -55,13 +57,10 @@ const outputCards = [
         <img class="home-brand-mark" :src="withBase('/logo.png')" alt="">
         <SiteBrand />
       </a>
-      <nav aria-label="主导航">
-        <a :href="withBase('/guide/00-start')">课程地图</a>
-        <a :href="withBase('/guide/01-t-shaped')">课后教材</a>
-        <a :href="withBase('/appendix/tool-radar')">工具雷达</a>
-        <a :href="withBase('/sources')">来源</a>
-        <a class="nav-stage course-button course-button--primary" :href="presentLink">开始讲课 <span>↗</span></a>
-      </nav>
+      <div class="home-nav-actions">
+        <PrimaryNavigation />
+        <HeaderUtilities tone="light" />
+      </div>
     </header>
 
     <main>

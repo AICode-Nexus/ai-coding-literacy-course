@@ -14,6 +14,7 @@ import "vitepress/dist/client/theme-default/styles/vars.css";
 import "./styles/tokens.css";
 import "./styles/docs.css";
 import "./styles/components.css";
+import "./styles/instructor.css";
 import "./styles/presentation.css";
 
 export default {
