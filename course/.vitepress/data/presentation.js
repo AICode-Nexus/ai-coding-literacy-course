@@ -5,8 +5,8 @@ export function clampScene(index, total) {
 
 export function sceneFromSearch(search, total) {
   const raw = new URLSearchParams(search).get("scene");
-  const oneBased = Number.parseInt(raw || "1", 10);
-  return clampScene(Number.isFinite(oneBased) ? oneBased - 1 : 0, total);
+  if (!raw || !/^\d+$/.test(raw)) return 0;
+  return clampScene(Number(raw) - 1, total);
 }
 
 export function searchWithScene(search, index) {

@@ -129,6 +129,7 @@ test("course homepage maps the supplied KV formats to responsive contexts and us
   const home = await read("course/.vitepress/theme/components/CourseHome.vue");
   const stage = await read("course/.vitepress/theme/components/StageScene.vue");
   const config = await read("course/.vitepress/config.mts");
+  const docs = await read("course/.vitepress/theme/styles/docs.css");
   const logo = await readFile("course/public/logo.png");
 
   for (const asset of ["kv-wide.jpg", "kv-mobile.jpg", "kv-stage.jpg", "kv-ultrawide.jpg"]) {
@@ -145,6 +146,8 @@ test("course homepage maps the supplied KV formats to responsive contexts and us
   assert.deepEqual([...logo.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
   assert.equal(logo.readUInt32BE(16), 1498);
   assert.equal(logo.readUInt32BE(20), 1280);
+  assert.equal(logo[25], 6);
+  assert.match(docs, /\.VPNavBarTitle \.logo\s*{[^}]*width:\s*auto[^}]*height:\s*32px[^}]*object-fit:\s*contain/s);
 });
 
 test("scenario and template registry is normalized", async () => {
@@ -344,6 +347,8 @@ test("presentation navigation is deterministic", async () => {
   assert.equal(clampScene(40, 30), 29);
   assert.equal(sceneFromSearch("?scene=12", 30), 11);
   assert.equal(sceneFromSearch("?scene=oops", 30), 0);
+  assert.equal(sceneFromSearch("?scene=12oops", 30), 0);
+  assert.equal(sceneFromSearch("?scene=2.5", 30), 0);
   assert.equal(searchWithScene("?mode=teacher", 2), "?mode=teacher&scene=3");
   assert.equal(keyToAction("ArrowRight"), "next");
   assert.equal(keyToAction("PageDown"), "next");
