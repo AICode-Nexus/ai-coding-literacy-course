@@ -7,7 +7,7 @@ export const primaryNavigation = Object.freeze([
   },
   {
     id: "materials",
-    text: "课后教材",
+    text: "课程",
     link: "/guide/01-t-shaped",
     activeMatch: "^/guide/(?!00-start)",
   },
@@ -25,7 +25,7 @@ export const primaryNavigation = Object.freeze([
   },
   {
     id: "present",
-    text: "开始讲课",
+    text: "PPT",
     link: "/present",
     query: "scene=1",
     activeMatch: "^/present",

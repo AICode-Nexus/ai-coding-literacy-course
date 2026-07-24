@@ -263,10 +263,10 @@ test("all page headers reuse one canonical primary navigation", async () => {
     primaryNavigation.map(({ id, text, link }) => ({ id, text, link })),
     [
       { id: "map", text: "课程地图", link: "/guide/00-start" },
-      { id: "materials", text: "课后教材", link: "/guide/01-t-shaped" },
+      { id: "materials", text: "课程", link: "/guide/01-t-shaped" },
       { id: "instructor", text: "讲师", link: "/instructor" },
       { id: "sources", text: "来源", link: "/sources" },
-      { id: "present", text: "开始讲课", link: "/present" },
+      { id: "present", text: "PPT", link: "/present" },
     ],
   );
   assert.match(config, /import\s*\{\s*primaryNavigation\s*\}\s*from\s*["']\.\/data\/navigation\.js["']/);

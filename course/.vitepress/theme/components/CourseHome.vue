@@ -89,7 +89,7 @@ const outputCards = [
           <p>从“会用AI”到“善用AI”</p>
           <div class="kv-course-actions">
             <a class="course-button course-button--secondary" :href="withBase('/guide/00-start')">查看课程</a>
-            <a class="course-button course-button--primary" :href="presentLink">开始讲课 <span>↗</span></a>
+            <a class="course-button course-button--primary" :href="presentLink">PPT <span>↗</span></a>
           </div>
         </div>
       </section>
@@ -101,7 +101,7 @@ const outputCards = [
           <h1>从“会用 AI”，<br><em>到“善用 AI”</em></h1>
           <p>{{ courseMeta.goal }}AI 的价值不只在提效，也在释放人的想象力、扩大人的执行力，让创新更快从设想走向验证。课程以讲课为主，同时保留一套可以课后搜索、阅读、练习和复用的完整教程。</p>
           <div class="hero-actions">
-            <a class="action-primary course-button course-button--primary" :href="presentLink">开始讲课 <span>→</span></a>
+            <a class="action-primary course-button course-button--primary" :href="presentLink">PPT <span>→</span></a>
             <a class="action-secondary course-button course-button--secondary" :href="withBase('/guide/00-start')">课后学习 <span>↗</span></a>
           </div>
           <div class="hero-proof">
@@ -137,7 +137,7 @@ const outputCards = [
           <a class="mode-card mode-stage" :href="presentLink">
             <span class="mode-index">01 / LECTURE</span>
             <div class="mode-preview"><i></i><strong>16:9</strong><small>1920 × 1080 LOGICAL</small></div>
-            <h3>开始讲课</h3>
+            <h3>PPT</h3>
             <p>32 屏、九节点总览、键盘翻页、URL 恢复、浏览器全屏与五层讲师备注。</p>
             <b>进入讲师模式 <span>↗</span></b>
           </a>
