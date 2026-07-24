@@ -3,6 +3,10 @@ title: 03 AI 基础、模型与工具全景
 description: 先看任务约束，再选择能力组合
 ---
 
+<script setup>
+import { toolCatalogVerifiedAt } from "../.vitepress/data/tools.js";
+</script>
+
 <span class="chapter-kicker">03 · AI Landscape</span>
 
 # 先看任务约束，再选择能力组合
@@ -113,7 +117,7 @@ Tool 是搜索、文件、终端、浏览器或业务接口等结构化动作。
 
 ## 工具与选择方法
 
-下面按能力而不是排名展示七类工具。代表入口的核验日期为 2026-07-13；正式授课或采购前应重新确认。
+下面按能力而不是排名展示七类工具。代表入口最近批量核验于 {{ toolCatalogVerifiedAt }}；正式授课或采购前应重新确认。
 
 <ToolLandscape />
 

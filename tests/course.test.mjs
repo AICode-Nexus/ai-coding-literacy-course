@@ -206,14 +206,20 @@ test("instructor profile exposes the approved compact identity open-source and c
   assert.deepEqual(instructorProfile.contacts.map((item) => item.label), ["微信公众号", "微信", "i 讯飞"]);
   assert.equal("experience" in instructorProfile, false);
   assert.deepEqual(instructorProfile.projects.map((item) => item.name), [
+    "AI 资源导航",
     "Silen",
     "mini-wiki",
     "ai-native-frontend-bootcamp",
     "ui-consistency",
     "vekui",
   ]);
-  const silen = instructorProfile.projects[0];
-  assert.equal(silen.featured, true);
+  const aiDirectory = instructorProfile.projects[0];
+  assert.equal(aiDirectory.featured, true);
+  assert.deepEqual(aiDirectory.links, [
+    { label: "访问目录", url: "https://aicode-nexus.github.io/website/docs/ai-directory/" },
+    { label: "GitHub", url: "https://github.com/AICode-Nexus/website" },
+  ]);
+  const silen = instructorProfile.projects[1];
   assert.deepEqual(silen.links, [
     { label: "GitHub", url: "https://github.com/AICode-Nexus/silen" },
     { label: "npm", url: "https://www.npmjs.com/package/@aicode-nexus/silen?activeTab=readme" },
@@ -326,8 +332,9 @@ test("shared references resolve across scenario concept and tool registries", as
 });
 
 test("tool catalog uses capability categories and explicit freshness metadata", async () => {
-  const { toolCategories, toolEntryStatus } = await import("../course/.vitepress/data/tools.js");
+  const { toolCatalogVerifiedAt, toolCategories, toolEntryStatus } = await import("../course/.vitepress/data/tools.js");
 
+  assert.equal(toolCatalogVerifiedAt, "2026-07-24");
   assert.deepEqual(toolCategories.map((item) => item.id), expectedToolCategoryIds);
   for (const category of toolCategories) {
     assert.ok(category.purpose.length >= 12);
@@ -336,12 +343,15 @@ test("tool catalog uses capability categories and explicit freshness metadata", 
     assert.ok(category.representatives.length >= 1);
     for (const entry of category.representatives) {
       assert.match(entry.officialUrl, /^https:\/\//);
-      assert.match(entry.verifiedAt, /^2026-07-13$/);
+      assert.equal(entry.verifiedAt, toolCatalogVerifiedAt);
       assert.equal(entry.reviewDays, category.reviewDays);
-      assert.equal(toolEntryStatus(entry, new Date("2026-07-13T00:00:00Z")), "已核验");
-      assert.equal(toolEntryStatus(entry, new Date("2026-10-20T00:00:00Z")), "待重新核验");
+      assert.equal(toolEntryStatus(entry, new Date("2026-10-22T00:00:00Z")), "已核验");
+      assert.equal(toolEntryStatus(entry, new Date("2026-10-23T00:00:00Z")), "待重新核验");
     }
   }
+
+  assert.equal(toolCategories[2].representatives[0].officialUrl, "https://openai.com/codex/");
+  assert.equal(toolCategories[2].representatives[2].officialUrl, "https://cursor.com/");
 });
 
 test("concepts have definitions boundaries maturity and shared references", async () => {

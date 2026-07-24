@@ -1,4 +1,4 @@
-const verifiedAt = "2026-07-13";
+export const toolCatalogVerifiedAt = "2026-07-24";
 const reviewDays = 90;
 
 const rawToolCategories = [
@@ -10,14 +10,14 @@ const rawToolCategories = [
     risks: ["把流畅回答当成事实", "把敏感材料交给未经批准的服务", "依赖单一产品形成不可迁移习惯"],
     reviewDays,
     representatives: [
-      { name: "讯飞星火", officialUrl: "https://xinghuo.xfyun.cn/", verifiedAt, note: "通用对话、文件与多模态能力示例" },
-      { name: "ChatGPT", officialUrl: "https://chatgpt.com/", verifiedAt, note: "通用助手与工具能力示例" },
-      { name: "Claude", officialUrl: "https://claude.ai/", verifiedAt, note: "通用助手、文件分析与研究能力示例" },
-      { name: "Gemini", officialUrl: "https://gemini.google.com/", verifiedAt, note: "通用助手与多模态能力示例" },
-      { name: "豆包", officialUrl: "https://www.doubao.com/", verifiedAt, note: "中文通用助手与内容能力示例" },
-      { name: "Kimi", officialUrl: "https://www.kimi.com/", verifiedAt, note: "通用助手、研究与文档能力示例" },
-      { name: "通义千问 / Qwen", officialUrl: "https://qwen.ai/qwenchat", verifiedAt, note: "通用助手与多模态能力示例" },
-      { name: "DeepSeek", officialUrl: "https://chat.deepseek.com/", verifiedAt, note: "通用对话与推理能力示例" },
+      { name: "讯飞星火", officialUrl: "https://xinghuo.xfyun.cn/", verifiedAt: toolCatalogVerifiedAt, note: "通用对话、文件与多模态能力示例" },
+      { name: "ChatGPT", officialUrl: "https://chatgpt.com/", verifiedAt: toolCatalogVerifiedAt, note: "通用助手与工具能力示例" },
+      { name: "Claude", officialUrl: "https://claude.ai/", verifiedAt: toolCatalogVerifiedAt, note: "通用助手、文件分析与研究能力示例" },
+      { name: "Gemini", officialUrl: "https://gemini.google.com/", verifiedAt: toolCatalogVerifiedAt, note: "通用助手与多模态能力示例" },
+      { name: "豆包", officialUrl: "https://www.doubao.com/", verifiedAt: toolCatalogVerifiedAt, note: "中文通用助手与内容能力示例" },
+      { name: "Kimi", officialUrl: "https://www.kimi.com/", verifiedAt: toolCatalogVerifiedAt, note: "通用助手、研究与文档能力示例" },
+      { name: "通义千问 / Qwen", officialUrl: "https://qwen.ai/qwenchat", verifiedAt: toolCatalogVerifiedAt, note: "通用助手与多模态能力示例" },
+      { name: "DeepSeek", officialUrl: "https://chat.deepseek.com/", verifiedAt: toolCatalogVerifiedAt, note: "通用对话与推理能力示例" },
     ],
   },
   {
@@ -28,9 +28,9 @@ const rawToolCategories = [
     risks: ["引用存在不等于结论正确", "搜索范围偏差被包装成完整研究", "过时网页与二手转述混入证据"],
     reviewDays,
     representatives: [
-      { name: "ChatGPT Deep Research", officialUrl: "https://help.openai.com/en/articles/10500283-research-faq", verifiedAt, note: "多步骤联网研究能力示例" },
-      { name: "Gemini Deep Research", officialUrl: "https://gemini.google/overview/deep-research/", verifiedAt, note: "自动浏览与研究报告能力示例" },
-      { name: "Kimi 深度研究", officialUrl: "https://www.kimi.com/zh-cn/help/new-user-guide/overview", verifiedAt, note: "中文研究与来源整理能力示例" },
+      { name: "ChatGPT Deep Research", officialUrl: "https://help.openai.com/en/articles/10500283-research-faq", verifiedAt: toolCatalogVerifiedAt, note: "多步骤联网研究能力示例" },
+      { name: "Gemini Deep Research", officialUrl: "https://gemini.google/overview/deep-research/", verifiedAt: toolCatalogVerifiedAt, note: "自动浏览与研究报告能力示例" },
+      { name: "Kimi 深度研究", officialUrl: "https://www.kimi.com/zh-cn/help/new-user-guide/overview", verifiedAt: toolCatalogVerifiedAt, note: "中文研究与来源整理能力示例" },
     ],
   },
   {
@@ -41,10 +41,10 @@ const rawToolCategories = [
     risks: ["权限过大导致意外副作用", "测试通过但业务目标错误", "并行修改造成文件或分支冲突"],
     reviewDays,
     representatives: [
-      { name: "Codex", officialUrl: "https://openai.com/codex/get-started/", verifiedAt, note: "多环境软件工程 Agent 示例" },
-      { name: "Claude Code", officialUrl: "https://code.claude.com/docs/en/overview", verifiedAt, note: "终端与仓库协作 Agent 示例" },
-      { name: "Cursor", officialUrl: "https://www.cursor.com/", verifiedAt, note: "AI 代码编辑器与 Agent 示例" },
-      { name: "GitHub Copilot", officialUrl: "https://github.com/features/copilot", verifiedAt, note: "编辑器、CLI 与 GitHub 工作流示例" },
+      { name: "Codex", officialUrl: "https://openai.com/codex/", verifiedAt: toolCatalogVerifiedAt, note: "多环境软件工程 Agent 示例" },
+      { name: "Claude Code", officialUrl: "https://code.claude.com/docs/en/overview", verifiedAt: toolCatalogVerifiedAt, note: "终端与仓库协作 Agent 示例" },
+      { name: "Cursor", officialUrl: "https://cursor.com/", verifiedAt: toolCatalogVerifiedAt, note: "AI 代码编辑器与 Agent 示例" },
+      { name: "GitHub Copilot", officialUrl: "https://github.com/features/copilot", verifiedAt: toolCatalogVerifiedAt, note: "编辑器、CLI 与 GitHub 工作流示例" },
     ],
   },
   {
@@ -55,9 +55,9 @@ const rawToolCategories = [
     risks: ["先画复杂流程再确认真实目标", "连接权限扩张但缺少审计", "失败分支和人工接管没有设计"],
     reviewDays,
     representatives: [
-      { name: "Dify", officialUrl: "https://dify.ai/", verifiedAt, note: "Agentic workflow 与知识连接平台示例" },
-      { name: "扣子 Coze", officialUrl: "https://www.coze.cn/overview", verifiedAt, note: "智能体、技能与工作流平台示例" },
-      { name: "n8n", officialUrl: "https://n8n.io/ai/", verifiedAt, note: "业务自动化与 AI 工作流平台示例" },
+      { name: "Dify", officialUrl: "https://dify.ai/", verifiedAt: toolCatalogVerifiedAt, note: "Agentic workflow 与知识连接平台示例" },
+      { name: "扣子 Coze", officialUrl: "https://www.coze.cn/overview", verifiedAt: toolCatalogVerifiedAt, note: "智能体、技能与工作流平台示例" },
+      { name: "n8n", officialUrl: "https://n8n.io/ai/", verifiedAt: toolCatalogVerifiedAt, note: "业务自动化与 AI 工作流平台示例" },
     ],
   },
   {
@@ -68,9 +68,9 @@ const rawToolCategories = [
     risks: ["生成内容侵犯版权或肖像权", "视觉效果掩盖事实错误", "素材来源与后期修改无法追溯"],
     reviewDays,
     representatives: [
-      { name: "即梦 AI", officialUrl: "https://www.jimeng.com/", verifiedAt, note: "中文图像与视频创作平台示例" },
-      { name: "可灵 AI", officialUrl: "https://kling.ai/cn", verifiedAt, note: "图像与视频生成平台示例" },
-      { name: "Midjourney", officialUrl: "https://www.midjourney.com/", verifiedAt, note: "图像与视频创作平台示例" },
+      { name: "即梦 AI", officialUrl: "https://www.jimeng.com/", verifiedAt: toolCatalogVerifiedAt, note: "中文图像与视频创作平台示例" },
+      { name: "可灵 AI", officialUrl: "https://kling.ai/cn", verifiedAt: toolCatalogVerifiedAt, note: "图像与视频生成平台示例" },
+      { name: "Midjourney", officialUrl: "https://www.midjourney.com/", verifiedAt: toolCatalogVerifiedAt, note: "图像与视频创作平台示例" },
     ],
   },
   {
@@ -81,10 +81,10 @@ const rawToolCategories = [
     risks: ["错误资料被当成组织事实", "检索结果越权暴露敏感内容", "知识长期不更新却继续被引用"],
     reviewDays,
     representatives: [
-      { name: "RAG / 文件检索", officialUrl: "https://developers.openai.com/api/docs/guides/retrieval", verifiedAt, note: "按需检索证据片段的实现类别" },
-      { name: "知识库", officialUrl: "https://docs.dify.ai/api-reference/knowledge-bases/retrieve-chunks-from-a-knowledge-base-test-retrieval", verifiedAt, note: "结构化知识接入与检索示例" },
-      { name: "MCP", officialUrl: "https://modelcontextprotocol.io/docs/learn/architecture", verifiedAt, note: "tools、resources 与 prompts 的连接协议" },
-      { name: "企业数据连接器", officialUrl: "https://developers.openai.com/api/docs/guides/tools-connectors-mcp", verifiedAt, note: "受权限控制的外部系统连接类别" },
+      { name: "RAG / 文件检索", officialUrl: "https://developers.openai.com/api/docs/guides/retrieval", verifiedAt: toolCatalogVerifiedAt, note: "按需检索证据片段的实现类别" },
+      { name: "知识库", officialUrl: "https://docs.dify.ai/api-reference/knowledge-bases/retrieve-chunks-from-a-knowledge-base-test-retrieval", verifiedAt: toolCatalogVerifiedAt, note: "结构化知识接入与检索示例" },
+      { name: "MCP", officialUrl: "https://modelcontextprotocol.io/docs/learn/architecture", verifiedAt: toolCatalogVerifiedAt, note: "tools、resources 与 prompts 的连接协议" },
+      { name: "企业数据连接器", officialUrl: "https://developers.openai.com/api/docs/guides/tools-connectors-mcp", verifiedAt: toolCatalogVerifiedAt, note: "受权限控制的外部系统连接类别" },
     ],
   },
   {
@@ -95,10 +95,10 @@ const rawToolCategories = [
     risks: ["把偶然成功过早封装成标准", "规则长期不更新造成错误复用", "模板让使用者跳过必要判断"],
     reviewDays,
     representatives: [
-      { name: "Prompt 模板", officialUrl: "https://developers.openai.com/api/docs/guides/prompting", verifiedAt, note: "重复任务说明的轻量复用方式" },
-      { name: "项目规则文件", officialUrl: "https://learn.chatgpt.com/docs/agent-configuration/agents-md", verifiedAt, note: "AGENTS.md、CLAUDE.md 等持久指令方式" },
-      { name: "Skill", officialUrl: "https://learn.chatgpt.com/docs/build-skills", verifiedAt, note: "指令、参考、脚本与资产的按需复用方式" },
-      { name: "检查清单", officialUrl: "https://developers.openai.com/api/docs/guides/agent-evals", verifiedAt, note: "把验收规则变成可重复检查资产" },
+      { name: "Prompt 模板", officialUrl: "https://developers.openai.com/api/docs/guides/prompting", verifiedAt: toolCatalogVerifiedAt, note: "重复任务说明的轻量复用方式" },
+      { name: "项目规则文件", officialUrl: "https://learn.chatgpt.com/docs/agent-configuration/agents-md", verifiedAt: toolCatalogVerifiedAt, note: "AGENTS.md、CLAUDE.md 等持久指令方式" },
+      { name: "Skill", officialUrl: "https://learn.chatgpt.com/docs/build-skills", verifiedAt: toolCatalogVerifiedAt, note: "指令、参考、脚本与资产的按需复用方式" },
+      { name: "检查清单", officialUrl: "https://developers.openai.com/api/docs/guides/agent-evals", verifiedAt: toolCatalogVerifiedAt, note: "把验收规则变成可重复检查资产" },
     ],
   },
 ];

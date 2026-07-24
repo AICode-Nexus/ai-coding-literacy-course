@@ -67,39 +67,50 @@ export const instructorProfile = {
   projects: [
     {
       index: "01",
+      name: "AI 资源导航",
+      kind: "AI RESOURCE DIRECTORY",
+      description:
+        "面向 AI 学习与实践的一站式资源目录，覆盖模型平台、AI Coding、Agent、产品设计、运营与企业效率等核心方向。",
+      featured: true,
+      links: [
+        { label: "访问目录", url: "https://aicode-nexus.github.io/website/docs/ai-directory/" },
+        { label: "GitHub", url: "https://github.com/AICode-Nexus/website" },
+      ],
+    },
+    {
+      index: "02",
       name: "Silen",
       kind: "AI-NATIVE DOCS",
       description:
         "面向人和 AI 双读者的文档优先静态站点生成器，基于 React、TypeScript、Vite 与 MDX，提供 AI 可读产物和本地 MCP 工作区。",
-      featured: true,
       links: [
         { label: "GitHub", url: "https://github.com/AICode-Nexus/silen" },
         { label: "npm", url: "https://www.npmjs.com/package/@aicode-nexus/silen?activeTab=readme" },
       ],
     },
     {
-      index: "02",
+      index: "03",
       name: "mini-wiki",
       kind: "AI KNOWLEDGE",
       description: "面向 GitHub、GitLab 与 Bitbucket 仓库的 AI Skills Wiki 生成器。",
       links: [{ label: "GitHub", url: "https://github.com/trsoliu/mini-wiki" }],
     },
     {
-      index: "03",
+      index: "04",
       name: "ai-native-frontend-bootcamp",
       kind: "OPEN COURSE",
       description: "大模型时代的 AI-Native 前端技术栈、工作流与培训材料。",
       links: [{ label: "GitHub", url: "https://github.com/AICode-Nexus/ai-native-frontend-bootcamp" }],
     },
     {
-      index: "04",
+      index: "05",
       name: "ui-consistency",
       kind: "ENGINEERING TOOL",
       description: "面向 shadcn/ui、Radix UI 与 Tailwind CSS 项目的界面一致性 ESLint 插件。",
       links: [{ label: "GitHub", url: "https://github.com/AICode-Nexus/ui-consistency" }],
     },
     {
-      index: "05",
+      index: "06",
       name: "vekui",
       kind: "UI SYSTEM",
       description: "面向 PC 与 H5、为 AI 驱动设计与组装打造的 source-first UI 系统。",
