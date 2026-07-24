@@ -1,7 +1,7 @@
 export const courseMeta = {
   title: "AI 协同方法论：从“会用 AI”到“善用 AI”",
   shortTitle: "AI 协同方法论",
-  subtitle: "形成 AI 思维，把专业判断组织进可验收的人机协作流程",
+  subtitle: "形成 AI 思维，用专业判断释放人的想象力、扩大人的执行力，并组织进可验收的人机协作流程",
   goal: "帮助校招生掌握怎么用 AI 提效、用什么思路用 AI，形成“人机协作”的工作思维。",
   audience: "具备通用 AI 基础的校招生，以 A 类学员为主并兼顾 B 类学员",
   audienceSize: 1050,
@@ -9,7 +9,7 @@ export const courseMeta = {
   exchangeMinutes: 15,
   stageAspect: "16:9",
   stageResolution: "1920×1080",
-  primaryTrack: "从单点使用升级为可验收、可复用的人机协作",
+  primaryTrack: "从单点提效升级为创新加速且可验收、可复用的人机协作",
   advancedTrack: "Agent、MCP、Skill、Harness、Tracing 与多智能体边界",
   outputs: ["一张 AI 协同任务卡", "一份三层验收清单", "一个岗位小流程改造方案", "一份 7 天行动计划"],
 };

@@ -559,6 +559,42 @@ test("tutorial typography gives keywords and chapter viewpoints a shared visual 
   }
 });
 
+test("innovation acceleration connects T-shaped talent to collaboration workflow and action", async () => {
+  const index = await read("course/index.md");
+  const courseMap = await read("course/guide/00-start.md");
+  const tShaped = await read("course/guide/01-t-shaped.md");
+  const collaboration = await read("course/guide/02-collaboration-shift.md");
+  const workflow = await read("course/guide/08-workflow.md");
+  const transfer = await read("course/guide/09-transfer.md");
+  const home = await read("course/.vitepress/theme/components/CourseHome.vue");
+  const readme = await read("README.md");
+  const { lectureScenes } = await import("../course/.vitepress/data/scenes.js");
+  const { scenarioById } = await import("../course/.vitepress/data/scenarios.js");
+
+  for (const source of [index, courseMap, tShaped, home, readme]) {
+    assert.match(source, /释放人的想象力/);
+    assert.match(source, /扩大人的执行力/);
+  }
+
+  assert.match(tShaped, /AI 不只提效，也在加速创新/);
+  assert.match(tShaped, /产生想法—形成原型—获得反馈/);
+  assert.match(collaboration, /提效之后，还要看创新是否被加速/);
+  assert.match(collaboration, /从可能性到原型/);
+  assert.match(workflow, /流程重构既释放效率，也加速创新/);
+  assert.match(workflow, /新想法从提出到获得首次有效反馈/);
+  assert.match(transfer, /新设想/);
+  assert.match(transfer, /第一个可检查片段/);
+
+  const tShapedScenes = lectureScenes.filter((scene) => scene.section === "t-shaped");
+  const tShapedLectureCopy = JSON.stringify(tShapedScenes);
+  assert.match(tShapedLectureCopy, /释放想象力/);
+  assert.match(tShapedLectureCopy, /扩大执行力/);
+  assert.match(tShapedLectureCopy, /创新/);
+  assert.match(scenarioById["t-shaped-adjacent-loop"].takeaway, /释放想象力/);
+  assert.match(scenarioById["workflow-reuse-or-restart"].takeaway, /组织创新/);
+  assert.match(scenarioById["transfer-first-small-loop"].takeaway, /扩大执行力/);
+});
+
 test("each tutorial chapter owns substantial lecture-ready material", async () => {
   const { lectureSections } = await import("../course/.vitepress/data/course.js");
   const requiredChapterLanguage = new Map([

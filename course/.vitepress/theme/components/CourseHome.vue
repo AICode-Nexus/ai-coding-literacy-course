@@ -32,7 +32,7 @@ const outputCards = [
   {
     title: courseMeta.outputs[2],
     label: "WORKFLOW REDESIGN",
-    description: "标出删除、合并、AI 执行与人工决策的新流程。",
+    description: "标出删除、合并、AI 执行与人工决策的新流程，让新想法更快获得反馈。",
     metric: "1 个可复用闭环",
     href: "/guide/08-workflow",
     visual: "workflow",
@@ -99,7 +99,7 @@ const outputCards = [
         <div class="hero-copy">
           <p class="home-eyebrow">AI COLLABORATION · CAMPUS LEARNING 2026</p>
           <h1>从“会用 AI”，<br><em>到“善用 AI”</em></h1>
-          <p>{{ courseMeta.goal }}课程以讲课为主，同时保留一套可以课后搜索、阅读、练习和复用的完整教程。</p>
+          <p>{{ courseMeta.goal }}AI 的价值不只在提效，也在释放人的想象力、扩大人的执行力，让创新更快从设想走向验证。课程以讲课为主，同时保留一套可以课后搜索、阅读、练习和复用的完整教程。</p>
           <div class="hero-actions">
             <a class="action-primary course-button course-button--primary" :href="presentLink">开始讲课 <span>→</span></a>
             <a class="action-secondary course-button course-button--secondary" :href="withBase('/guide/00-start')">课后学习 <span>↗</span></a>
@@ -251,8 +251,8 @@ const outputCards = [
 
       <section class="home-cta">
         <div><span>GOAL</span><i></i><span>CONTEXT</span><i></i><span>TASK</span><i></i><span>OUTPUT</span><i></i><span>EVAL</span><i></i><span>GUARDRAILS</span><i></i><span>LOOP</span></div>
-        <h2>明天，先改造一个低风险的小流程</h2>
-        <p>不要从收集更多工具开始；从一个可验收、会再次发生的岗位任务开始。</p>
+        <h2>明天，先让一个真实想法进入小流程</h2>
+        <p>不要从收集更多工具开始；让 AI 帮你做出第一个可检查成果，再用真实反馈决定下一步。</p>
         <a class="course-button course-button--primary" :href="withBase('/guide/09-transfer')">打开 7 天行动计划 <span>→</span></a>
       </section>
     </main>
